@@ -329,7 +329,7 @@ export default function Checkout() {
           {/* Order summary */}
           <div className="lg:col-span-2">
             <div
-              className="sticky top-24 rounded-2xl p-6 space-y-4"
+              className="sticky top-6 rounded-2xl p-6 space-y-4"
               style={{
                 background: "oklch(0.98 0.008 295)",
                 border: "1.5px solid oklch(0.91 0.04 295)",

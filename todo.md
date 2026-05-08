@@ -63,9 +63,15 @@
 - [x] Actualizar ProductCard con nueva paleta
 
 ## Rediseño Visual v3 - Páginas restantes
-- [ ] Rediseñar página Tienda con nueva identidad BoraHae
-- [ ] Rediseñar página Detalle de Producto
-- [ ] Rediseñar página Sobre Nosotros
-- [ ] Rediseñar página Contacto
-- [ ] Rediseñar página FAQs
-- [ ] Rediseñar Checkout y CartDrawer
+- [x] Rediseñar página Tienda con nueva identidad BoraHae
+- [x] Rediseñar página Detalle de Producto
+- [x] Rediseñar página Sobre Nosotros
+- [x] Rediseñar página Contacto
+- [x] Rediseñar página FAQs
+- [x] Rediseñar Checkout y CartDrawer
+
+## Rediseño Visual v4 - Sidebar lateral
+- [x] Crear componente SidebarNav con iconos, logo, links y controles de usuario
+- [x] Actualizar StoreLayout para layout con sidebar izquierdo fijo
+- [x] Eliminar Navbar horizontal
+- [x] Ajustar hero y páginas para que no queden cortadas por el sidebar

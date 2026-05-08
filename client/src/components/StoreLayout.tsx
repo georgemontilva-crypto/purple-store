@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import SidebarNav from "./SidebarNav";
 import Footer from "./Footer";
 import CartDrawer from "./CartDrawer";
 import { CartProvider } from "@/contexts/CartContext";
@@ -10,12 +10,18 @@ interface StoreLayoutProps {
 
 function StoreLayoutInner({ children, hideFooter }: StoreLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Navbar />
-      <main className="flex-1 pt-16">
-        {children}
-      </main>
-      {!hideFooter && <Footer />}
+    <div className="min-h-screen flex bg-background">
+      {/* Sidebar fijo izquierdo */}
+      <SidebarNav />
+
+      {/* Contenido principal desplazado a la derecha del sidebar */}
+      <div className="flex-1 flex flex-col" style={{ marginLeft: "72px" }}>
+        <main className="flex-1">
+          {children}
+        </main>
+        {!hideFooter && <Footer />}
+      </div>
+
       <CartDrawer />
     </div>
   );
