@@ -1,7 +1,12 @@
 import { Link } from "wouter";
 import { Instagram, Youtube, Heart, Palette } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 
 export default function Footer() {
+  const { data: logoData } = trpc.content.get.useQuery({ key: "site_logo" });
+  const { data: siteNameData } = trpc.content.get.useQuery({ key: "site_name" });
+  const logoUrl = logoData?.value ?? "";
+  const siteName = siteNameData?.value ?? "BoraHae Art";
   return (
     <footer
       className="mt-16"
@@ -15,19 +20,23 @@ export default function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center"
+                className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden"
                 style={{
                   background:
                     "linear-gradient(135deg, oklch(0.62 0.22 295) 0%, oklch(0.78 0.14 295) 100%)",
                 }}
               >
-                <Palette className="w-5 h-5 text-white" />
+                {logoUrl ? (
+                  <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-0.5" />
+                ) : (
+                  <Palette className="w-5 h-5 text-white" />
+                )}
               </div>
               <span
                 className="font-black text-xl text-white"
                 style={{ fontFamily: "'Nunito', sans-serif" }}
               >
-                BoraHae Art
+                {siteName}
               </span>
             </div>
             <p
@@ -129,7 +138,7 @@ export default function Footer() {
             className="text-xs"
             style={{ color: "oklch(1 0 0 / 0.35)", fontFamily: "'Nunito', sans-serif" }}
           >
-            © {new Date().getFullYear()} BoraHae Art. Todos los derechos reservados.
+            © {new Date().getFullYear()} {siteName}. Todos los derechos reservados.
           </p>
           <p
             className="text-xs flex items-center gap-1"

@@ -2,6 +2,7 @@ import { and, desc, eq, ilike, like, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   type InsertUser,
+  bannerSlides,
   cartItems,
   categories,
   contactMessages,
@@ -582,4 +583,31 @@ export async function markVerificationUsed(id: number) {
   const db = await getDb();
   if (!db) throw new Error("DB not available");
   await db.update(emailVerifications).set({ used: true }).where(eq(emailVerifications.id, id));
+}
+
+// --- Banner Slides ---
+export async function getBannerSlides() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(bannerSlides).where(eq(bannerSlides.active, true)).orderBy(bannerSlides.sortOrder);
+}
+export async function getAllBannerSlides() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(bannerSlides).orderBy(bannerSlides.sortOrder);
+}
+export async function createBannerSlide(data: { url: string; type: "image" | "video"; title?: string; subtitle?: string; sortOrder?: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.insert(bannerSlides).values({ ...data, sortOrder: data.sortOrder ?? 0 });
+}
+export async function updateBannerSlide(id: number, data: Partial<{ url: string; type: "image" | "video"; title: string; subtitle: string; sortOrder: number; active: boolean }>) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(bannerSlides).set(data).where(eq(bannerSlides.id, id));
+}
+export async function deleteBannerSlide(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.delete(bannerSlides).where(eq(bannerSlides.id, id));
 }

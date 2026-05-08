@@ -44,6 +44,11 @@ export default function SidebarNav() {
   const { user, refetch } = useCustomAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const { data: logoData } = trpc.content.get.useQuery({ key: "site_logo" });
+  const { data: siteNameData } = trpc.content.get.useQuery({ key: "site_name" });
+  const logoUrl = logoData?.value ?? "";
+  const siteName = siteNameData?.value ?? "BoraHae Art";
+
   const logoutMutation = trpc.customAuth.logout.useMutation({
     onSuccess: () => {
       refetch();
@@ -78,9 +83,13 @@ export default function SidebarNav() {
           <div
             className="w-11 h-11 rounded-2xl flex items-center justify-center mb-3 cursor-pointer transition-transform hover:scale-105"
             style={{ background: gradientBg, boxShadow: `0 4px 16px oklch(0.42 0.24 295 / 0.35)` }}
-            title="BoraHae Art"
+            title={siteName}
           >
-            <Palette className="w-5 h-5 text-white" />
+            {logoUrl ? (
+              <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-1 rounded-2xl" />
+            ) : (
+              <Palette className="w-5 h-5 text-white" />
+            )}
           </div>
         </Link>
 
@@ -206,10 +215,14 @@ export default function SidebarNav() {
               className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
               style={{ background: gradientBg, boxShadow: `0 3px 10px oklch(0.42 0.24 295 / 0.35)` }}
             >
-              <Palette className="w-4 h-4 text-white" />
+              {logoUrl ? (
+                <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-0.5" />
+              ) : (
+                <Palette className="w-4 h-4 text-white" />
+              )}
             </div>
             <span className="font-black text-base" style={{ color: purple, ...nunito }}>
-              BoraHae Art
+              {siteName}
             </span>
           </div>
         </Link>

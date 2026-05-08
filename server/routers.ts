@@ -508,6 +508,35 @@ const customAuthRouter = router({
   }),
 });
 
+// --- Banner Slides Router ---
+const bannerRouter = router({
+  list: publicProcedure.query(() => db.getBannerSlides()),
+  adminList: adminProcedure.query(() => db.getAllBannerSlides()),
+  create: adminProcedure
+    .input(z.object({
+      url: z.string().min(1),
+      type: z.enum(["image", "video"]),
+      title: z.string().optional(),
+      subtitle: z.string().optional(),
+      sortOrder: z.number().optional(),
+    }))
+    .mutation(({ input }) => db.createBannerSlide(input)),
+  update: adminProcedure
+    .input(z.object({
+      id: z.number(),
+      url: z.string().optional(),
+      type: z.enum(["image", "video"]).optional(),
+      title: z.string().optional(),
+      subtitle: z.string().optional(),
+      sortOrder: z.number().optional(),
+      active: z.boolean().optional(),
+    }))
+    .mutation(({ input }) => { const { id, ...data } = input; return db.updateBannerSlide(id, data); }),
+  delete: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(({ input }) => db.deleteBannerSlide(input.id)),
+});
+
 // --- App Router ---
 export const appRouter = router({
   system: systemRouter,
@@ -530,6 +559,7 @@ export const appRouter = router({
   upload: uploadRouter,
   dashboard: dashboardRouter,
   customAuth: customAuthRouter,
+  banner: bannerRouter,
 });
 
 export type AppRouter = typeof appRouter;

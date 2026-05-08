@@ -189,3 +189,17 @@ export const contactMessages = mysqlTable("contact_messages", {
 
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertContactMessage = typeof contactMessages.$inferInsert;
+
+// --- Banner Slides (Hero Carousel) -------------------------------------------
+export const bannerSlides = mysqlTable("banner_slides", {
+  id: int("id").autoincrement().primaryKey(),
+  url: text("url").notNull(),
+  type: mysqlEnum("type", ["image", "video"]).default("image").notNull(),
+  title: varchar("title", { length: 256 }),
+  subtitle: text("subtitle"),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  active: boolean("active").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+export type BannerSlide = typeof bannerSlides.$inferSelect;
+export type InsertBannerSlide = typeof bannerSlides.$inferInsert;

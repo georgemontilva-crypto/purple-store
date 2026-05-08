@@ -114,3 +114,14 @@
 - [x] Rediseñar AdminFAQs con lista moderna y toggle de estado
 - [x] Rediseñar AdminMessages con panel de lista + detalle tipo email
 - [x] Corregir error de caracteres Unicode en Home.tsx (línea 226)
+
+## Nuevas funcionalidades v6 + Hero Carrusel v7
+- [x] Logo editable desde AdminContent: campo de imagen para logo del menu y footer
+- [x] SidebarNav y Footer usan logo guardado en site_content (key: site_logo)
+- [x] Nombre de tienda editable (site_name) en AdminContent
+- [x] Tabla banner_slides en DB con campos: url, type (image/video), title, subtitle, sort_order, active
+- [x] API tRPC: listar slides (publico), CRUD slides (admin)
+- [x] AdminContent: seccion para subir/gestionar slides del hero (imagen o video)
+- [x] Home.tsx: hero carrusel con autoplay 5s, dots de navegacion, flechas prev/next, soporte imagen y video
+- [x] Carrusel: pausa en hover, navegacion con flechas y dots
+- [ ] Exportar proyecto a GitHub

@@ -12,165 +12,176 @@ import {
   Heart,
   Package,
   Brush,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-/* --- Hero ------------------------------------------------------------------- */
+import { useState, useEffect, useRef, useCallback } from "react";
+/* --- Hero Carousel ---------------------------------------------------------- */
 function HeroSection() {
   const { data: heroTitle } = trpc.content.get.useQuery({ key: "hero_title" });
   const { data: heroSubtitle } = trpc.content.get.useQuery({ key: "hero_subtitle" });
-  const { data: heroImage } = trpc.content.get.useQuery({ key: "hero_image" });
   const { data: heroCta } = trpc.content.get.useQuery({ key: "hero_cta" });
+  const { data: slides = [] } = trpc.banner.list.useQuery();
 
   const title = heroTitle?.value ?? "Arte Anime\nHecho a Mano";
-  const subtitle =
-    heroSubtitle?.value ??
-    "Cuadros originales de anime y personajes favoritos, pintados a mano con amor. Stock disponible y pedidos por encargo.";
-  const ctaText = heroCta?.value ?? "Ver colección";
-  const bgImage = heroImage?.value;
+  const subtitle = heroSubtitle?.value ?? "Cuadros originales de anime y personajes favoritos, pintados a mano con amor. Stock disponible y pedidos por encargo.";
+  const ctaText = heroCta?.value ?? "Ver coleccion";
+
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
+  const total = slides.length;
+
+  const goTo = useCallback((idx: number) => {
+    setCurrent((prev) => {
+      const prevVid = videoRefs.current[prev];
+      if (prevVid) { prevVid.pause(); prevVid.currentTime = 0; }
+      return idx;
+    });
+  }, []);
+
+  const next = useCallback(() => goTo((current + 1) % total), [current, total, goTo]);
+  const prev = useCallback(() => goTo((current - 1 + total) % total), [current, total, goTo]);
+
+  useEffect(() => {
+    if (total <= 1 || paused) return;
+    const interval = setInterval(next, 5000);
+    return () => clearInterval(interval);
+  }, [total, paused, next]);
+
+  useEffect(() => {
+    if (!slides[current]) return;
+    if (slides[current].type === "video") {
+      const vid = videoRefs.current[current];
+      if (vid) { vid.play().catch(() => {}); }
+    }
+  }, [current, slides]);
+
+  const hasSlides = total > 0;
+  const currentSlide = slides[current];
 
   return (
     <section className="py-4 px-4 lg:px-8">
-      {/* Hero card con bordes redondeados, no full-width */}
       <div
         className="hero-container relative w-full"
-        style={{
-          minHeight: "340px",
-          maxHeight: "520px",
-          borderRadius: "1.5rem",
-          overflow: "hidden",
-        }}
+        style={{ minHeight: "340px", maxHeight: "520px", borderRadius: "1.5rem", overflow: "hidden" }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
       >
-        {/* Background */}
-        {bgImage ? (
-          <>
-            <img
-              src={bgImage}
-              alt="Hero"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.14_0.10_295/0.85)] via-[oklch(0.14_0.10_295/0.55)] to-transparent" />
-          </>
+        {hasSlides ? (
+          <div className="absolute inset-0">
+            {slides.map((slide, i) => (
+              <div
+                key={slide.id}
+                className="absolute inset-0 transition-opacity duration-700"
+                style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}
+              >
+                {slide.type === "video" ? (
+                  <video
+                    ref={(el) => { videoRefs.current[i] = el; }}
+                    src={slide.url}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    muted
+                    loop
+                    playsInline
+                    autoPlay={i === 0}
+                  />
+                ) : (
+                  <img src={slide.url} alt={slide.title ?? `Slide ${i + 1}`} className="absolute inset-0 w-full h-full object-cover" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.14_0.10_295/0.80)] via-[oklch(0.14_0.10_295/0.45)] to-transparent" />
+              </div>
+            ))}
+          </div>
         ) : (
           <div
             className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(135deg, oklch(0.28 0.18 295) 0%, oklch(0.42 0.24 295) 40%, oklch(0.62 0.22 295) 70%, oklch(0.78 0.14 295) 100%)",
-            }}
+            style={{ background: "linear-gradient(135deg, oklch(0.28 0.18 295) 0%, oklch(0.42 0.24 295) 40%, oklch(0.62 0.22 295) 70%, oklch(0.78 0.14 295) 100%)" }}
           >
-            {/* Decorative blobs */}
-            <div
-              className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl opacity-30"
-              style={{ background: "oklch(0.88 0.10 295)" }}
-            />
-            <div
-              className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full blur-3xl opacity-20"
-              style={{ background: "oklch(0.95 0.06 295)" }}
-            />
-            {/* Anime-style decorative circles */}
+            <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl opacity-30" style={{ background: "oklch(0.88 0.10 295)" }} />
+            <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full blur-3xl opacity-20" style={{ background: "oklch(0.95 0.06 295)" }} />
             <div className="absolute top-8 right-24 w-16 h-16 rounded-full border-2 border-white/20" />
             <div className="absolute top-16 right-40 w-8 h-8 rounded-full border border-white/15" />
             <div className="absolute bottom-12 right-16 w-24 h-24 rounded-full border-2 border-white/10" />
           </div>
         )}
-
-        {/* Content */}
         <div className="relative z-10 flex flex-col justify-center h-full px-5 sm:px-8 lg:px-14 py-8 lg:py-10" style={{ minHeight: "340px" }}>
           <div className="max-w-xl">
-            {/* Badge */}
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 text-sm font-semibold"
-              style={{
-                background: "oklch(1 0 0 / 0.15)",
-                border: "1px solid oklch(1 0 0 / 0.25)",
-                color: "white",
-                backdropFilter: "blur(8px)",
-              }}
+              style={{ background: "oklch(1 0 0 / 0.15)", border: "1px solid oklch(1 0 0 / 0.25)", color: "white", backdropFilter: "blur(8px)" }}
             >
               <Brush className="w-3.5 h-3.5" />
               Arte original · Hecho a mano
             </div>
-
-            {/* Title */}
             <h1
               className="font-black leading-tight mb-4 text-white"
-              style={{
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                fontFamily: "'Nunito', sans-serif",
-                whiteSpace: "pre-line",
-                textShadow: "0 2px 20px oklch(0 0 0 / 0.3)",
-              }}
+              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontFamily: "'Nunito', sans-serif", whiteSpace: "pre-line", textShadow: "0 2px 20px oklch(0 0 0 / 0.3)" }}
             >
-              {title}
+              {(hasSlides && currentSlide?.title) ? currentSlide.title : title}
             </h1>
-
-            <p
-              className="text-sm sm:text-base lg:text-lg leading-relaxed mb-5 lg:mb-7"
-              style={{ color: "oklch(1 0 0 / 0.85)", maxWidth: "420px" }}
-            >
-              {subtitle}
+            <p className="text-sm sm:text-base lg:text-lg leading-relaxed mb-5 lg:mb-7" style={{ color: "oklch(1 0 0 / 0.85)", maxWidth: "420px" }}>
+              {(hasSlides && currentSlide?.subtitle) ? currentSlide.subtitle : subtitle}
             </p>
-
             <div className="flex flex-wrap gap-2 sm:gap-3">
               <Link href="/tienda">
-                <Button
-                  size="lg"
-                  className="rounded-full font-bold h-12 px-7 text-sm border-0 shadow-lg hover:scale-105 transition-transform"
-                  style={{
-                    background: "oklch(1 0 0)",
-                    color: "oklch(0.35 0.22 295)",
-                  }}
-                >
-                  {ctaText}
-                  <ArrowRight className="w-4 h-4 ml-1.5" />
+                <Button size="lg" className="rounded-full font-bold h-12 px-7 text-sm border-0 shadow-lg hover:scale-105 transition-transform" style={{ background: "oklch(1 0 0)", color: "oklch(0.35 0.22 295)" }}>
+                  {ctaText}<ArrowRight className="w-4 h-4 ml-1.5" />
                 </Button>
               </Link>
               <Link href="/tienda?tipo=encargo">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full font-bold h-12 px-7 text-sm hover:scale-105 transition-transform"
-                  style={{
-                    borderColor: "oklch(1 0 0 / 0.4)",
-                    color: "white",
-                    background: "oklch(1 0 0 / 0.08)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                >
+                <Button size="lg" variant="outline" className="rounded-full font-bold h-12 px-7 text-sm hover:scale-105 transition-transform" style={{ borderColor: "oklch(1 0 0 / 0.4)", color: "white", background: "oklch(1 0 0 / 0.08)", backdropFilter: "blur(8px)" }}>
                   Pedir por encargo
                 </Button>
               </Link>
             </div>
           </div>
         </div>
-
-        {/* Stats floating bottom-right */}
-        <div
-          className="absolute bottom-6 right-6 hidden lg:flex gap-3"
-        >
-          {[
-            { value: "100%", label: "Hecho a mano" },
-            { value: "+200", label: "Cuadros vendidos" },
-            { value: "★ 5.0", label: "Calificación" },
-          ].map((s, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center px-4 py-2.5 rounded-2xl text-center"
-              style={{
-                background: "oklch(1 0 0 / 0.12)",
-                border: "1px solid oklch(1 0 0 / 0.2)",
-                backdropFilter: "blur(12px)",
-                color: "white",
-              }}
-            >
+        <div className="absolute bottom-6 right-6 hidden lg:flex gap-3" style={{ zIndex: 10 }}>
+          {[{ value: "100%", label: "Hecho a mano" }, { value: "+200", label: "Cuadros vendidos" }, { value: "★ 5.0", label: "Calificacion" }].map((s, i) => (
+            <div key={i} className="flex flex-col items-center px-4 py-2.5 rounded-2xl text-center" style={{ background: "oklch(1 0 0 / 0.12)", border: "1px solid oklch(1 0 0 / 0.2)", backdropFilter: "blur(12px)", color: "white" }}>
               <span className="font-black text-lg leading-none">{s.value}</span>
               <span className="text-xs mt-0.5" style={{ color: "oklch(1 0 0 / 0.7)" }}>{s.label}</span>
             </div>
           ))}
         </div>
+        {total > 1 && (
+          <>
+            <button
+              onClick={prev}
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "oklch(1 0 0 / 0.18)", border: "1px solid oklch(1 0 0 / 0.3)", backdropFilter: "blur(8px)", zIndex: 10 }}
+            >
+              <ChevronLeft className="w-5 h-5 text-white" />
+            </button>
+            <button
+              onClick={next}
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "oklch(1 0 0 / 0.18)", border: "1px solid oklch(1 0 0 / 0.3)", backdropFilter: "blur(8px)", zIndex: 10 }}
+            >
+              <ChevronRight className="w-5 h-5 text-white" />
+            </button>
+          </>
+        )}
+        {total > 1 && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5" style={{ zIndex: 10 }}>
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className="transition-all duration-300 rounded-full"
+                style={{
+                  width: i === current ? "20px" : "6px",
+                  height: "6px",
+                  background: i === current ? "oklch(1 0 0)" : "oklch(1 0 0 / 0.45)",
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
