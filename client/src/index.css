@@ -43,39 +43,40 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
+  /* Purple palette */
+  --primary: oklch(0.52 0.22 295);
+  --primary-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.52 0.22 295);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --chart-1: oklch(0.67 0.18 295);
+  --chart-2: oklch(0.57 0.22 295);
+  --chart-3: oklch(0.52 0.22 295);
+  --chart-4: oklch(0.44 0.20 295);
+  --chart-5: oklch(0.36 0.17 295);
+  --radius: 0.75rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
+  --foreground: oklch(0.15 0.01 285);
+  --card: oklch(0.99 0.003 295);
+  --card-foreground: oklch(0.15 0.01 285);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --popover-foreground: oklch(0.15 0.01 285);
+  --secondary: oklch(0.96 0.015 295);
+  --secondary-foreground: oklch(0.35 0.15 295);
+  --muted: oklch(0.97 0.005 285);
+  --muted-foreground: oklch(0.55 0.04 285);
+  --accent: oklch(0.93 0.04 295);
+  --accent-foreground: oklch(0.35 0.15 295);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --border: oklch(0.92 0.01 285);
+  --input: oklch(0.92 0.01 285);
+  --ring: oklch(0.52 0.22 295);
+  --sidebar: oklch(0.99 0.003 295);
+  --sidebar-foreground: oklch(0.15 0.01 285);
+  --sidebar-accent: oklch(0.93 0.04 295);
+  --sidebar-accent-foreground: oklch(0.35 0.15 295);
+  --sidebar-border: oklch(0.92 0.01 285);
+  --sidebar-ring: oklch(0.52 0.22 295);
 }
 
 .dark {
@@ -119,6 +120,13 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -159,6 +167,34 @@
     min-height: 0;
     min-width: 0;
   }
+
+  .gradient-purple {
+    background: linear-gradient(135deg, oklch(0.52 0.22 295) 0%, oklch(0.67 0.18 295) 100%);
+  }
+  .gradient-purple-soft {
+    background: linear-gradient(135deg, oklch(0.97 0.02 295) 0%, oklch(0.93 0.04 295) 100%);
+  }
+  .text-gradient-purple {
+    background: linear-gradient(135deg, oklch(0.52 0.22 295) 0%, oklch(0.67 0.18 295) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .glass {
+    background: oklch(1 0 0 / 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .shadow-purple {
+    box-shadow: 0 8px 32px oklch(0.52 0.22 295 / 0.15);
+  }
+  .shadow-purple-lg {
+    box-shadow: 0 20px 60px oklch(0.52 0.22 295 / 0.2);
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: oklch(0.78 0.13 295 / 0.5); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: oklch(0.57 0.22 295 / 0.8); }
 
   @media (min-width: 640px) {
     .container {

@@ -4,32 +4,66 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+
+// Public pages
 import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import ProductDetail from "./pages/ProductDetail";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import FAQs from "./pages/FAQs";
+import Checkout from "./pages/Checkout";
+
+// Admin pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminCategories from "./pages/admin/AdminCategories";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminContent from "./pages/admin/AdminContent";
+import AdminFAQs from "./pages/admin/AdminFAQs";
+import AdminMessages from "./pages/admin/AdminMessages";
 
 function Router() {
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      {/* Public routes */}
+      <Route path="/" component={Home} />
+      <Route path="/tienda" component={Shop} />
+      <Route path="/producto/:slug">
+        {(params) => <ProductDetail slug={params.slug} />}
+      </Route>
+      <Route path="/sobre-nosotros" component={About} />
+      <Route path="/contacto" component={Contact} />
+      <Route path="/faqs" component={FAQs} />
+      <Route path="/checkout" component={Checkout} />
+
+      {/* Admin routes */}
+      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/admin/productos" component={AdminProducts} />
+      <Route path="/admin/productos/nuevo" component={AdminProducts} />
+      <Route path="/admin/categorias" component={AdminCategories} />
+      <Route path="/admin/categorias/nueva" component={AdminCategories} />
+      <Route path="/admin/pedidos" component={AdminOrders} />
+      <Route path="/admin/pedidos/:id">
+        {() => <AdminOrders />}
+      </Route>
+      <Route path="/admin/clientes" component={AdminCustomers} />
+      <Route path="/admin/contenido" component={AdminContent} />
+      <Route path="/admin/faqs" component={AdminFAQs} />
+      <Route path="/admin/mensajes" component={AdminMessages} />
+
+      {/* Fallback */}
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
           <Router />

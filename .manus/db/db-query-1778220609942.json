@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `site_content` (`id` int AUTO_INCREMENT NOT NULL, `key` varchar(128) NOT NULL, `value` text, `type` enum('text','image','json','html') NOT NULL DEFAULT 'text', `label` varchar(256), `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP, CONSTRAINT `site_content_id` PRIMARY KEY(`id`), CONSTRAINT `site_content_key_unique` UNIQUE(`key`))",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3wT6CV9nWxKKmAe.9a0193c1f5b9 --database CePQi3Fzp2W4jGXGMag2GN --execute CREATE TABLE IF NOT EXISTS `site_content` (`id` int AUTO_INCREMENT NOT NULL, `key` varchar(128) NOT NULL, `value` text, `type` enum('text','image','json','html') NOT NULL DEFAULT 'text', `label` varchar(256), `updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP, CONSTRAINT `site_content_id` PRIMARY KEY(`id`), CONSTRAINT `site_content_key_unique` UNIQUE(`key`))",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 333
+}
