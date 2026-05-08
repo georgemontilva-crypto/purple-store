@@ -75,3 +75,17 @@
 - [x] Actualizar StoreLayout para layout con sidebar izquierdo fijo
 - [x] Eliminar Navbar horizontal
 - [x] Ajustar hero y páginas para que no queden cortadas por el sidebar
+
+## Auth Propio con Email + PIN
+- [x] Esquema DB: tabla email_verifications (pin, email, expiry, used)
+- [x] Agregar campos password_hash, is_verified, verified_at a users
+- [x] Backend: procedimiento register (nombre, email, password → guarda hash, envía PIN)
+- [x] Backend: procedimiento verifyPin (email, pin → activa cuenta, devuelve sesión)
+- [x] Backend: procedimiento login (email, password → verifica hash, devuelve sesión)
+- [x] Backend: procedimiento resendPin (email → reenvía PIN)
+- [x] Integrar envío de email con nodemailer + Ethereal (dev) / SMTP (prod)
+- [x] Frontend: página /registro con formulario nombre, email, password
+- [x] Frontend: página /verificar con input de 6 dígitos PIN
+- [x] Frontend: página /login con formulario email + password
+- [x] Actualizar SidebarNav para mostrar botón Login/Registro en lugar de OAuth
+- [x] Proteger rutas de checkout con auth propio

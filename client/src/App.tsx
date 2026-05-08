@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 // Public pages
 import Home from "./pages/Home";
@@ -13,6 +14,11 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQs from "./pages/FAQs";
 import Checkout from "./pages/Checkout";
+
+// Auth pages
+import Register from "./pages/Register";
+import VerifyPin from "./pages/VerifyPin";
+import Login from "./pages/Login";
 
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -37,6 +43,11 @@ function Router() {
       <Route path="/contacto" component={Contact} />
       <Route path="/faqs" component={FAQs} />
       <Route path="/checkout" component={Checkout} />
+
+      {/* Auth routes */}
+      <Route path="/registro" component={Register} />
+      <Route path="/verificar" component={VerifyPin} />
+      <Route path="/login" component={Login} />
 
       {/* Admin routes */}
       <Route path="/admin" component={AdminDashboard} />
@@ -64,10 +75,12 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster richColors position="top-right" />
+            <Router />
+          </TooltipProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

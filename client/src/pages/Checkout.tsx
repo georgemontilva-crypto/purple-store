@@ -1,19 +1,19 @@
 import StoreLayout from "@/components/StoreLayout";
 import { trpc } from "@/lib/trpc";
 import { useCart } from "@/contexts/CartContext";
-import { ArrowLeft, CheckCircle, ShoppingBag, CreditCard, MapPin, Palette, Truck } from "lucide-react";
-import { Link } from "wouter";
+import { useCustomAuth } from "@/contexts/AuthContext";
+import { ArrowLeft, CheckCircle, ShoppingBag, CreditCard, MapPin, Palette, Truck, Lock } from "lucide-react";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 export default function Checkout() {
+  const { user, loading: authLoading } = useCustomAuth();
+  const [, navigate] = useLocation();
   const { sessionId, clearCart } = useCart();
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
-
-  const { data: cartItems = [] } = trpc.cart.get.useQuery({ sessionId });
-
   const [form, setForm] = useState({
     guestName: "",
     guestEmail: "",
@@ -25,6 +25,8 @@ export default function Checkout() {
     notes: "",
   });
 
+  const { data: cartItems = [] } = trpc.cart.get.useQuery({ sessionId });
+
   const createOrderMutation = trpc.orders.create.useMutation({
     onSuccess: (order) => {
       setOrderNumber(order.orderNumber);
@@ -35,9 +37,34 @@ export default function Checkout() {
     },
   });
 
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      toast.info("Inicia sesión para continuar con tu pedido");
+      navigate("/login");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authLoading, user]);
+
   const subtotal = cartItems.reduce((sum, item) => {
     return sum + parseFloat(item.product?.price ?? "0") * item.quantity;
   }, 0);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "oklch(0.98 0.008 295)" }}>
+        <div className="text-center">
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3"
+            style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295), oklch(0.62 0.22 295))" }}>
+            <Lock className="w-6 h-6 text-white" />
+          </div>
+          <p className="text-sm font-semibold" style={{ color: "oklch(0.52 0.14 295)" }}>Verificando sesión...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

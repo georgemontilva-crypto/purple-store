@@ -1,0 +1,9 @@
+{
+  "query": "\nALTER TABLE users \n  ADD COLUMN IF NOT EXISTS passwordHash varchar(255) NULL,\n  ADD COLUMN IF NOT EXISTS isVerified tinyint(1) NOT NULL DEFAULT 0,\n  ADD COLUMN IF NOT EXISTS verifiedAt timestamp NULL;\n\nCREATE TABLE IF NOT EXISTS email_verifications (\n  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  email varchar(320) NOT NULL,\n  pin varchar(6) NOT NULL,\n  expiresAt timestamp NOT NULL,\n  used tinyint(1) NOT NULL DEFAULT 0,\n  createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  INDEX idx_email_verifications_email (email)\n);\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway05.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3wT6CV9nWxKKmAe.9a0193c1f5b9 --database CePQi3Fzp2W4jGXGMag2GN --execute \nALTER TABLE users \n  ADD COLUMN IF NOT EXISTS passwordHash varchar(255) NULL,\n  ADD COLUMN IF NOT EXISTS isVerified tinyint(1) NOT NULL DEFAULT 0,\n  ADD COLUMN IF NOT EXISTS verifiedAt timestamp NULL;\n\nCREATE TABLE IF NOT EXISTS email_verifications (\n  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,\n  email varchar(320) NOT NULL,\n  pin varchar(6) NOT NULL,\n  expiresAt timestamp NOT NULL,\n  used tinyint(1) NOT NULL DEFAULT 0,\n  createdAt timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  INDEX idx_email_verifications_email (email)\n);\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 764
+}

@@ -5,6 +5,7 @@ import {
   cartItems,
   categories,
   contactMessages,
+  emailVerifications,
   faqs,
   orderItems,
   orders,
@@ -515,4 +516,70 @@ export async function getDashboardStats() {
     totalProducts: Number(productCount[0]?.count ?? 0),
     totalCustomers: Number(customerCount[0]?.count ?? 0),
   };
+}
+
+// ─── Custom Auth Helpers ──────────────────────────────────────────────────────
+export async function getUserByEmail(email: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return result[0] ?? null;
+}
+
+export async function getUserById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+  return result[0] ?? null;
+}
+
+export async function createLocalUser(data: { name: string; email: string; passwordHash: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  const openId = `local_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  await db.insert(users).values({
+    openId,
+    name: data.name,
+    email: data.email,
+    passwordHash: data.passwordHash,
+    loginMethod: "email",
+    isVerified: false,
+    role: "user",
+    lastSignedIn: new Date(),
+  });
+  const result = await db.select().from(users).where(eq(users.email, data.email)).limit(1);
+  return result[0];
+}
+
+export async function verifyUserEmail(email: string) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(users).set({ isVerified: true, verifiedAt: new Date() }).where(eq(users.email, email));
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return result[0] ?? null;
+}
+
+export async function createEmailVerification(email: string, pin: string) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 min
+  await db.insert(emailVerifications).values({ email, pin, expiresAt });
+}
+
+export async function getLatestVerification(email: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db
+    .select()
+    .from(emailVerifications)
+    .where(eq(emailVerifications.email, email))
+    .orderBy(desc(emailVerifications.createdAt))
+    .limit(1);
+  return result[0] ?? null;
+}
+
+export async function markVerificationUsed(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(emailVerifications).set({ used: true }).where(eq(emailVerifications.id, id));
 }

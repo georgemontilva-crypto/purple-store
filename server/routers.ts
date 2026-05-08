@@ -7,6 +7,10 @@ import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import { storagePut } from "./storage";
 import * as db from "./db";
+import bcrypt from "bcryptjs";
+import { sendVerificationEmail } from "./email";
+import { SignJWT, jwtVerify } from "jose";
+import { ENV } from "./_core/env";
 
 // ─── Admin guard ──────────────────────────────────────────────────────────────
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -388,8 +392,123 @@ const dashboardRouter = router({
   stats: adminProcedure.query(() => db.getDashboardStats()),
   recentOrders: adminProcedure.query(() => db.getOrders({ page: 1, limit: 5 })),
 });
+// ─── Custom Auth Router ─────────────────────────────────────────────────────────────────────────────────
+function generatePin(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
-// ─── App Router ───────────────────────────────────────────────────────────────
+async function createCustomSession(userId: number, res: any, req: any) {
+  const secret = new TextEncoder().encode(ENV.cookieSecret + "_custom");
+  const token = await new SignJWT({ sub: String(userId), type: "custom" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("30d")
+    .sign(secret);
+  const cookieOptions = getSessionCookieOptions(req);
+  res.cookie("custom_session", token, { ...cookieOptions, maxAge: 30 * 24 * 60 * 60 * 1000 });
+}
+
+const customAuthRouter = router({
+  register: publicProcedure
+    .input(z.object({
+      name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+      email: z.string().email("Email inválido"),
+      password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
+    }))
+    .mutation(async ({ input }) => {
+      const existing = await db.getUserByEmail(input.email);
+      if (existing) {
+        throw new TRPCError({ code: "CONFLICT", message: "Ya existe una cuenta con ese email" });
+      }
+      const passwordHash = await bcrypt.hash(input.password, 12);
+      await db.createLocalUser({ name: input.name, email: input.email, passwordHash });
+      const pin = generatePin();
+      await db.createEmailVerification(input.email, pin);
+      const result = await sendVerificationEmail(input.email, input.name, pin);
+      return { success: true, previewUrl: result.previewUrl };
+    }),
+
+  verifyPin: publicProcedure
+    .input(z.object({
+      email: z.string().email(),
+      pin: z.string().length(6),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      const verification = await db.getLatestVerification(input.email);
+      if (!verification) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "No hay un código pendiente para este email" });
+      }
+      if (verification.used) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "Este código ya fue usado" });
+      }
+      if (new Date() > verification.expiresAt) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "El código ha expirado. Solicita uno nuevo" });
+      }
+      if (verification.pin !== input.pin) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "Código incorrecto" });
+      }
+      await db.markVerificationUsed(verification.id);
+      const user = await db.verifyUserEmail(input.email);
+      if (!user) throw new TRPCError({ code: "NOT_FOUND", message: "Usuario no encontrado" });
+      await createCustomSession(user.id, ctx.res, ctx.req);
+      return { success: true, user: { id: user.id, name: user.name, email: user.email, role: user.role } };
+    }),
+
+  login: publicProcedure
+    .input(z.object({
+      email: z.string().email(),
+      password: z.string().min(1),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      const user = await db.getUserByEmail(input.email);
+      if (!user || !user.passwordHash) {
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Email o contraseña incorrectos" });
+      }
+      if (!user.isVerified) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "Debes verificar tu email antes de iniciar sesión" });
+      }
+      const valid = await bcrypt.compare(input.password, user.passwordHash);
+      if (!valid) {
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Email o contraseña incorrectos" });
+      }
+      await createCustomSession(user.id, ctx.res, ctx.req);
+      return { success: true, user: { id: user.id, name: user.name, email: user.email, role: user.role } };
+    }),
+
+  resendPin: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .mutation(async ({ input }) => {
+      const user = await db.getUserByEmail(input.email);
+      if (!user) throw new TRPCError({ code: "NOT_FOUND", message: "No existe cuenta con ese email" });
+      if (user.isVerified) throw new TRPCError({ code: "BAD_REQUEST", message: "Esta cuenta ya está verificada" });
+      const pin = generatePin();
+      await db.createEmailVerification(input.email, pin);
+      const result = await sendVerificationEmail(input.email, user.name ?? "Usuario", pin);
+      return { success: true, previewUrl: result.previewUrl };
+    }),
+
+  me: publicProcedure.query(async ({ ctx }) => {
+    const token = ctx.req.cookies?.custom_session;
+    if (!token) return null;
+    try {
+      const secret = new TextEncoder().encode(ENV.cookieSecret + "_custom");
+      const { payload } = await jwtVerify(token, secret);
+      if (payload.type !== "custom" || !payload.sub) return null;
+      const user = await db.getUserById(parseInt(payload.sub));
+      if (!user) return null;
+      return { id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified };
+    } catch {
+      return null;
+    }
+  }),
+
+  logout: publicProcedure.mutation(({ ctx }) => {
+    const cookieOptions = getSessionCookieOptions(ctx.req);
+    ctx.res.clearCookie("custom_session", { ...cookieOptions, maxAge: -1 });
+    return { success: true } as const;
+  }),
+});
+
+// ─── App Router ─────────────────────────────────────────────────────────────────────────────────
 export const appRouter = router({
   system: systemRouter,
   auth: router({
@@ -410,6 +529,7 @@ export const appRouter = router({
   customers: customersRouter,
   upload: uploadRouter,
   dashboard: dashboardRouter,
+  customAuth: customAuthRouter,
 });
 
 export type AppRouter = typeof appRouter;

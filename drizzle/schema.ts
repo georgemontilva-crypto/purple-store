@@ -22,13 +22,30 @@ export const users = mysqlTable("users", {
   address: text("address"),
   city: varchar("city", { length: 128 }),
   country: varchar("country", { length: 128 }),
+  // Auth propio
+  passwordHash: varchar("passwordHash", { length: 255 }),
+  isVerified: boolean("isVerified").default(false).notNull(),
+  verifiedAt: timestamp("verifiedAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
 });
 
+// ─── Email Verifications ─────────────────────────────────────────────────────────────────────────────────
+const emailVerifications = mysqlTable("email_verifications", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull(),
+  pin: varchar("pin", { length: 6 }).notNull(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  used: boolean("used").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+export { emailVerifications };
+export type EmailVerification = typeof emailVerifications.$inferSelect;
 
 // ─── Categories ───────────────────────────────────────────────────────────────
 export const categories = mysqlTable("categories", {
