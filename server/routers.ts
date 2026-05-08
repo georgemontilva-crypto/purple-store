@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { nanoid } from "nanoid";
 import { z } from "zod";
+import { parse as parseCookies } from "cookie";
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
@@ -487,7 +488,8 @@ const customAuthRouter = router({
     }),
 
   me: publicProcedure.query(async ({ ctx }) => {
-    const token = ctx.req.cookies?.custom_session;
+    const cookies = parseCookies(ctx.req.headers.cookie ?? "");
+    const token = cookies.custom_session;
     if (!token) return null;
     try {
       const secret = new TextEncoder().encode(ENV.cookieSecret + "_custom");
