@@ -1,7 +1,13 @@
 import type { Express } from "express";
 import { ENV } from "./env";
 
+function useR2(): boolean {
+  return !!(ENV.r2AccessKeyId && ENV.r2SecretAccessKey && ENV.r2BucketName && ENV.r2AccountId);
+}
+
 export function registerStorageProxy(app: Express) {
+  // When using R2 with a public bucket, /manus-storage/* redirects to R2_PUBLIC_URL
+  // When using Manus Forge, it proxies via presigned URL
   app.get("/manus-storage/*", async (req, res) => {
     const key = (req.params as Record<string, string>)["0"];
     if (!key) {
@@ -9,6 +15,19 @@ export function registerStorageProxy(app: Express) {
       return;
     }
 
+    // ── R2 path: redirect to public URL ──
+    if (useR2()) {
+      const publicBase = ENV.r2PublicUrl.replace(/\/+$/, "");
+      if (!publicBase) {
+        res.status(500).send("R2_PUBLIC_URL not configured");
+        return;
+      }
+      res.set("Cache-Control", "public, max-age=31536000, immutable");
+      res.redirect(301, `${publicBase}/${key}`);
+      return;
+    }
+
+    // ── Manus Forge path ──
     if (!ENV.forgeApiUrl || !ENV.forgeApiKey) {
       res.status(500).send("Storage proxy not configured");
       return;

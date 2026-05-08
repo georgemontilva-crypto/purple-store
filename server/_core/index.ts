@@ -36,6 +36,8 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
+  // Health check endpoint for Railway
+  app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
   // tRPC API
   app.use(
     "/api/trpc",
