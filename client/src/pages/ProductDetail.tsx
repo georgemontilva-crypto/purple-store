@@ -1,7 +1,7 @@
 import StoreLayout from "@/components/StoreLayout";
 import { trpc } from "@/lib/trpc";
 import { useCart } from "@/contexts/CartContext";
-import { ShoppingBag, ArrowLeft, Star, Minus, Plus, Heart } from "lucide-react";
+import { ShoppingBag, ArrowLeft, Star, Minus, Plus, Heart, Palette, Brush, Clock, Shield } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -19,16 +19,19 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
   const [wished, setWished] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
 
+  const nunito = { fontFamily: "'Nunito', sans-serif" };
+
   if (isLoading) {
     return (
       <StoreLayout>
-        <div className="container mx-auto px-4 lg:px-8 py-24">
-          <div className="grid lg:grid-cols-2 gap-12 animate-pulse">
-            <div className="aspect-square rounded-3xl bg-muted" />
+        <div className="container mx-auto px-4 lg:px-8 py-16">
+          <div className="grid lg:grid-cols-2 gap-10 animate-pulse">
+            <div className="aspect-square rounded-3xl" style={{ background: "oklch(0.95 0.02 295)" }} />
             <div className="space-y-4">
-              <div className="h-8 bg-muted rounded-xl w-3/4" />
-              <div className="h-6 bg-muted rounded-xl w-1/3" />
-              <div className="h-24 bg-muted rounded-xl" />
+              <div className="h-6 rounded-2xl w-1/4" style={{ background: "oklch(0.95 0.02 295)" }} />
+              <div className="h-10 rounded-2xl w-3/4" style={{ background: "oklch(0.95 0.02 295)" }} />
+              <div className="h-8 rounded-2xl w-1/3" style={{ background: "oklch(0.95 0.02 295)" }} />
+              <div className="h-24 rounded-2xl" style={{ background: "oklch(0.95 0.02 295)" }} />
             </div>
           </div>
         </div>
@@ -40,9 +43,21 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
     return (
       <StoreLayout>
         <div className="container mx-auto px-4 lg:px-8 py-24 text-center">
-          <h1 className="text-2xl font-bold mb-4">Producto no encontrado</h1>
+          <div
+            className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5"
+            style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+          >
+            <Palette className="w-10 h-10 text-white/60" />
+          </div>
+          <h1 className="text-2xl font-black mb-3" style={nunito}>Cuadro no encontrado</h1>
+          <p className="text-muted-foreground mb-6 font-semibold" style={nunito}>
+            Este cuadro no existe o fue eliminado
+          </p>
           <Link href="/tienda">
-            <Button className="rounded-full gradient-purple text-white border-0">
+            <Button
+              className="rounded-full font-black border-0"
+              style={{ ...nunito, background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)", color: "white" }}
+            >
               Volver a la tienda
             </Button>
           </Link>
@@ -59,63 +74,75 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
       : null;
 
   const handleAddToCart = () => {
-    for (let i = 0; i < qty; i++) {
-      addToCart(product.id);
-    }
-    toast.success("Añadido al carrito", { description: `${qty}x ${product.name}` });
+    for (let i = 0; i < qty; i++) addToCart(product.id);
+    toast.success("¡Añadido al carrito!", { description: `${qty}x ${product.name}` });
     setCartOpen(true);
   };
 
   return (
     <StoreLayout>
-      <div className="container mx-auto px-4 lg:px-8 py-12">
+      <div className="container mx-auto px-4 lg:px-8 py-8">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-          <Link href="/" className="hover:text-primary transition-colors">Inicio</Link>
-          <span>/</span>
-          <Link href="/tienda" className="hover:text-primary transition-colors">Tienda</Link>
+        <nav className="flex items-center gap-2 text-sm mb-8" style={{ fontFamily: "'Nunito', sans-serif" }}>
+          <Link href="/" className="text-muted-foreground hover:text-primary transition-colors font-semibold">Inicio</Link>
+          <span className="text-muted-foreground">/</span>
+          <Link href="/tienda" className="text-muted-foreground hover:text-primary transition-colors font-semibold">Tienda</Link>
           {category && (
             <>
-              <span>/</span>
-              <Link href={`/tienda?categoria=${category.slug}`} className="hover:text-primary transition-colors">
+              <span className="text-muted-foreground">/</span>
+              <Link href={`/tienda?categoria=${category.slug}`} className="text-muted-foreground hover:text-primary transition-colors font-semibold">
                 {category.name}
               </Link>
             </>
           )}
-          <span>/</span>
-          <span className="text-foreground font-medium line-clamp-1">{product.name}</span>
+          <span className="text-muted-foreground">/</span>
+          <span className="text-foreground font-black line-clamp-1">{product.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
           {/* Images */}
-          <div className="space-y-4">
-            <div className="aspect-square rounded-3xl overflow-hidden bg-muted relative">
+          <div className="space-y-3">
+            <div
+              className="aspect-square rounded-3xl overflow-hidden relative"
+              style={{ border: "1.5px solid oklch(0.91 0.04 295)" }}
+            >
               {images[selectedImage] ? (
-                <img
-                  src={images[selectedImage]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
+                <img src={images[selectedImage]} alt={product.name} className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full gradient-purple-soft flex items-center justify-center">
-                  <ShoppingBag className="w-20 h-20 text-primary/20" />
+                <div
+                  className="w-full h-full flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                >
+                  <Palette className="w-20 h-20 text-white/40" />
                 </div>
               )}
               {discount && (
-                <span className="absolute top-4 left-4 px-3 py-1.5 bg-rose-500 text-white text-sm font-bold rounded-full">
+                <span className="absolute top-4 left-4 px-3 py-1.5 bg-rose-500 text-white text-sm font-black rounded-full" style={nunito}>
                   -{discount}%
                 </span>
               )}
+              {/* Wishlist */}
+              <button
+                onClick={() => setWished(!wished)}
+                className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                style={{ background: "oklch(1 0 0 / 0.95)", boxShadow: "0 2px 8px oklch(0 0 0 / 0.1)" }}
+              >
+                <Heart className={`w-5 h-5 transition-colors ${wished ? "fill-rose-500 text-rose-500" : "text-muted-foreground"}`} />
+              </button>
             </div>
             {images.length > 1 && (
-              <div className="flex gap-3">
+              <div className="flex gap-2.5">
                 {images.map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                      selectedImage === i ? "border-primary shadow-purple" : "border-transparent"
-                    }`}
+                    className="w-20 h-20 rounded-2xl overflow-hidden transition-all"
+                    style={{
+                      border: selectedImage === i
+                        ? "2.5px solid oklch(0.52 0.24 295)"
+                        : "2px solid oklch(0.91 0.04 295)",
+                      boxShadow: selectedImage === i ? "0 2px 12px oklch(0.42 0.24 295 / 0.3)" : "none",
+                    }}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -125,44 +152,52 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
           </div>
 
           {/* Info */}
-          <div className="space-y-6">
+          <div className="space-y-5">
+            {/* Category */}
             {category && (
               <Link href={`/tienda?categoria=${category.slug}`}>
-                <span className="text-sm font-medium text-primary uppercase tracking-wider hover:underline">
+                <span
+                  className="text-xs font-black uppercase tracking-widest hover:underline"
+                  style={{ color: "oklch(0.62 0.22 295)", fontFamily: "'Nunito', sans-serif" }}
+                >
                   {category.name}
                 </span>
               </Link>
             )}
 
+            {/* Title */}
             <h1
-              className="text-3xl lg:text-4xl font-bold text-foreground leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-3xl lg:text-4xl font-black text-foreground leading-tight"
+              style={nunito}
             >
               {product.name}
             </h1>
 
-            {/* Rating placeholder */}
+            {/* Stars */}
             <div className="flex items-center gap-2">
-              <div className="flex">
+              <div className="flex gap-0.5">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star key={s} className="w-4 h-4 fill-amber-400 text-amber-400" />
                 ))}
               </div>
-              <span className="text-sm text-muted-foreground">(24 reseñas)</span>
+              <span className="text-sm font-semibold text-muted-foreground" style={nunito}>(24 reseñas)</span>
             </div>
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-bold text-foreground">
+              <span className="text-4xl font-black" style={{ ...nunito, color: "oklch(0.35 0.22 295)" }}>
                 ${parseFloat(product.price).toFixed(2)}
               </span>
               {product.comparePrice && parseFloat(product.comparePrice) > parseFloat(product.price) && (
-                <span className="text-xl text-muted-foreground line-through">
+                <span className="text-xl text-muted-foreground line-through font-semibold" style={nunito}>
                   ${parseFloat(product.comparePrice).toFixed(2)}
                 </span>
               )}
               {discount && (
-                <span className="px-2.5 py-1 bg-rose-50 text-rose-600 text-sm font-semibold rounded-full">
+                <span
+                  className="px-2.5 py-1 text-sm font-black rounded-full"
+                  style={{ background: "oklch(0.95 0.06 295)", color: "oklch(0.35 0.22 295)", fontFamily: "'Nunito', sans-serif" }}
+                >
                   Ahorras {discount}%
                 </span>
               )}
@@ -170,60 +205,95 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
             {/* Description */}
             {product.description && (
-              <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+              <p className="text-muted-foreground leading-relaxed font-semibold text-sm" style={nunito}>
+                {product.description}
+              </p>
             )}
 
-            {/* Stock */}
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${product.stock > 0 ? "bg-emerald-500" : "bg-rose-500"}`} />
-              <span className="text-sm text-muted-foreground">
-                {product.stock > 0 ? `${product.stock} unidades disponibles` : "Sin stock"}
-              </span>
+            {/* Stock badge */}
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-black"
+              style={{
+                background: product.stock > 0 ? "oklch(0.95 0.08 160)" : "oklch(0.95 0.05 20)",
+                color: product.stock > 0 ? "oklch(0.40 0.15 160)" : "oklch(0.50 0.20 20)",
+                fontFamily: "'Nunito', sans-serif",
+              }}
+            >
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ background: product.stock > 0 ? "oklch(0.55 0.20 160)" : "oklch(0.60 0.25 20)" }}
+              />
+              {product.stock > 0 ? `${product.stock} disponibles` : "Sin stock"}
             </div>
 
             {/* Quantity */}
             <div className="flex items-center gap-4">
-              <span className="text-sm font-medium text-foreground">Cantidad:</span>
-              <div className="flex items-center gap-2 border border-border rounded-xl p-1">
+              <span className="text-sm font-black text-foreground" style={nunito}>Cantidad:</span>
+              <div
+                className="flex items-center gap-1 p-1 rounded-2xl"
+                style={{ border: "1.5px solid oklch(0.91 0.04 295)", background: "oklch(0.98 0.006 295)" }}
+              >
                 <button
                   onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-accent transition-colors"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors hover:bg-accent"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="w-8 text-center font-semibold">{qty}</span>
+                <span className="w-10 text-center font-black text-foreground" style={nunito}>{qty}</span>
                 <button
                   onClick={() => setQty(Math.min(product.stock, qty + 1))}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-accent transition-colors"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors hover:bg-accent"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Actions */}
+            {/* CTA */}
             <div className="flex gap-3">
               <Button
                 size="lg"
-                className="flex-1 rounded-xl gradient-purple text-white border-0 shadow-purple h-14 text-base font-semibold hover:opacity-90"
+                className="flex-1 rounded-2xl font-black h-14 text-base border-0 hover:opacity-90 transition-opacity"
+                style={{
+                  ...nunito,
+                  background: product.stock === 0
+                    ? "oklch(0.85 0.02 295)"
+                    : "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                  color: product.stock === 0 ? "oklch(0.55 0.06 295)" : "white",
+                  boxShadow: product.stock > 0 ? "0 6px 24px oklch(0.42 0.24 295 / 0.35)" : "none",
+                }}
                 disabled={product.stock === 0}
                 onClick={handleAddToCart}
               >
                 <ShoppingBag className="w-5 h-5 mr-2" />
                 {product.stock === 0 ? "Sin stock" : "Añadir al carrito"}
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-14 h-14 rounded-xl p-0 border-border"
-                onClick={() => setWished(!wished)}
-              >
-                <Heart className={`w-5 h-5 transition-colors ${wished ? "fill-rose-500 text-rose-500" : "text-muted-foreground"}`} />
-              </Button>
+            </div>
+
+            {/* Trust badges */}
+            <div className="grid grid-cols-3 gap-3 pt-2">
+              {[
+                { icon: Brush, label: "Hecho a mano" },
+                { icon: Clock, label: "Envío en 3-5 días" },
+                { icon: Shield, label: "Garantía total" },
+              ].map(({ icon: Icon, label }) => (
+                <div
+                  key={label}
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-2xl text-center"
+                  style={{ background: "oklch(0.97 0.01 295)", border: "1px solid oklch(0.91 0.04 295)" }}
+                >
+                  <Icon className="w-4 h-4" style={{ color: "oklch(0.52 0.24 295)" }} />
+                  <span className="text-xs font-black text-foreground leading-tight" style={nunito}>{label}</span>
+                </div>
+              ))}
             </div>
 
             <Link href="/tienda">
-              <Button variant="ghost" className="rounded-full text-muted-foreground gap-1.5 -ml-2">
+              <Button
+                variant="ghost"
+                className="rounded-full gap-1.5 font-bold -ml-2"
+                style={{ ...nunito, color: "oklch(0.55 0.06 295)" }}
+              >
                 <ArrowLeft className="w-4 h-4" />
                 Volver a la tienda
               </Button>

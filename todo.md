@@ -61,3 +61,11 @@
 - [x] Rediseñar Home: estructura organizada tipo cards, secciones para cuadros de anime
 - [x] Actualizar Navbar con nueva paleta y tipografía
 - [x] Actualizar ProductCard con nueva paleta
+
+## Rediseño Visual v3 - Páginas restantes
+- [ ] Rediseñar página Tienda con nueva identidad BoraHae
+- [ ] Rediseñar página Detalle de Producto
+- [ ] Rediseñar página Sobre Nosotros
+- [ ] Rediseñar página Contacto
+- [ ] Rediseñar página FAQs
+- [ ] Rediseñar Checkout y CartDrawer
