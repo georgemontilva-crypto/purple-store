@@ -11,15 +11,27 @@ interface StoreLayoutProps {
 function StoreLayoutInner({ children, hideFooter }: StoreLayoutProps) {
   return (
     <div className="min-h-screen flex bg-background">
-      {/* Sidebar fijo izquierdo */}
+      {/* Navigation: sidebar on desktop, top navbar on mobile */}
       <SidebarNav />
 
-      {/* Contenido principal desplazado a la derecha del sidebar */}
-      <div className="flex-1 flex flex-col" style={{ marginLeft: "72px" }}>
-        <main className="flex-1">
-          {children}
-        </main>
-        {!hideFooter && <Footer />}
+      {/*
+        Desktop: margin-left 72px for sidebar
+        Mobile: padding-top 60px for top navbar, no left margin
+      */}
+      <div
+        className="flex-1 flex flex-col w-full"
+        style={{ marginLeft: "0" }}
+      >
+        {/* Desktop sidebar offset */}
+        <div className="hidden md:block" style={{ marginLeft: "0" }} />
+        <div className="md:ml-[72px] flex flex-col flex-1">
+          {/* Mobile top navbar offset */}
+          <div className="h-[60px] md:hidden flex-shrink-0" />
+          <main className="flex-1">
+            {children}
+          </main>
+          {!hideFooter && <Footer />}
+        </div>
       </div>
 
       <CartDrawer />

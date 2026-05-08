@@ -87,7 +87,7 @@ export default function VerifyPin() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-16"
+      className="min-h-screen flex items-center justify-center px-4 py-8 md:py-16"
       style={{ background: "oklch(0.98 0.008 295)" }}
     >
       <div className="w-full max-w-md">
@@ -105,7 +105,7 @@ export default function VerifyPin() {
 
         {/* Card */}
         <div
-          className="rounded-3xl p-8 text-center"
+          className="rounded-3xl p-5 md:p-8 text-center"
           style={{
             background: "#ffffff",
             boxShadow: "0 8px 40px oklch(0.42 0.24 295 / 0.12)",
@@ -132,7 +132,7 @@ export default function VerifyPin() {
 
           <form onSubmit={handleSubmit}>
             {/* PIN inputs */}
-            <div className="flex gap-2 justify-center mb-6" onPaste={handlePaste}>
+            <div className="flex gap-1.5 sm:gap-2 justify-center mb-6" onPaste={handlePaste}>
               {pins.map((pin, i) => (
                 <input
                   key={i}
@@ -143,7 +143,7 @@ export default function VerifyPin() {
                   value={pin}
                   onChange={(e) => handleChange(i, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(i, e)}
-                  className="w-12 h-14 text-center text-xl font-black rounded-xl outline-none transition-all"
+                  className="w-10 h-12 sm:w-12 sm:h-14 text-center text-xl font-black rounded-xl outline-none transition-all"
                   style={{
                     background: pin ? "oklch(0.92 0.08 295)" : "oklch(0.97 0.01 295)",
                     border: pin

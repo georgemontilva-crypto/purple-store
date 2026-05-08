@@ -12,7 +12,7 @@ import { sendVerificationEmail } from "./email";
 import { SignJWT, jwtVerify } from "jose";
 import { ENV } from "./_core/env";
 
-// ─── Admin guard ──────────────────────────────────────────────────────────────
+// --- Admin guard ---
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
     throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
@@ -20,7 +20,7 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
   return next({ ctx });
 });
 
-// ─── Categories Router ────────────────────────────────────────────────────────
+// --- Categories Router ---
 const categoriesRouter = router({
   list: publicProcedure.query(() => db.getCategories()),
   featured: publicProcedure.query(() => db.getFeaturedCategories()),
@@ -62,7 +62,7 @@ const categoriesRouter = router({
     .mutation(({ input }) => db.deleteCategory(input.id)),
 });
 
-// ─── Products Router ──────────────────────────────────────────────────────────
+// --- Products Router ---
 const productsRouter = router({
   list: publicProcedure
     .input(
@@ -141,7 +141,7 @@ const productsRouter = router({
     .mutation(({ input }) => db.deleteProduct(input.id)),
 });
 
-// ─── Orders Router ────────────────────────────────────────────────────────────
+// --- Orders Router ---
 const ordersRouter = router({
   list: adminProcedure
     .input(
@@ -236,7 +236,7 @@ const ordersRouter = router({
     }),
 });
 
-// ─── Cart Router ──────────────────────────────────────────────────────────────
+// --- Cart Router ---
 const cartRouter = router({
   get: publicProcedure
     .input(z.object({ sessionId: z.string() }))
@@ -274,7 +274,7 @@ const cartRouter = router({
     .mutation(({ input }) => db.clearCart(input.sessionId)),
 });
 
-// ─── Content Router ───────────────────────────────────────────────────────────
+// --- Content Router ---
 const contentRouter = router({
   get: publicProcedure
     .input(z.object({ key: z.string() }))
@@ -309,7 +309,7 @@ const contentRouter = router({
     }),
 });
 
-// ─── FAQs Router ──────────────────────────────────────────────────────────────
+// --- FAQs Router ---
 const faqsRouter = router({
   list: publicProcedure.query(() => db.getFaqs(true)),
   adminList: adminProcedure.query(() => db.getFaqs(false)),
@@ -342,7 +342,7 @@ const faqsRouter = router({
     .mutation(({ input }) => db.deleteFaq(input.id)),
 });
 
-// ─── Contact Router ───────────────────────────────────────────────────────────
+// --- Contact Router ---
 const contactRouter = router({
   send: publicProcedure
     .input(
@@ -362,14 +362,14 @@ const contactRouter = router({
     .mutation(({ input }) => db.markMessageRead(input.id)),
 });
 
-// ─── Customers Router ─────────────────────────────────────────────────────────
+// --- Customers Router ---
 const customersRouter = router({
   list: adminProcedure
     .input(z.object({ page: z.number().optional(), limit: z.number().optional() }).optional())
     .query(({ input }) => db.getAllUsers(input?.page, input?.limit)),
 });
 
-// ─── Upload Router ────────────────────────────────────────────────────────────
+// --- Upload Router ---
 const uploadRouter = router({
   image: adminProcedure
     .input(
@@ -387,12 +387,12 @@ const uploadRouter = router({
     }),
 });
 
-// ─── Dashboard Router ─────────────────────────────────────────────────────────
+// --- Dashboard Router ---
 const dashboardRouter = router({
   stats: adminProcedure.query(() => db.getDashboardStats()),
   recentOrders: adminProcedure.query(() => db.getOrders({ page: 1, limit: 5 })),
 });
-// ─── Custom Auth Router ─────────────────────────────────────────────────────────────────────────────────
+// --- Custom Auth Router ---
 function generatePin(): string {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
@@ -508,7 +508,7 @@ const customAuthRouter = router({
   }),
 });
 
-// ─── App Router ─────────────────────────────────────────────────────────────────────────────────
+// --- App Router ---
 export const appRouter = router({
   system: systemRouter,
   auth: router({

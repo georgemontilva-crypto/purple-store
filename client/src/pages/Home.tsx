@@ -37,7 +37,7 @@ function HeroSection() {
       <div
         className="hero-container relative w-full"
         style={{
-          minHeight: "420px",
+          minHeight: "340px",
           maxHeight: "520px",
           borderRadius: "1.5rem",
           overflow: "hidden",
@@ -78,7 +78,7 @@ function HeroSection() {
         )}
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col justify-center h-full px-8 lg:px-14 py-10" style={{ minHeight: "420px" }}>
+        <div className="relative z-10 flex flex-col justify-center h-full px-5 sm:px-8 lg:px-14 py-8 lg:py-10" style={{ minHeight: "340px" }}>
           <div className="max-w-xl">
             {/* Badge */}
             <div
@@ -108,13 +108,13 @@ function HeroSection() {
             </h1>
 
             <p
-              className="text-base lg:text-lg leading-relaxed mb-7"
+              className="text-sm sm:text-base lg:text-lg leading-relaxed mb-5 lg:mb-7"
               style={{ color: "oklch(1 0 0 / 0.85)", maxWidth: "420px" }}
             >
               {subtitle}
             </p>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               <Link href="/tienda">
                 <Button
                   size="lg"

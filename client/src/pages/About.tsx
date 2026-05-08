@@ -24,7 +24,7 @@ export default function About() {
       {/* Hero banner */}
       <div className="px-4 lg:px-8 pt-4 pb-2">
         <div
-          className="rounded-2xl px-8 py-14 relative overflow-hidden"
+          className="rounded-2xl px-5 py-8 md:px-8 md:py-14 relative overflow-hidden"
           style={{
             background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 55%, oklch(0.72 0.18 295) 100%)",
           }}
@@ -44,7 +44,7 @@ export default function About() {
               <Palette className="w-3.5 h-3.5" />
               Arte original · Con alma
             </div>
-            <h1 className="text-4xl lg:text-5xl font-black text-white mb-3" style={nunito}>
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-white mb-3" style={nunito}>
               {title?.value ?? "Sobre Nosotros"}
             </h1>
             <p className="text-white/75 text-base leading-relaxed font-semibold" style={nunito}>
@@ -56,7 +56,7 @@ export default function About() {
 
       <div className="container mx-auto px-4 lg:px-8 py-14">
         {/* Story section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-14">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-10 md:mb-14">
           <div className="space-y-5">
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-black"
@@ -65,7 +65,7 @@ export default function About() {
               <Brush className="w-3.5 h-3.5" />
               Nuestra historia
             </div>
-            <h2 className="text-3xl font-black text-foreground leading-tight" style={nunito}>
+            <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight" style={nunito}>
               Arte anime pintado con amor
             </h2>
             <p className="text-muted-foreground leading-relaxed font-semibold whitespace-pre-line" style={nunito}>

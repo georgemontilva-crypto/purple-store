@@ -46,7 +46,7 @@ export default function Contact() {
       {/* Hero banner */}
       <div className="px-4 lg:px-8 pt-4 pb-2">
         <div
-          className="rounded-2xl px-8 py-12 relative overflow-hidden"
+          className="rounded-2xl px-5 py-8 md:px-8 md:py-12 relative overflow-hidden"
           style={{
             background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 55%, oklch(0.72 0.18 295) 100%)",
           }}
@@ -64,7 +64,7 @@ export default function Contact() {
               <MessageCircle className="w-3.5 h-3.5" />
               Estamos aquí para ti
             </div>
-            <h1 className="text-4xl font-black text-white mb-3" style={nunito}>Contáctanos</h1>
+            <h1 className="text-2xl md:text-4xl font-black text-white mb-3" style={nunito}>Contáctanos</h1>
             <p className="text-white/75 font-semibold" style={nunito}>
               ¿Tienes dudas sobre un encargo o quieres más info? Escríbenos y te respondemos pronto.
             </p>
@@ -73,9 +73,9 @@ export default function Contact() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 py-12">
-        <div className="grid lg:grid-cols-5 gap-10">
+        <div className="grid md:grid-cols-5 gap-6 md:gap-10">
           {/* Contact info */}
-          <div className="lg:col-span-2 space-y-5">
+          <div className="md:col-span-2 space-y-5">
             <div>
               <h2 className="text-2xl font-black text-foreground mb-2" style={nunito}>
                 Información de contacto
@@ -135,7 +135,7 @@ export default function Contact() {
           </div>
 
           {/* Form */}
-          <div className="lg:col-span-3">
+          <div className="md:col-span-3">
             <div
               className="p-8 rounded-2xl"
               style={{

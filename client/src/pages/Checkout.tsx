@@ -193,13 +193,13 @@ export default function Checkout() {
           </Button>
         </Link>
 
-        <h1 className="text-3xl font-black text-foreground mb-8" style={nunito}>
+        <h1 className="text-2xl md:text-3xl font-black text-foreground mb-5 md:mb-8" style={nunito}>
           Finalizar compra
         </h1>
 
-        <div className="grid lg:grid-cols-5 gap-10">
+        <div className="grid lg:grid-cols-5 gap-6 lg:gap-10">
           {/* Form */}
-          <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-7">
+          <form onSubmit={handleSubmit} className="lg:col-span-3 space-y-5 lg:space-y-7">
             {/* Contact */}
             <div
               className="p-6 rounded-2xl"

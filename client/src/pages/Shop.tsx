@@ -16,6 +16,7 @@ export default function Shop() {
   const [selectedCatSlug, setSelectedCatSlug] = useState(initialCat);
   const [page, setPage] = useState(1);
   const [viewGrid, setViewGrid] = useState(true);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const { data: categories = [] } = trpc.categories.list.useQuery();
 
@@ -40,7 +41,7 @@ export default function Shop() {
       {/* Header banner */}
       <div className="px-4 lg:px-8 pt-4 pb-2">
         <div
-          className="rounded-2xl px-8 py-10 relative overflow-hidden"
+          className="rounded-2xl px-5 py-7 md:px-8 md:py-10 relative overflow-hidden"
           style={{
             background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 55%, oklch(0.72 0.18 295) 100%)",
           }}
@@ -62,7 +63,7 @@ export default function Shop() {
               Arte Anime · Hecho a mano
             </div>
             <h1
-              className="text-3xl lg:text-4xl font-black text-white mb-2"
+              className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-2"
               style={{ fontFamily: "'Nunito', sans-serif" }}
             >
               Nuestra Colección
@@ -74,11 +75,74 @@ export default function Shop() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 py-8">
+      <div className="container mx-auto px-4 lg:px-8 py-6">
+        {/* Mobile filter toggle */}
+        <div className="lg:hidden flex items-center gap-3 mb-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar cuadros..."
+              value={search}
+              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              className="pl-9 rounded-2xl font-semibold text-sm"
+              style={{ fontFamily: "'Nunito', sans-serif", border: "1.5px solid oklch(0.91 0.04 295)" }}
+            />
+            {search && (
+              <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2">
+                <X className="w-4 h-4 text-muted-foreground" />
+              </button>
+            )}
+          </div>
+          <button
+            onClick={() => setFiltersOpen(!filtersOpen)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-sm flex-shrink-0"
+            style={{
+              fontFamily: "'Nunito', sans-serif",
+              background: filtersOpen ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" : "oklch(0.95 0.02 295)",
+              color: filtersOpen ? "white" : "oklch(0.42 0.24 295)",
+            }}
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+            Filtros
+          </button>
+        </div>
+
+        {/* Mobile categories filter */}
+        {filtersOpen && (
+          <div
+            className="lg:hidden rounded-2xl p-4 mb-4"
+            style={{ background: "oklch(0.98 0.008 295)", border: "1.5px solid oklch(0.91 0.04 295)" }}
+          >
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => { setSelectedCatSlug(""); setPage(1); setFiltersOpen(false); }}
+                className="px-4 py-2 rounded-full text-sm font-bold transition-all"
+                style={{
+                  fontFamily: "'Nunito', sans-serif",
+                  background: !selectedCatSlug ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" : "oklch(0.92 0.06 295)",
+                  color: !selectedCatSlug ? "white" : "oklch(0.42 0.24 295)",
+                }}
+              >Todos</button>
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => { setSelectedCatSlug(cat.slug); setPage(1); setFiltersOpen(false); }}
+                  className="px-4 py-2 rounded-full text-sm font-bold transition-all"
+                  style={{
+                    fontFamily: "'Nunito', sans-serif",
+                    background: selectedCatSlug === cat.slug ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" : "oklch(0.92 0.06 295)",
+                    color: selectedCatSlug === cat.slug ? "white" : "oklch(0.42 0.24 295)",
+                  }}
+                >{cat.name}</button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col lg:flex-row gap-6">
 
-          {/* Sidebar */}
-          <aside className="lg:w-60 flex-shrink-0">
+          {/* Sidebar (desktop only) */}
+          <aside className="hidden lg:block lg:w-60 flex-shrink-0">
             <div className="sticky top-6 space-y-4">
               {/* Search */}
               <div className="relative">

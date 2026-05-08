@@ -99,7 +99,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
           <span className="text-foreground font-black line-clamp-1">{product.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-14">
           {/* Images */}
           <div className="space-y-3">
             <div
@@ -167,7 +167,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
             {/* Title */}
             <h1
-              className="text-3xl lg:text-4xl font-black text-foreground leading-tight"
+              className="text-2xl md:text-3xl lg:text-4xl font-black text-foreground leading-tight"
               style={nunito}
             >
               {product.name}
@@ -185,7 +185,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-black" style={{ ...nunito, color: "oklch(0.35 0.22 295)" }}>
+              <span className="text-3xl md:text-4xl font-black" style={{ ...nunito, color: "oklch(0.35 0.22 295)" }}>
                 ${parseFloat(product.price).toFixed(2)}
               </span>
               {product.comparePrice && parseFloat(product.comparePrice) > parseFloat(product.price) && (

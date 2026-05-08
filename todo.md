@@ -89,3 +89,13 @@
 - [x] Frontend: página /login con formulario email + password
 - [x] Actualizar SidebarNav para mostrar botón Login/Registro en lugar de OAuth
 - [x] Proteger rutas de checkout con auth propio
+
+## Responsive Móvil v1
+- [x] Navbar superior en móvil con menú hamburguesa (reemplaza sidebar en pantallas pequeñas)
+- [x] Responsive: Home (hero, categorías, productos destacados)
+- [x] Responsive: Tienda (filtros colapsables, grid de productos)
+- [x] Responsive: Detalle de Producto
+- [x] Responsive: Sobre Nosotros, Contacto, FAQs
+- [x] Responsive: Checkout (formulario + resumen)
+- [x] Responsive: Login, Registro, VerifyPin
+- [x] Responsive: Panel Admin (sidebar colapsable, tablas scrollables)

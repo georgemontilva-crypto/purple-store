@@ -42,12 +42,12 @@ export default function Register() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-16"
+      className="min-h-screen flex items-center justify-center px-4 py-8 md:py-16"
       style={{ background: "oklch(0.98 0.008 295)" }}
     >
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 md:mb-8">
           <Link href="/">
             <span
               className="text-2xl font-black tracking-tight cursor-pointer"

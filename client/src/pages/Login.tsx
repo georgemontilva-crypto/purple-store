@@ -46,7 +46,7 @@ export default function Login() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-16"
+      className="min-h-screen flex items-center justify-center px-4 py-8 md:py-16"
       style={{ background: "oklch(0.98 0.008 295)" }}
     >
       <div className="w-full max-w-md">
@@ -67,7 +67,7 @@ export default function Login() {
 
         {/* Card */}
         <div
-          className="rounded-3xl p-8"
+          className="rounded-3xl p-5 md:p-8"
           style={{
             background: "#ffffff",
             boxShadow: "0 8px 40px oklch(0.42 0.24 295 / 0.12)",
