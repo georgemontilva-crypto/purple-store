@@ -236,11 +236,15 @@
     position: relative;
   }
 
-  /* Scrollbar */
+  /* Scrollbar global */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: oklch(0.78 0.14 295 / 0.5); border-radius: 99px; }
   ::-webkit-scrollbar-thumb:hover { background: oklch(0.62 0.22 295 / 0.8); }
+
+  /* Carruseles sin scrollbar visible */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
   @media (min-width: 640px) {
     .container {

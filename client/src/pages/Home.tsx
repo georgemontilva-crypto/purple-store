@@ -228,8 +228,62 @@ function FeaturedCategories() {
         </Link>
       </div>
 
+      {/* Carrusel en móvil, grid en desktop */}
+      <div className="sm:hidden -mx-4 px-4">
+        <div
+          className="no-scrollbar flex gap-3 overflow-x-auto pb-2"
+          style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
+        >
+          {(categories.length > 0
+            ? categories.map((cat) => (
+                <Link key={cat.id} href={`/tienda?categoria=${cat.slug}`}>
+                  <div
+                    className="group relative rounded-2xl overflow-hidden cursor-pointer flex-shrink-0"
+                    style={{ aspectRatio: "3/4", width: "72vw", scrollSnapAlign: "start" }}
+                  >
+                    {cat.imageUrl ? (
+                      <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + (cat.id * 15) % 40}) 0%, oklch(0.72 0.18 ${285 + (cat.id * 20) % 30}) 100%)` }}
+                      >
+                        <Palette className="w-10 h-10 text-white/60" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <h3 className="text-white font-black text-sm leading-tight">{cat.name}</h3>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            : ["Anime", "Shōnen", "Shōjo", "Chibi", "Paisajes", "Encargos"].map((name, i) => (
+                <Link key={i} href="/tienda">
+                  <div
+                    className="group relative rounded-2xl overflow-hidden cursor-pointer flex-shrink-0"
+                    style={{ aspectRatio: "3/4", width: "72vw", scrollSnapAlign: "start" }}
+                  >
+                    <div
+                      className="w-full h-full flex items-center justify-center"
+                      style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + i * 8}) 0%, oklch(0.62 0.22 ${285 + i * 5}) 100%)` }}
+                    >
+                      <Palette className="w-10 h-10 text-white/50" />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <h3 className="text-white font-black text-sm">{name}</h3>
+                    </div>
+                  </div>
+                </Link>
+              ))
+          )}
+        </div>
+      </div>
+
+      {/* Grid en sm+ */}
       {categories.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+        <div className="hidden sm:grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
           {categories.map((cat) => (
             <Link key={cat.id} href={`/tienda?categoria=${cat.slug}`}>
               <div
@@ -237,17 +291,11 @@ function FeaturedCategories() {
                 style={{ aspectRatio: "3/4" }}
               >
                 {cat.imageUrl ? (
-                  <img
-                    src={cat.imageUrl}
-                    alt={cat.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+                  <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 ) : (
                   <div
                     className="w-full h-full flex items-center justify-center"
-                    style={{
-                      background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + (cat.id * 15) % 40}) 0%, oklch(0.72 0.18 ${285 + (cat.id * 20) % 30}) 100%)`,
-                    }}
+                    style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + (cat.id * 15) % 40}) 0%, oklch(0.72 0.18 ${285 + (cat.id * 20) % 30}) 100%)` }}
                   >
                     <Palette className="w-10 h-10 text-white/60" />
                   </div>
@@ -261,8 +309,7 @@ function FeaturedCategories() {
           ))}
         </div>
       ) : (
-        /* Placeholder cuando no hay categorías */
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="hidden sm:grid grid-cols-3 lg:grid-cols-6 gap-3">
           {["Anime", "Shōnen", "Shōjo", "Chibi", "Paisajes", "Encargos"].map((name, i) => (
             <Link key={i} href="/tienda">
               <div
@@ -271,9 +318,7 @@ function FeaturedCategories() {
               >
                 <div
                   className="w-full h-full flex items-center justify-center"
-                  style={{
-                    background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + i * 8}) 0%, oklch(0.62 0.22 ${285 + i * 5}) 100%)`,
-                  }}
+                  style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + i * 8}) 0%, oklch(0.62 0.22 ${285 + i * 5}) 100%)` }}
                 >
                   <Palette className="w-10 h-10 text-white/50" />
                 </div>
@@ -309,8 +354,55 @@ function FeaturedProducts() {
         </Link>
       </div>
 
+      {/* Carrusel en móvil */}
+      <div className="sm:hidden -mx-4 px-4">
+        <div
+          className="no-scrollbar flex gap-3 overflow-x-auto pb-2"
+          style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
+        >
+          {products.length > 0
+            ? products.map((product) => {
+                const category = allCats.find((c) => c.id === product.categoryId);
+                return (
+                  <div key={product.id} className="flex-shrink-0" style={{ width: "75vw", scrollSnapAlign: "start" }}>
+                    <ProductCard
+                      id={product.id}
+                      name={product.name}
+                      slug={product.slug}
+                      price={product.price}
+                      comparePrice={product.comparePrice}
+                      imageUrl={product.imageUrl}
+                      categoryName={category?.name}
+                      featured={product.featured}
+                    />
+                  </div>
+                );
+              })
+            : Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex-shrink-0 rounded-2xl overflow-hidden border border-border/50"
+                  style={{ width: "75vw", scrollSnapAlign: "start", background: "oklch(0.97 0.01 295)" }}
+                >
+                  <div
+                    className="aspect-square flex items-center justify-center"
+                    style={{ background: `linear-gradient(135deg, oklch(0.92 0.06 ${285 + i * 8}) 0%, oklch(0.78 0.14 ${290 + i * 5}) 100%)` }}
+                  >
+                    <Palette className="w-12 h-12 text-white/40" />
+                  </div>
+                  <div className="p-3">
+                    <div className="h-4 rounded-full bg-muted mb-2 w-3/4" />
+                    <div className="h-4 rounded-full bg-muted w-1/2" />
+                  </div>
+                </div>
+              ))
+          }
+        </div>
+      </div>
+
+      {/* Grid en sm+ */}
       {products.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => {
             const category = allCats.find((c) => c.id === product.categoryId);
             return (
@@ -329,8 +421,7 @@ function FeaturedProducts() {
           })}
         </div>
       ) : (
-        /* Placeholder visual */
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
@@ -339,9 +430,7 @@ function FeaturedProducts() {
             >
               <div
                 className="aspect-square flex items-center justify-center"
-                style={{
-                  background: `linear-gradient(135deg, oklch(0.92 0.06 ${285 + i * 8}) 0%, oklch(0.78 0.14 ${290 + i * 5}) 100%)`,
-                }}
+                style={{ background: `linear-gradient(135deg, oklch(0.92 0.06 ${285 + i * 8}) 0%, oklch(0.78 0.14 ${290 + i * 5}) 100%)` }}
               >
                 <Palette className="w-12 h-12 text-white/40" />
               </div>

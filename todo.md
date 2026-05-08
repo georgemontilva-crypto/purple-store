@@ -99,3 +99,7 @@
 - [x] Responsive: Checkout (formulario + resumen)
 - [x] Responsive: Login, Registro, VerifyPin
 - [x] Responsive: Panel Admin (sidebar colapsable, tablas scrollables)
+
+## UX Móvil v2 - Carruseles
+- [x] Categorías en móvil: carrusel horizontal snap, sin scrollbar, cards casi full-width
+- [x] Productos destacados en móvil: carrusel horizontal snap, sin scrollbar, cards casi full-width
