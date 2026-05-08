@@ -176,7 +176,7 @@ function HeroSection() {
   );
 }
 
-/* ─── Quick Info Bar ────────────────────────────────────────────────────────── */
+/* ─── Quick Info Bar (Marquee) ───────────────────────────────────────────────── */
 function QuickInfoBar() {
   const items = [
     { icon: Brush, text: "Pintado a mano" },
@@ -186,25 +186,40 @@ function QuickInfoBar() {
     { icon: Truck, text: "Envío a todo el país" },
     { icon: Shield, text: "Garantía de calidad" },
   ];
-
+  // Duplicamos para el loop infinito
+  const doubled = [...items, ...items];
   return (
     <div className="px-4 lg:px-8 py-3">
+      <style>{`
+        @keyframes marquee-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+          animation: marquee-scroll 18s linear infinite;
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
       <div
-        className="rounded-2xl px-6 py-3 flex items-center gap-6 overflow-x-auto scrollbar-hide"
+        className="rounded-2xl py-3 overflow-hidden"
         style={{
           background: "oklch(0.96 0.02 295)",
           border: "1px solid oklch(0.91 0.04 295)",
         }}
       >
-        {items.map((item, i) => (
-          <div key={i} className="flex items-center gap-2 whitespace-nowrap flex-shrink-0">
-            <item.icon className="w-4 h-4 text-primary flex-shrink-0" />
-            <span className="text-sm font-semibold text-foreground">{item.text}</span>
-            {i < items.length - 1 && (
-              <div className="w-px h-4 bg-border ml-2 flex-shrink-0" />
-            )}
+        <div className="flex">
+          <div className="marquee-track flex items-center gap-0 whitespace-nowrap">
+            {doubled.map((item, i) => (
+              <div key={i} className="flex items-center gap-2 px-5 flex-shrink-0">
+                <item.icon className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-sm font-semibold text-foreground">{item.text}</span>
+                <span className="ml-4 text-primary/30 font-bold">✦</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
