@@ -152,7 +152,7 @@ export type InsertCartItem = typeof cartItems.$inferInsert;
 // ─── Site Content (editable) ──────────────────────────────────────────────────
 export const siteContent = mysqlTable("site_content", {
   id: int("id").autoincrement().primaryKey(),
-  key: varchar("keyName", { length: 128 }).notNull().unique(),
+  key: varchar("key", { length: 128 }).notNull().unique(),
   value: text("value"),
   type: mysqlEnum("type", ["text", "image", "json", "html"]).default("text").notNull(),
   label: varchar("label", { length: 256 }),
