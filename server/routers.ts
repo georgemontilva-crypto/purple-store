@@ -537,6 +537,39 @@ const bannerRouter = router({
     .mutation(({ input }) => db.deleteBannerSlide(input.id)),
 });
 
+// --- Welcome Popup Router ---
+const popupRouter = router({
+  get: publicProcedure.query(() => db.getWelcomePopup()),
+  update: adminProcedure
+    .input(z.object({
+      title: z.string().optional(),
+      subtitle: z.string().optional(),
+      body: z.string().optional(),
+      imageUrl: z.string().optional(),
+      buttonText: z.string().optional(),
+      buttonUrl: z.string().optional(),
+      showNewsletter: z.boolean().optional(),
+      active: z.boolean().optional(),
+      delaySeconds: z.number().optional(),
+      showOnce: z.boolean().optional(),
+    }))
+    .mutation(({ input }) => db.upsertWelcomePopup(input)),
+});
+
+// --- Newsletter Router ---
+const newsletterRouter = router({
+  subscribe: publicProcedure
+    .input(z.object({
+      email: z.string().email("Email inválido"),
+      name: z.string().optional(),
+    }))
+    .mutation(({ input }) => db.subscribeNewsletter(input.email, input.name)),
+  list: adminProcedure.query(() => db.getNewsletterSubscribers()),
+  remove: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(({ input }) => db.deleteNewsletterSubscriber(input.id)),
+});
+
 // --- App Router ---
 export const appRouter = router({
   system: systemRouter,
@@ -560,6 +593,8 @@ export const appRouter = router({
   dashboard: dashboardRouter,
   customAuth: customAuthRouter,
   banner: bannerRouter,
+  popup: popupRouter,
+  newsletter: newsletterRouter,
 });
 
 export type AppRouter = typeof appRouter;

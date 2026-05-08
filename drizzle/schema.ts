@@ -152,7 +152,7 @@ export type InsertCartItem = typeof cartItems.$inferInsert;
 // ─── Site Content (editable) ──────────────────────────────────────────────────
 export const siteContent = mysqlTable("site_content", {
   id: int("id").autoincrement().primaryKey(),
-  key: varchar("key", { length: 128 }).notNull().unique(),
+  key: varchar("keyName", { length: 128 }).notNull().unique(),
   value: text("value"),
   type: mysqlEnum("type", ["text", "image", "json", "html"]).default("text").notNull(),
   label: varchar("label", { length: 256 }),
@@ -203,3 +203,32 @@ export const bannerSlides = mysqlTable("banner_slides", {
 });
 export type BannerSlide = typeof bannerSlides.$inferSelect;
 export type InsertBannerSlide = typeof bannerSlides.$inferInsert;
+
+// --- Welcome Popup -----------------------------------------------------------
+export const welcomePopup = mysqlTable("welcome_popup", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull().default("¡Bienvenida a BoraHae Art!"),
+  subtitle: varchar("subtitle", { length: 500 }),
+  body: text("body"),
+  imageUrl: varchar("imageUrl", { length: 1000 }),
+  buttonText: varchar("buttonText", { length: 100 }).default("Explorar tienda"),
+  buttonUrl: varchar("buttonUrl", { length: 500 }).default("/tienda"),
+  showNewsletter: boolean("showNewsletter").default(true).notNull(),
+  active: boolean("active").default(true).notNull(),
+  delaySeconds: int("delaySeconds").default(2),
+  showOnce: boolean("showOnce").default(true).notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+export type WelcomePopup = typeof welcomePopup.$inferSelect;
+export type InsertWelcomePopup = typeof welcomePopup.$inferInsert;
+
+// --- Newsletter Subscribers --------------------------------------------------
+export const newsletterSubscribers = mysqlTable("newsletter_subscribers", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  subscribedAt: timestamp("subscribedAt").defaultNow().notNull(),
+  active: boolean("active").default(true).notNull(),
+});
+export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+export type InsertNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;

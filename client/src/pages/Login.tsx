@@ -2,18 +2,17 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { useCustomAuth } from "@/contexts/AuthContext";
 
 export default function Login() {
   const [, navigate] = useLocation();
-  const { refetch } = useCustomAuth();
+  const utils = trpc.useUtils();
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const loginMutation = trpc.customAuth.login.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("¡Bienvenida de vuelta! 🎨");
-      refetch();
+      await utils.customAuth.me.invalidate();
       navigate("/");
     },
     onError: (err) => {

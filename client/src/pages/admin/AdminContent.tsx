@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import {
   Upload, Loader2, Save, ImageIcon, FileText, Phone, Sparkles,
   Video, Trash2, Plus, GripVertical, CheckCircle2, XCircle, Image as ImageLucide, LayoutTemplate,
+  Bell, Users, Clock, Mail,
 } from "lucide-react";
 
 // ─── ContentField ─────────────────────────────────────────────────────────────
@@ -304,6 +305,217 @@ const CONTENT_SECTIONS = [
   },
 ];
 
+// ─── PopupManager ────────────────────────────────────────────────────────────
+function PopupManager() {
+  const { data: popup, isLoading } = trpc.popup.get.useQuery();
+  const utils = trpc.useUtils();
+  const [form, setForm] = useState({
+    title: "", subtitle: "", body: "", imageUrl: "",
+    buttonText: "", buttonUrl: "",
+    showNewsletter: true, active: true, delaySeconds: 2, showOnce: true,
+  });
+  const [initialized, setInitialized] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  if (!initialized && popup !== undefined && popup !== null) {
+    setForm({
+      title: popup.title ?? "",
+      subtitle: popup.subtitle ?? "",
+      body: popup.body ?? "",
+      imageUrl: popup.imageUrl ?? "",
+      buttonText: popup.buttonText ?? "",
+      buttonUrl: popup.buttonUrl ?? "",
+      showNewsletter: popup.showNewsletter ?? true,
+      active: popup.active ?? true,
+      delaySeconds: popup.delaySeconds ?? 2,
+      showOnce: popup.showOnce ?? true,
+    });
+    setInitialized(true);
+  }
+
+  const updateMutation = trpc.popup.update.useMutation({
+    onSuccess: () => { toast.success("Pop-up guardado"); utils.popup.get.invalidate(); },
+    onError: (err) => toast.error("Error", { description: err.message }),
+  });
+
+  const uploadMutation = trpc.upload.image.useMutation({
+    onSuccess: (res) => { setForm(f => ({ ...f, imageUrl: res.url })); toast.success("Imagen subida"); },
+    onError: (err) => toast.error("Error al subir", { description: err.message }),
+    onSettled: () => setUploading(false),
+  });
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; if (!file) return;
+    setUploading(true);
+    const reader = new FileReader();
+    reader.onload = () => { const base64 = (reader.result as string).split(",")[1]; uploadMutation.mutate({ filename: file.name, contentType: file.type, data: base64 }); };
+    reader.readAsDataURL(file);
+  };
+
+  if (isLoading) return <div className="h-20 rounded-xl bg-muted animate-pulse" />;
+
+  return (
+    <div className="space-y-5">
+      {/* Activar/desactivar */}
+      <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: form.active ? "oklch(0.95 0.06 295)" : "oklch(0.96 0.01 295)" }}>
+        <div>
+          <p className="text-sm font-bold text-foreground">Pop-up activo</p>
+          <p className="text-xs text-muted-foreground">Cuando está activo, se muestra a los visitantes</p>
+        </div>
+        <button
+          onClick={() => setForm(f => ({ ...f, active: !f.active }))}
+          className="relative w-12 h-6 rounded-full transition-all"
+          style={{ background: form.active ? "oklch(0.42 0.24 295)" : "oklch(0.80 0.02 295)" }}
+        >
+          <span className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all" style={{ left: form.active ? "26px" : "2px" }} />
+        </button>
+      </div>
+
+      {/* Imagen */}
+      <div className="space-y-2">
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Imagen del pop-up</label>
+        <div className="flex items-start gap-4">
+          <div className="w-32 h-20 rounded-xl overflow-hidden bg-muted border flex-shrink-0" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            {form.imageUrl ? <img src={form.imageUrl} alt="Pop-up" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><ImageIcon className="w-6 h-6 text-muted-foreground/40" /></div>}
+          </div>
+          <div className="space-y-2">
+            <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+            <Button type="button" variant="outline" size="sm" className="rounded-xl gap-2" onClick={() => fileRef.current?.click()} disabled={uploading}>
+              {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+              {uploading ? "Subiendo..." : "Subir imagen"}
+            </Button>
+            {form.imageUrl && (
+              <button onClick={() => setForm(f => ({ ...f, imageUrl: "" }))} className="text-xs text-red-500 hover:underline block">Quitar imagen</button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Título */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Título</label>
+        <Input value={form.title} onChange={(e) => setForm(f => ({ ...f, title: e.target.value }))} placeholder="¡Bienvenida a BoraHae Art!" className="rounded-xl" />
+      </div>
+
+      {/* Subtítulo */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Subtítulo</label>
+        <Input value={form.subtitle} onChange={(e) => setForm(f => ({ ...f, subtitle: e.target.value }))} placeholder="Arte anime hecho a mano con amor" className="rounded-xl" />
+      </div>
+
+      {/* Cuerpo */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Texto del cuerpo</label>
+        <textarea value={form.body} onChange={(e) => setForm(f => ({ ...f, body: e.target.value }))} placeholder="Descripción del pop-up..." rows={3} className="w-full px-3 py-2.5 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "oklch(0.88 0.04 295)" }} />
+      </div>
+
+      {/* Botón CTA */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Texto del botón</label>
+          <Input value={form.buttonText} onChange={(e) => setForm(f => ({ ...f, buttonText: e.target.value }))} placeholder="Explorar tienda" className="rounded-xl" />
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">URL del botón</label>
+          <Input value={form.buttonUrl} onChange={(e) => setForm(f => ({ ...f, buttonUrl: e.target.value }))} placeholder="/tienda" className="rounded-xl" />
+        </div>
+      </div>
+
+      {/* Opciones */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Delay (segundos)</label>
+          <Input type="number" min={0} max={30} value={form.delaySeconds} onChange={(e) => setForm(f => ({ ...f, delaySeconds: parseInt(e.target.value) || 0 }))} className="rounded-xl" />
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Mostrar solo una vez</label>
+          <button
+            onClick={() => setForm(f => ({ ...f, showOnce: !f.showOnce }))}
+            className="flex items-center gap-2 mt-1"
+          >
+            <span className="relative w-10 h-5 rounded-full transition-all inline-block" style={{ background: form.showOnce ? "oklch(0.42 0.24 295)" : "oklch(0.80 0.02 295)" }}>
+              <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all" style={{ left: form.showOnce ? "22px" : "2px" }} />
+            </span>
+            <span className="text-sm text-foreground">{form.showOnce ? "Sí" : "No"}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Mostrar suscripción */}
+      <div className="flex items-center justify-between p-3 rounded-xl bg-muted/40">
+        <div>
+          <p className="text-sm font-semibold text-foreground">Mostrar formulario de suscripción</p>
+          <p className="text-xs text-muted-foreground">Permite a los visitantes suscribirse al boletín desde el pop-up</p>
+        </div>
+        <button
+          onClick={() => setForm(f => ({ ...f, showNewsletter: !f.showNewsletter }))}
+          className="relative w-10 h-5 rounded-full transition-all"
+          style={{ background: form.showNewsletter ? "oklch(0.42 0.24 295)" : "oklch(0.80 0.02 295)" }}
+        >
+          <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all" style={{ left: form.showNewsletter ? "22px" : "2px" }} />
+        </button>
+      </div>
+
+      {/* Guardar */}
+      <Button
+        onClick={() => updateMutation.mutate(form)}
+        disabled={updateMutation.isPending}
+        className="w-full rounded-xl gradient-purple text-white border-0 shadow-purple gap-2"
+      >
+        {updateMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+        Guardar cambios del pop-up
+      </Button>
+    </div>
+  );
+}
+
+// ─── NewsletterManager ────────────────────────────────────────────────────────
+function NewsletterManager() {
+  const { data: subscribers = [], isLoading, refetch } = trpc.newsletter.list.useQuery();
+  const removeMutation = trpc.newsletter.remove.useMutation({
+    onSuccess: () => { toast.success("Suscriptor eliminado"); refetch(); },
+    onError: (err) => toast.error("Error", { description: err.message }),
+  });
+
+  if (isLoading) return <div className="h-20 rounded-xl bg-muted animate-pulse" />;
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-semibold text-foreground">{subscribers.length} suscriptor{subscribers.length !== 1 ? "es" : ""}</p>
+      </div>
+      {subscribers.length === 0 ? (
+        <div className="text-center py-8 text-muted-foreground">
+          <Mail className="w-8 h-8 mx-auto mb-2 opacity-30" />
+          <p className="text-sm">Aún no hay suscriptores</p>
+        </div>
+      ) : (
+        <div className="space-y-2 max-h-64 overflow-y-auto">
+          {subscribers.map((sub: any) => (
+            <div key={sub.id} className="flex items-center justify-between p-3 rounded-xl bg-muted/40">
+              <div>
+                <p className="text-sm font-semibold text-foreground">{sub.name || "Sin nombre"}</p>
+                <p className="text-xs text-muted-foreground">{sub.email}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-muted-foreground">{new Date(sub.subscribedAt).toLocaleDateString("es")}</p>
+                <button
+                  onClick={() => removeMutation.mutate({ id: sub.id })}
+                  className="text-red-400 hover:text-red-600 transition-colors"
+                  title="Eliminar suscriptor"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AdminContent() {
   return (
     <AdminLayout>
@@ -356,6 +568,38 @@ export default function AdminContent() {
           </div>
           <div className="p-5">
             <BannerSlidesManager />
+          </div>
+        </div>
+
+        {/* Welcome Popup */}
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
+              <Bell className="w-4 h-4 text-purple-600" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-foreground">Pop-up de bienvenida</h3>
+              <p className="text-xs text-muted-foreground">Se muestra a los visitantes al entrar a la tienda. Puedes agregar imagen, texto y suscripción al boletín.</p>
+            </div>
+          </div>
+          <div className="p-5">
+            <PopupManager />
+          </div>
+        </div>
+
+        {/* Newsletter Subscribers */}
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+              <Users className="w-4 h-4 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-foreground">Suscriptores del boletín</h3>
+              <p className="text-xs text-muted-foreground">Personas que se suscribieron desde el pop-up de bienvenida</p>
+            </div>
+          </div>
+          <div className="p-5">
+            <NewsletterManager />
           </div>
         </div>
 

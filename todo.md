@@ -124,4 +124,13 @@
 - [x] AdminContent: seccion para subir/gestionar slides del hero (imagen o video)
 - [x] Home.tsx: hero carrusel con autoplay 5s, dots de navegacion, flechas prev/next, soporte imagen y video
 - [x] Carrusel: pausa en hover, navegacion con flechas y dots
-- [ ] Exportar proyecto a GitHub
+- [x] Exportar proyecto a GitHub
+
+## Correcciones y Nuevas Funcionalidades v8
+- [x] Corregir SidebarNav: mostrar opciones de usuario autenticado y botón Admin tras login
+- [x] Crear tabla newsletter_subscribers en DB
+- [x] Crear tabla welcome_popup en DB (imagen, título, texto, activo, delay)
+- [x] Backend: tRPC procedures para pop-up y suscripción a boletín
+- [x] Frontend: Pop-up de bienvenida con imagen, título, texto y formulario de suscripción
+- [x] Admin: Sección para gestionar el pop-up (imagen, texto, activar/desactivar, delay)
+- [x] Admin: Sección para ver suscriptores del boletín

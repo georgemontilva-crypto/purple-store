@@ -29,7 +29,7 @@ import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminContent from "./pages/admin/AdminContent";
 import AdminFAQs from "./pages/admin/AdminFAQs";
 import AdminMessages from "./pages/admin/AdminMessages";
-
+import WelcomePopup from "./components/WelcomePopup";
 function Router() {
   return (
     <Switch>
@@ -78,6 +78,7 @@ function App() {
         <AuthProvider>
           <TooltipProvider>
             <Toaster richColors position="top-right" />
+            <WelcomePopup />
             <Router />
           </TooltipProvider>
         </AuthProvider>

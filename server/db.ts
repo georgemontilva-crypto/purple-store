@@ -13,6 +13,8 @@ import {
   products,
   siteContent,
   users,
+  welcomePopup,
+  newsletterSubscribers,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -610,4 +612,55 @@ export async function deleteBannerSlide(id: number) {
   const db = await getDb();
   if (!db) throw new Error("DB not available");
   await db.delete(bannerSlides).where(eq(bannerSlides.id, id));
+}
+
+// --- Welcome Popup ---
+export async function getWelcomePopup() {
+  const db = await getDb();
+  if (!db) return null;
+  const rows = await db.select().from(welcomePopup).limit(1);
+  return rows[0] ?? null;
+}
+export async function upsertWelcomePopup(data: Partial<{
+  title: string; subtitle: string; body: string; imageUrl: string;
+  buttonText: string; buttonUrl: string; showNewsletter: boolean;
+  active: boolean; delaySeconds: number; showOnce: boolean;
+}>) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  const existing = await db.select().from(welcomePopup).limit(1);
+  if (existing.length > 0) {
+    await db.update(welcomePopup).set(data).where(eq(welcomePopup.id, existing[0].id));
+  } else {
+    await db.insert(welcomePopup).values({
+      title: data.title ?? "¡Bienvenida a BoraHae Art!",
+      ...data,
+    });
+  }
+  const rows = await db.select().from(welcomePopup).limit(1);
+  return rows[0] ?? null;
+}
+
+// --- Newsletter Subscribers ---
+export async function subscribeNewsletter(email: string, name?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  // Upsert: si ya existe, reactivar
+  const existing = await db.select().from(newsletterSubscribers).where(eq(newsletterSubscribers.email, email)).limit(1);
+  if (existing.length > 0) {
+    await db.update(newsletterSubscribers).set({ active: true, name: name ?? existing[0].name }).where(eq(newsletterSubscribers.email, email));
+    return { alreadySubscribed: true };
+  }
+  await db.insert(newsletterSubscribers).values({ email, name: name ?? null });
+  return { alreadySubscribed: false };
+}
+export async function getNewsletterSubscribers() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(newsletterSubscribers).where(eq(newsletterSubscribers.active, true)).orderBy(desc(newsletterSubscribers.subscribedAt));
+}
+export async function deleteNewsletterSubscriber(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  await db.update(newsletterSubscribers).set({ active: false }).where(eq(newsletterSubscribers.id, id));
 }
