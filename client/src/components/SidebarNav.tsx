@@ -138,20 +138,10 @@ export default function SidebarNav() {
             badge={cartCount > 0 ? (cartCount > 9 ? "9+" : String(cartCount)) : undefined}
           />
 
-          {user?.role === "admin" && (
-            <Link href="/admin">
-              <DesktopSidebarIconLink
-                icon={<Settings className="w-5 h-5" style={{ color: location.startsWith("/admin") ? "white" : purpleMid }} />}
-                label="Panel Admin"
-                active={location.startsWith("/admin")}
-              />
-            </Link>
-          )}
-
           {user ? (
             <div className="relative group">
+              {/* Avatar button - solo muestra el menú, no hace logout */}
               <button
-                onClick={() => logoutMutation.mutate()}
                 className="w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-150"
                 style={{ background: purpleHover }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "oklch(0.88 0.08 295)"; }}
@@ -166,15 +156,34 @@ export default function SidebarNav() {
                   <User className="w-5 h-5" style={{ color: purple }} />
                 )}
               </button>
+              {/* Dropdown menu */}
               <div
-                className="absolute left-14 bottom-0 px-3 py-2 rounded-xl text-xs font-black whitespace-nowrap pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-50"
-                style={{ background: purpleDark, color: "white", ...nunito, boxShadow: "0 4px 12px oklch(0 0 0 / 0.25)" }}
+                className="absolute left-14 bottom-0 rounded-xl text-xs font-black whitespace-nowrap pointer-events-none opacity-0 group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-150 z-50 overflow-hidden"
+                style={{ background: purpleDark, color: "white", ...nunito, boxShadow: "0 4px 16px oklch(0 0 0 / 0.3)", minWidth: "165px" }}
               >
-                <p style={{ color: "oklch(0.85 0.06 295)" }}>{user.name}</p>
-                <p className="font-semibold mt-0.5 flex items-center gap-1" style={{ color: "oklch(0.65 0.08 295)" }}>
-                  <LogOut className="w-3 h-3" /> Cerrar sesión
-                </p>
-                <div className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent" style={{ borderRightColor: purpleDark }} />
+                {/* User info */}
+                <div className="px-3 py-2.5 border-b" style={{ borderColor: "oklch(0.32 0.1 295)" }}>
+                  <p className="font-bold text-xs" style={{ color: "oklch(0.88 0.06 295)" }}>{user.name}</p>
+                  <p style={{ color: "oklch(0.55 0.08 295)", fontSize: "10px", marginTop: "1px" }}>{user.email}</p>
+                </div>
+                {/* Admin link */}
+                {user.role === "admin" && (
+                  <Link href="/admin">
+                    <div className="px-3 py-2.5 flex items-center gap-2 cursor-pointer hover:bg-white/10 transition-colors">
+                      <Settings className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "oklch(0.72 0.18 295)" }} />
+                      <span style={{ color: "oklch(0.88 0.06 295)" }}>Panel Admin</span>
+                    </div>
+                  </Link>
+                )}
+                {/* Logout */}
+                <button
+                  onClick={() => logoutMutation.mutate()}
+                  className="w-full px-3 py-2.5 flex items-center gap-2 cursor-pointer hover:bg-white/10 transition-colors text-left"
+                >
+                  <LogOut className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "oklch(0.62 0.08 295)" }} />
+                  <span style={{ color: "oklch(0.72 0.06 295)" }}>Cerrar sesión</span>
+                </button>
+                <div className="absolute right-full bottom-8 border-4 border-transparent" style={{ borderRightColor: purpleDark }} />
               </div>
             </div>
           ) : (
