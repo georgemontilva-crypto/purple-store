@@ -394,9 +394,9 @@ export async function clearCart(sessionId: string) {
 // ─── Site Content ─────────────────────────────────────────────────────────────
 export async function getSiteContent(key: string) {
   const db = await getDb();
-  if (!db) return undefined;
+  if (!db) return null;
   const result = await db.select().from(siteContent).where(eq(siteContent.key, key)).limit(1);
-  return result[0];
+  return result[0] ?? null;
 }
 
 export async function getAllSiteContent() {
