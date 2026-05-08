@@ -13,7 +13,7 @@ export default function Login() {
     onSuccess: async () => {
       toast.success("¡Bienvenida de vuelta! 🎨");
       await utils.customAuth.me.invalidate();
-      navigate("/");
+      window.location.href = "/";
     },
     onError: (err) => {
       if (err.message.includes("verificar")) {
