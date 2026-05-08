@@ -66,4 +66,5 @@ async function startServer() {
   });
 }
 
+// force rebuild
 startServer().catch(console.error);
