@@ -1,22 +1,17 @@
 import AdminLayout from "@/components/AdminLayout";
 import { trpc } from "@/lib/trpc";
-import { Plus, Pencil, Trash2, Tags, Upload, X, Loader2 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { Plus, Edit2, Trash2, Tags, ImageOff, Star, X, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 function slugify(text: string) {
-  return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
 
-interface CategoryFormProps {
-  category?: any;
-  onClose: () => void;
-}
-
-function CategoryForm({ category, onClose }: CategoryFormProps) {
-  const isEdit = !!category;
+function CategoryForm({ category, onClose }: { category?: any; onClose: () => void }) {
+  const utils = trpc.useUtils();
   const [form, setForm] = useState({
     name: category?.name ?? "",
     slug: category?.slug ?? "",
@@ -27,13 +22,10 @@ function CategoryForm({ category, onClose }: CategoryFormProps) {
     sortOrder: category?.sortOrder ?? 0,
   });
   const [uploading, setUploading] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
-  const utils = trpc.useUtils();
 
   const uploadMutation = trpc.upload.image.useMutation({
-    onSuccess: (data) => { setForm((f) => ({ ...f, imageUrl: data.url, imageKey: data.key })); toast.success("Imagen subida"); },
-    onError: (err) => toast.error("Error al subir imagen", { description: err.message }),
-    onSettled: () => setUploading(false),
+    onSuccess: (data) => { setForm((f) => ({ ...f, imageUrl: data.url, imageKey: data.key })); setUploading(false); },
+    onError: (err) => { toast.error("Error al subir imagen", { description: err.message }); setUploading(false); },
   });
 
   const createMutation = trpc.categories.create.useMutation({
@@ -60,76 +52,94 @@ function CategoryForm({ category, onClose }: CategoryFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name) { toast.error("El nombre es requerido"); return; }
-    const slug = form.slug || slugify(form.name);
-    const data = { name: form.name, slug, description: form.description || undefined, imageUrl: form.imageUrl || undefined, imageKey: form.imageKey || undefined, featured: form.featured, sortOrder: Number(form.sortOrder) };
-    if (isEdit) updateMutation.mutate({ id: category.id, ...data });
-    else createMutation.mutate(data);
+    const payload = { ...form, slug: form.slug || slugify(form.name), sortOrder: Number(form.sortOrder) };
+    if (category) updateMutation.mutate({ id: category.id, ...payload });
+    else createMutation.mutate(payload);
   };
 
+  const isPending = createMutation.isPending || updateMutation.isPending;
+
   return (
-    <div className="max-w-lg">
-      <h3 className="font-semibold text-lg text-foreground mb-5">{isEdit ? "Editar categoría" : "Nueva categoría"}</h3>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Image */}
-        <div className="flex items-center gap-4">
-          <div className="w-20 h-20 rounded-xl overflow-hidden bg-muted border border-border flex-shrink-0">
-            {form.imageUrl ? <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" /> : <div className="w-full h-full gradient-purple-soft flex items-center justify-center"><Upload className="w-5 h-5 text-primary/40" /></div>}
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
+      <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <h3 className="font-semibold text-sm text-foreground mb-3">Imagen de categoría</h3>
+        <div className="flex items-start gap-4">
+          <div className="w-24 h-24 rounded-xl overflow-hidden bg-muted flex-shrink-0 border" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            {form.imageUrl ? (
+              <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <ImageOff className="w-6 h-6 text-muted-foreground/40" />
+              </div>
+            )}
           </div>
-          <div className="space-y-2">
-            <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
-            <Button type="button" variant="outline" size="sm" className="rounded-xl gap-2" onClick={() => fileRef.current?.click()} disabled={uploading}>
-              {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
-              {uploading ? "Subiendo..." : "Subir imagen"}
-            </Button>
-            {form.imageUrl && <Button type="button" variant="ghost" size="sm" className="rounded-xl gap-2 text-destructive" onClick={() => setForm((f) => ({ ...f, imageUrl: "", imageKey: "" }))}><X className="w-3.5 h-3.5" />Eliminar</Button>}
+          <div className="flex-1">
+            <label className="cursor-pointer">
+              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-colors ${uploading ? "opacity-50" : "hover:bg-muted"}`} style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+                <Upload className="w-4 h-4" />
+                {uploading ? "Subiendo..." : "Subir imagen"}
+              </div>
+              <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
+            </label>
+            {form.imageUrl && (
+              <button type="button" onClick={() => setForm((f) => ({ ...f, imageUrl: "", imageKey: "" }))} className="mt-2 flex items-center gap-1 text-xs text-rose-500 hover:text-rose-700">
+                <X className="w-3 h-3" /> Eliminar imagen
+              </button>
+            )}
           </div>
         </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Nombre <span className="text-rose-500">*</span></label>
-          <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value, slug: slugify(e.target.value) })} placeholder="Nombre de la categoría" className="rounded-xl" required />
+      </div>
+
+      <div className="bg-white rounded-2xl border p-5 space-y-4" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <h3 className="font-semibold text-sm text-foreground">Información</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Nombre *</label>
+            <Input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value, slug: slugify(e.target.value) }))} placeholder="Ej: Shonen" required className="rounded-xl" />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Slug *</label>
+            <Input value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} placeholder="shonen" required className="rounded-xl font-mono text-sm" />
+          </div>
         </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Slug</label>
-          <Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} placeholder="nombre-categoria" className="rounded-xl font-mono text-sm" />
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Descripción</label>
+          <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} placeholder="Descripción breve..." rows={2} className="w-full px-3 py-2 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "oklch(0.88 0.04 295)" }} />
         </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Descripción</label>
-          <Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Descripción breve" className="rounded-xl" />
+        <div className="flex items-center gap-6">
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Orden</label>
+            <Input type="number" value={form.sortOrder} onChange={(e) => setForm((f) => ({ ...f, sortOrder: parseInt(e.target.value) || 0 }))} className="rounded-xl w-24" />
+          </div>
+          <label className="flex items-center gap-2 cursor-pointer mt-5">
+            <input type="checkbox" checked={form.featured} onChange={(e) => setForm((f) => ({ ...f, featured: e.target.checked }))} className="w-4 h-4 rounded accent-primary" />
+            <span className="text-sm font-medium text-foreground">Categoría destacada</span>
+          </label>
         </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Orden de visualización</label>
-          <Input type="number" value={form.sortOrder} onChange={(e) => setForm({ ...form, sortOrder: parseInt(e.target.value) || 0 })} className="rounded-xl" />
-        </div>
-        <label className="flex items-center gap-3 cursor-pointer">
-          <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 rounded accent-primary" />
-          <span className="text-sm text-foreground">Mostrar en el home como categoría destacada</span>
-        </label>
-        <div className="flex gap-3 pt-2">
-          <Button type="submit" className="flex-1 rounded-xl gradient-purple text-white border-0 shadow-purple" disabled={createMutation.isPending || updateMutation.isPending}>
-            {createMutation.isPending || updateMutation.isPending ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear categoría"}
-          </Button>
-          <Button type="button" variant="outline" className="rounded-xl" onClick={onClose}>Cancelar</Button>
-        </div>
-      </form>
-    </div>
+      </div>
+
+      <div className="flex justify-end gap-3">
+        <Button type="button" variant="outline" onClick={onClose} className="rounded-xl gap-2"><X className="w-4 h-4" /> Cancelar</Button>
+        <Button type="submit" disabled={isPending} className="rounded-xl gradient-purple text-white border-0 shadow-purple">
+          {isPending ? "Guardando..." : category ? "Guardar cambios" : "Crear categoría"}
+        </Button>
+      </div>
+    </form>
   );
 }
 
 export default function AdminCategories() {
+  const utils = trpc.useUtils();
   const [showForm, setShowForm] = useState(false);
   const [editingCat, setEditingCat] = useState<any>(null);
-  const utils = trpc.useUtils();
-  const { data: categories = [], isLoading } = trpc.categories.list.useQuery();
+
+  const { data: catData, isLoading } = trpc.categories.list.useQuery();
+  const categories: any[] = (catData as any)?.categories ?? (Array.isArray(catData) ? catData : []);
 
   const deleteMutation = trpc.categories.delete.useMutation({
     onSuccess: () => { toast.success("Categoría eliminada"); utils.categories.list.invalidate(); },
     onError: (err) => toast.error("Error al eliminar", { description: err.message }),
   });
-
-  const handleDelete = (id: number, name: string) => {
-    if (confirm(`¿Eliminar "${name}"?`)) deleteMutation.mutate({ id });
-  };
 
   if (showForm) {
     return (
@@ -140,42 +150,61 @@ export default function AdminCategories() {
   }
 
   return (
-    <AdminLayout title="Categorías">
-      <div className="space-y-5">
-        <div className="flex justify-end">
-          <Button onClick={() => { setEditingCat(null); setShowForm(true); }} className="rounded-xl gradient-purple text-white border-0 shadow-purple gap-2">
-            <Plus className="w-4 h-4" />Nueva categoría
+    <AdminLayout>
+      <div className="space-y-4 max-w-6xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-bold text-foreground">Categorías</h2>
+            <p className="text-sm text-muted-foreground">{categories.length} categoría{categories.length !== 1 ? "s" : ""}</p>
+          </div>
+          <Button onClick={() => { setEditingCat(null); setShowForm(true); }} className="rounded-xl gradient-purple text-white border-0 shadow-purple hover:opacity-90 gap-2 font-semibold">
+            <Plus className="w-4 h-4" /> Nueva categoría
           </Button>
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-40 rounded-2xl bg-muted animate-pulse" />)}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 8 }).map((_, i) => <div key={i} className="rounded-2xl bg-muted animate-pulse aspect-[4/3]" />)}
           </div>
         ) : categories.length === 0 ? (
-          <div className="py-16 text-center">
-            <Tags className="w-10 h-10 text-muted-foreground/30 mx-auto mb-2" />
-            <p className="text-muted-foreground">No hay categorías aún</p>
+          <div className="bg-white rounded-2xl border py-16 text-center" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            <Tags className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
+            <p className="font-semibold text-foreground">No hay categorías</p>
+            <p className="text-sm text-muted-foreground mt-1">Crea tu primera categoría para organizar los productos</p>
+            <Button onClick={() => { setEditingCat(null); setShowForm(true); }} className="mt-4 rounded-xl gradient-purple text-white border-0 shadow-purple gap-2">
+              <Plus className="w-4 h-4" /> Crear categoría
+            </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {categories.map((cat) => (
-              <div key={cat.id} className="group bg-card rounded-2xl border border-border/50 overflow-hidden hover:border-primary/30 hover:shadow-purple transition-all">
-                <div className="aspect-video bg-muted relative overflow-hidden">
-                  {cat.imageUrl ? <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /> : <div className="w-full h-full gradient-purple-soft flex items-center justify-center"><Tags className="w-8 h-8 text-primary/30" /></div>}
-                  {cat.featured && <span className="absolute top-2 left-2 px-2 py-0.5 gradient-purple text-white text-xs font-semibold rounded-full">Destacada</span>}
-                </div>
-                <div className="p-3">
-                  <p className="font-medium text-foreground text-sm truncate">{cat.name}</p>
-                  {cat.description && <p className="text-xs text-muted-foreground mt-0.5 truncate">{cat.description}</p>}
-                  <div className="flex gap-1 mt-3">
-                    <button onClick={() => { setEditingCat(cat); setShowForm(true); }} className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:bg-accent hover:text-primary transition-colors">
-                      <Pencil className="w-3.5 h-3.5" />Editar
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {categories.map((cat: any) => (
+              <div key={cat.id} className="bg-white rounded-2xl border overflow-hidden hover:shadow-md transition-all group" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+                <div className="aspect-video relative overflow-hidden bg-muted">
+                  {cat.imageUrl ? (
+                    <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, oklch(0.88 0.10 295), oklch(0.72 0.18 295))" }}>
+                      <Tags className="w-8 h-8 text-white/50" />
+                    </div>
+                  )}
+                  {cat.featured && (
+                    <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: "oklch(0.42 0.20 295)", color: "white" }}>
+                      <Star className="w-3 h-3 fill-white" /> Destacada
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <button onClick={() => { setEditingCat(cat); setShowForm(true); }} className="p-2 rounded-xl bg-white/90 hover:bg-white transition-colors">
+                      <Edit2 className="w-4 h-4 text-primary" />
                     </button>
-                    <button onClick={() => handleDelete(cat.id, cat.name)} className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors">
-                      <Trash2 className="w-3.5 h-3.5" />Eliminar
+                    <button onClick={() => { if (confirm(`¿Eliminar "${cat.name}"?`)) deleteMutation.mutate({ id: cat.id }); }} className="p-2 rounded-xl bg-white/90 hover:bg-white transition-colors">
+                      <Trash2 className="w-4 h-4 text-rose-500" />
                     </button>
                   </div>
+                </div>
+                <div className="p-3">
+                  <p className="font-bold text-sm text-foreground truncate">{cat.name}</p>
+                  {cat.description && <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{cat.description}</p>}
+                  <p className="text-xs text-muted-foreground/50 mt-1 font-mono">{cat.slug}</p>
                 </div>
               </div>
             ))}

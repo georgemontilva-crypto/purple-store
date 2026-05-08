@@ -103,3 +103,14 @@
 ## UX Móvil v2 - Carruseles
 - [x] Categorías en móvil: carrusel horizontal snap, sin scrollbar, cards casi full-width
 - [x] Productos destacados en móvil: carrusel horizontal snap, sin scrollbar, cards casi full-width
+## Rediseño Panel Admin v5
+- [x] Rediseñar AdminLayout con sidebar moderno y header mejorado
+- [x] Rediseñar AdminDashboard con métricas, pedidos recientes y acciones rápidas
+- [x] Rediseñar AdminProducts con tabla moderna, búsqueda y badges
+- [x] Rediseñar AdminCategories con grid de tarjetas y formulario mejorado
+- [x] Rediseñar AdminOrders con tabla filtrable, badges de estado y detalle inline
+- [x] Rediseñar AdminCustomers con tabla moderna y badges de rol
+- [x] Rediseñar AdminContent con secciones organizadas por área
+- [x] Rediseñar AdminFAQs con lista moderna y toggle de estado
+- [x] Rediseñar AdminMessages con panel de lista + detalle tipo email
+- [x] Corregir error de caracteres Unicode en Home.tsx (línea 226)

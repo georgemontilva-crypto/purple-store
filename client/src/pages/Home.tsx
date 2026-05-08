@@ -17,7 +17,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-/* ─── Hero ─────────────────────────────────────────────────────────────────── */
+/* --- Hero ------------------------------------------------------------------- */
 function HeroSection() {
   const { data: heroTitle } = trpc.content.get.useQuery({ key: "hero_title" });
   const { data: heroSubtitle } = trpc.content.get.useQuery({ key: "hero_subtitle" });
@@ -176,7 +176,7 @@ function HeroSection() {
   );
 }
 
-/* ─── Quick Info Bar (Marquee) ───────────────────────────────────────────────── */
+/* --- Quick Info Bar (Marquee) ------------------------------------------------- */
 function QuickInfoBar() {
   const items = [
     { icon: Brush, text: "Pintado a mano" },
@@ -225,7 +225,7 @@ function QuickInfoBar() {
   );
 }
 
-/* ─── Featured Categories ───────────────────────────────────────────────────── */
+/* --- Featured Categories ----------------------------------------------------- */
 function FeaturedCategories() {
   const { data: categories = [] } = trpc.categories.featured.useQuery();
 
@@ -350,7 +350,7 @@ function FeaturedCategories() {
   );
 }
 
-/* ─── Featured Products ─────────────────────────────────────────────────────── */
+/* --- Featured Products ------------------------------------------------------- */
 function FeaturedProducts() {
   const { data: products = [] } = trpc.products.featured.useQuery({ limit: 8 });
   const { data: allCats = [] } = trpc.categories.list.useQuery();
@@ -461,7 +461,7 @@ function FeaturedProducts() {
   );
 }
 
-/* ─── Commission Banner ─────────────────────────────────────────────────────── */
+/* --- Commission Banner ------------------------------------------------------- */
 function CommissionBanner() {
   return (
     <section className="px-4 lg:px-8 py-6">
@@ -505,7 +505,7 @@ function CommissionBanner() {
   );
 }
 
-/* ─── Why Us ────────────────────────────────────────────────────────────────── */
+/* --- Why Us ------------------------------------------------------------------ */
 function WhyUs() {
   const features = [
     {
@@ -578,7 +578,7 @@ function WhyUs() {
   );
 }
 
-/* ─── About Snippet ─────────────────────────────────────────────────────────── */
+/* --- About Snippet ----------------------------------------------------------- */
 function AboutSnippet() {
   const { data: aboutShort } = trpc.content.get.useQuery({ key: "about_short" });
   const { data: aboutImage } = trpc.content.get.useQuery({ key: "about_image" });
@@ -665,7 +665,7 @@ function AboutSnippet() {
   );
 }
 
-/* ─── Page ──────────────────────────────────────────────────────────────────── */
+/* --- Page -------------------------------------------------------------------- */
 export default function Home() {
   return (
     <StoreLayout>

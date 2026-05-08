@@ -4,55 +4,54 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Upload, Loader2, Save, Image, FileText, Info } from "lucide-react";
+import { Upload, Loader2, Save, ImageIcon, FileText, Phone, Sparkles } from "lucide-react";
 
 const CONTENT_SECTIONS = [
   {
     title: "Hero (Página de inicio)",
-    icon: Image,
+    description: "El banner principal que ven los visitantes al entrar a la tienda",
+    icon: Sparkles,
+    color: "text-violet-600",
+    bg: "bg-violet-50",
     fields: [
-      { key: "hero_title", label: "Título principal", type: "text", placeholder: "Descubre tu estilo único" },
-      { key: "hero_subtitle", label: "Subtítulo", type: "textarea", placeholder: "Colecciones exclusivas..." },
-      { key: "hero_cta", label: "Texto del botón CTA", type: "text", placeholder: "Explorar colección" },
+      { key: "hero_title", label: "Título principal", type: "text", placeholder: "Arte Anime Hecho a Mano" },
+      { key: "hero_subtitle", label: "Subtítulo / descripción", type: "textarea", placeholder: "Cuadros originales de anime..." },
+      { key: "hero_cta", label: "Texto del botón CTA", type: "text", placeholder: "Ver colección" },
       { key: "hero_image", label: "Imagen de fondo del hero", type: "image" },
     ],
   },
   {
     title: "Sobre nosotros",
-    icon: Info,
+    description: "Información sobre la artista y la historia de BoraHae Art",
+    icon: FileText,
+    color: "text-blue-600",
+    bg: "bg-blue-50",
     fields: [
-      { key: "about_title", label: "Título", type: "text", placeholder: "Sobre nosotras" },
-      { key: "about_subtitle", label: "Subtítulo", type: "text", placeholder: "Descubre la historia..." },
-      { key: "about_short", label: "Texto corto (Home)", type: "textarea", placeholder: "Somos una tienda..." },
-      { key: "about_body", label: "Texto completo", type: "textarea", placeholder: "Texto largo..." },
-      { key: "about_mission", label: "Misión", type: "textarea", placeholder: "Nuestra misión..." },
-      { key: "about_vision", label: "Visión", type: "textarea", placeholder: "Nuestra visión..." },
+      { key: "about_title", label: "Título de la página", type: "text", placeholder: "Sobre BoraHae Art" },
+      { key: "about_subtitle", label: "Subtítulo", type: "text", placeholder: "Arte anime con alma" },
+      { key: "about_short", label: "Texto corto (aparece en el Home)", type: "textarea", placeholder: "Somos artistas apasionados..." },
+      { key: "about_body", label: "Texto completo (página Sobre Nosotros)", type: "textarea", placeholder: "Historia detallada..." },
+      { key: "about_mission", label: "Misión", type: "textarea", placeholder: "Nuestra misión es..." },
+      { key: "about_vision", label: "Visión", type: "textarea", placeholder: "Nuestra visión es..." },
       { key: "about_image", label: "Imagen principal", type: "image" },
       { key: "about_image2", label: "Imagen secundaria", type: "image" },
     ],
   },
   {
-    title: "Contacto",
-    icon: FileText,
+    title: "Información de contacto",
+    description: "Datos que aparecen en la página de contacto y el footer",
+    icon: Phone,
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
     fields: [
-      { key: "contact_email", label: "Email de contacto", type: "text", placeholder: "hola@purplestore.com" },
-      { key: "contact_phone", label: "Teléfono", type: "text", placeholder: "+1 (555) 123-4567" },
-      { key: "contact_address", label: "Dirección", type: "text", placeholder: "Ciudad, País" },
+      { key: "contact_email", label: "Email de contacto", type: "text", placeholder: "hola@borahaeart.com" },
+      { key: "contact_phone", label: "Teléfono / WhatsApp", type: "text", placeholder: "+57 300 123 4567" },
+      { key: "contact_address", label: "Ciudad / País", type: "text", placeholder: "Bogotá, Colombia" },
     ],
   },
 ];
 
-function ContentField({
-  fieldKey,
-  label,
-  type,
-  placeholder,
-}: {
-  fieldKey: string;
-  label: string;
-  type: string;
-  placeholder?: string;
-}) {
+function ContentField({ fieldKey, label, type, placeholder }: { fieldKey: string; label: string; type: string; placeholder?: string }) {
   const { data } = trpc.content.get.useQuery({ key: fieldKey });
   const [value, setValue] = useState<string>("");
   const [initialized, setInitialized] = useState(false);
@@ -66,19 +65,12 @@ function ContentField({
   }
 
   const setMutation = trpc.content.set.useMutation({
-    onSuccess: () => {
-      toast.success("Guardado correctamente");
-      utils.content.get.invalidate({ key: fieldKey });
-    },
+    onSuccess: () => { toast.success("Guardado correctamente"); utils.content.get.invalidate({ key: fieldKey }); },
     onError: (err) => toast.error("Error al guardar", { description: err.message }),
   });
 
   const uploadMutation = trpc.upload.image.useMutation({
-    onSuccess: (res) => {
-      setValue(res.url);
-      setMutation.mutate({ key: fieldKey, value: res.url });
-      toast.success("Imagen subida y guardada");
-    },
+    onSuccess: (res) => { setValue(res.url); setMutation.mutate({ key: fieldKey, value: res.url }); toast.success("Imagen subida y guardada"); },
     onError: (err) => toast.error("Error al subir imagen", { description: err.message }),
     onSettled: () => setUploading(false),
   });
@@ -95,40 +87,27 @@ function ContentField({
     reader.readAsDataURL(file);
   };
 
-  const handleSave = () => {
-    setMutation.mutate({ key: fieldKey, value });
-  };
-
   if (type === "image") {
     return (
       <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">{label}</label>
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}</label>
         <div className="flex items-start gap-4">
-          <div className="w-24 h-24 rounded-xl overflow-hidden bg-muted border border-border flex-shrink-0">
+          <div className="w-20 h-20 rounded-xl overflow-hidden bg-muted border flex-shrink-0" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
             {value ? (
               <img src={value} alt={label} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full gradient-purple-soft flex items-center justify-center">
-                <Image className="w-6 h-6 text-primary/40" />
+              <div className="w-full h-full flex items-center justify-center">
+                <ImageIcon className="w-6 h-6 text-muted-foreground/40" />
               </div>
             )}
           </div>
           <div className="space-y-2">
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="rounded-xl gap-2"
-              onClick={() => fileRef.current?.click()}
-              disabled={uploading}
-            >
+            <Button type="button" variant="outline" size="sm" className="rounded-xl gap-2" onClick={() => fileRef.current?.click()} disabled={uploading}>
               {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
-              {uploading ? "Subiendo..." : "Cambiar imagen"}
+              {uploading ? "Subiendo..." : "Subir imagen"}
             </Button>
-            {value && (
-              <p className="text-xs text-muted-foreground truncate max-w-[200px]">{value}</p>
-            )}
+            {value && <p className="text-xs text-muted-foreground/60 truncate max-w-[200px]">✓ Imagen guardada</p>}
           </div>
         </div>
       </div>
@@ -137,23 +116,18 @@ function ContentField({
 
   if (type === "textarea") {
     return (
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">{label}</label>
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}</label>
         <div className="flex gap-2">
           <textarea
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder={placeholder}
             rows={3}
-            className="flex-1 px-3 py-2.5 rounded-xl border border-border/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background text-foreground placeholder:text-muted-foreground text-sm resize-none"
+            className="flex-1 px-3 py-2.5 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background"
+            style={{ borderColor: "oklch(0.88 0.04 295)" }}
           />
-          <Button
-            type="button"
-            size="sm"
-            className="rounded-xl gradient-purple text-white border-0 shadow-purple self-start gap-1"
-            onClick={handleSave}
-            disabled={setMutation.isPending}
-          >
+          <Button type="button" size="sm" className="rounded-xl gradient-purple text-white border-0 shadow-purple self-start gap-1" onClick={() => setMutation.mutate({ key: fieldKey, value })} disabled={setMutation.isPending}>
             {setMutation.isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
           </Button>
         </div>
@@ -162,23 +136,17 @@ function ContentField({
   }
 
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-foreground">{label}</label>
+    <div className="space-y-1.5">
+      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}</label>
       <div className="flex gap-2">
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={placeholder}
           className="rounded-xl flex-1"
-          onKeyDown={(e) => e.key === "Enter" && handleSave()}
+          onKeyDown={(e) => e.key === "Enter" && setMutation.mutate({ key: fieldKey, value })}
         />
-        <Button
-          type="button"
-          size="sm"
-          className="rounded-xl gradient-purple text-white border-0 shadow-purple gap-1"
-          onClick={handleSave}
-          disabled={setMutation.isPending}
-        >
+        <Button type="button" size="sm" className="rounded-xl gradient-purple text-white border-0 shadow-purple gap-1" onClick={() => setMutation.mutate({ key: fieldKey, value })} disabled={setMutation.isPending}>
           {setMutation.isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
           Guardar
         </Button>
@@ -189,21 +157,32 @@ function ContentField({
 
 export default function AdminContent() {
   return (
-    <AdminLayout title="Contenido del sitio">
-      <div className="space-y-8 max-w-3xl">
-        <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
-          <p className="text-sm text-primary">
-            Edita aquí el contenido visible en el sitio web. Los cambios se aplican inmediatamente.
+    <AdminLayout>
+      <div className="space-y-5 max-w-3xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-bold text-foreground">Contenido del sitio</h2>
+            <p className="text-sm text-muted-foreground">Los cambios se aplican inmediatamente en la tienda</p>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-2xl border flex items-start gap-3" style={{ background: "oklch(0.96 0.03 295)", borderColor: "oklch(0.88 0.06 295)" }}>
+          <Sparkles className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-primary font-medium">
+            Edita el contenido de tu tienda sin tocar código. Cada campo tiene su propio botón de guardar.
           </p>
         </div>
 
         {CONTENT_SECTIONS.map((section) => (
-          <div key={section.title} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
-            <div className="flex items-center gap-3 p-5 border-b border-border bg-muted/30">
-              <div className="w-8 h-8 rounded-lg gradient-purple-soft flex items-center justify-center">
-                <section.icon className="w-4 h-4 text-primary" />
+          <div key={section.title} className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+              <div className={`w-9 h-9 rounded-xl ${section.bg} flex items-center justify-center flex-shrink-0`}>
+                <section.icon className={`w-4.5 h-4.5 ${section.color}`} />
               </div>
-              <h3 className="font-semibold text-foreground">{section.title}</h3>
+              <div>
+                <h3 className="font-bold text-sm text-foreground">{section.title}</h3>
+                <p className="text-xs text-muted-foreground">{section.description}</p>
+              </div>
             </div>
             <div className="p-5 space-y-5">
               {section.fields.map((field) => (

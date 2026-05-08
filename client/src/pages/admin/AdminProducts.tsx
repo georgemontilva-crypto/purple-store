@@ -1,6 +1,6 @@
 import AdminLayout from "@/components/AdminLayout";
 import { trpc } from "@/lib/trpc";
-import { Plus, Pencil, Trash2, Search, Package, Eye, EyeOff, Star } from "lucide-react";
+import { Plus, Search, Edit2, Trash2, Eye, EyeOff, Star, Package, ImageOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,13 +21,11 @@ export default function AdminProducts() {
     limit: 15,
   });
 
-  const { data: categories = [] } = trpc.categories.list.useQuery();
+  const { data: catData } = trpc.categories.list.useQuery();
+  const categories = (catData as any)?.categories ?? catData ?? [];
 
   const deleteMutation = trpc.products.delete.useMutation({
-    onSuccess: () => {
-      toast.success("Producto eliminado");
-      utils.products.adminList.invalidate();
-    },
+    onSuccess: () => { toast.success("Producto eliminado"); utils.products.adminList.invalidate(); },
     onError: (err) => toast.error("Error al eliminar", { description: err.message }),
   });
 
@@ -39,17 +37,6 @@ export default function AdminProducts() {
   const total = data?.total ?? 0;
   const totalPages = Math.ceil(total / 15);
 
-  const handleDelete = (id: number, name: string) => {
-    if (confirm(`¿Eliminar "${name}"? Esta acción no se puede deshacer.`)) {
-      deleteMutation.mutate({ id });
-    }
-  };
-
-  const handleEdit = (product: any) => {
-    setEditingProduct(product);
-    setShowForm(true);
-  };
-
   const handleFormClose = () => {
     setShowForm(false);
     setEditingProduct(null);
@@ -59,160 +46,199 @@ export default function AdminProducts() {
   if (showForm) {
     return (
       <AdminLayout title={editingProduct ? "Editar producto" : "Nuevo producto"}>
-        <ProductForm
-          product={editingProduct}
-          categories={categories}
-          onClose={handleFormClose}
-        />
+        <ProductForm product={editingProduct} categories={categories} onClose={handleFormClose} />
       </AdminLayout>
     );
   }
 
   return (
-    <AdminLayout title="Productos">
-      <div className="space-y-5">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar productos..."
-              value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="pl-9 rounded-xl"
-            />
+    <AdminLayout>
+      <div className="space-y-4 max-w-6xl">
+        {/* Header Row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-bold text-foreground">Productos</h2>
+            <p className="text-sm text-muted-foreground">{total} producto{total !== 1 ? "s" : ""} en total</p>
           </div>
           <Button
             onClick={() => { setEditingProduct(null); setShowForm(true); }}
-            className="rounded-xl gradient-purple text-white border-0 shadow-purple gap-2"
+            className="rounded-xl gradient-purple text-white border-0 shadow-purple hover:opacity-90 gap-2 font-semibold"
           >
             <Plus className="w-4 h-4" />
             Nuevo producto
           </Button>
         </div>
 
+        {/* Search */}
+        <div className="bg-white rounded-2xl border p-4" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div className="relative max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar productos..."
+              value={search}
+              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              className="pl-9 rounded-xl border-border/60 bg-muted/30 focus:bg-white"
+            />
+          </div>
+        </div>
+
         {/* Table */}
-        <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border bg-muted/50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Producto</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell">Categoría</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Precio</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell">Stock</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell">Estado</th>
-                  <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Acciones</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {isLoading ? (
-                  Array.from({ length: 5 }).map((_, i) => (
-                    <tr key={i}>
-                      <td colSpan={6} className="px-4 py-3">
-                        <div className="h-10 bg-muted rounded-lg animate-pulse" />
-                      </td>
-                    </tr>
-                  ))
-                ) : products.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="px-4 py-12 text-center">
-                      <Package className="w-10 h-10 text-muted-foreground/30 mx-auto mb-2" />
-                      <p className="text-muted-foreground text-sm">No hay productos</p>
-                    </td>
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          {isLoading ? (
+            <div className="p-6 space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="h-12 bg-muted rounded-xl animate-pulse" />
+              ))}
+            </div>
+          ) : products.length === 0 ? (
+            <div className="py-16 text-center">
+              <Package className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
+              <p className="font-semibold text-foreground">No hay productos</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                {search ? "Prueba con otro término de búsqueda" : "Crea tu primer producto para comenzar"}
+              </p>
+              {!search && (
+                <Button
+                  onClick={() => { setEditingProduct(null); setShowForm(true); }}
+                  className="mt-4 rounded-xl gradient-purple text-white border-0 shadow-purple gap-2"
+                >
+                  <Plus className="w-4 h-4" /> Crear producto
+                </Button>
+              )}
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b" style={{ borderColor: "oklch(0.93 0.02 295)", background: "oklch(0.98 0.01 295)" }}>
+                    <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Producto</th>
+                    <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden md:table-cell">Categoría</th>
+                    <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Precio</th>
+                    <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden sm:table-cell">Stock</th>
+                    <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden sm:table-cell">Estado</th>
+                    <th className="text-right px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Acciones</th>
                   </tr>
-                ) : (
-                  products.map((product) => {
-                    const category = categories.find((c) => c.id === product.categoryId);
+                </thead>
+                <tbody className="divide-y" style={{ borderColor: "oklch(0.95 0.01 295)" }}>
+                  {products.map((product) => {
+                    const category = categories.find((c: any) => c.id === product.categoryId);
                     return (
                       <tr key={product.id} className="hover:bg-muted/30 transition-colors">
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                            <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0 bg-muted">
                               {product.imageUrl ? (
                                 <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
                               ) : (
-                                <div className="w-full h-full gradient-purple-soft flex items-center justify-center">
-                                  <Package className="w-4 h-4 text-primary/40" />
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <ImageOff className="w-4 h-4 text-muted-foreground/40" />
                                 </div>
                               )}
                             </div>
                             <div className="min-w-0">
-                              <p className="text-sm font-medium text-foreground truncate max-w-[180px]">{product.name}</p>
-                              {product.featured && (
-                                <span className="inline-flex items-center gap-1 text-xs text-amber-600">
-                                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                                  Destacado
-                                </span>
-                              )}
+                              <div className="flex items-center gap-1.5">
+                                <p className="font-semibold text-foreground truncate max-w-[160px]">{product.name}</p>
+                                {product.featured && (
+                                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400 flex-shrink-0" />
+                                )}
+                              </div>
+                              <p className="text-xs text-muted-foreground truncate max-w-[160px]">{product.slug}</p>
                             </div>
                           </div>
                         </td>
                         <td className="px-4 py-3 hidden md:table-cell">
-                          <span className="text-sm text-muted-foreground">{category?.name ?? "—"}</span>
+                          {category ? (
+                            <span className="text-xs px-2.5 py-1 rounded-full bg-primary/8 text-primary font-medium">
+                              {(category as any).name}
+                            </span>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          )}
                         </td>
                         <td className="px-4 py-3">
                           <div>
-                            <span className="text-sm font-semibold text-foreground">${parseFloat(product.price).toFixed(2)}</span>
+                            <p className="font-bold text-foreground">${parseFloat(product.price).toFixed(2)}</p>
                             {product.comparePrice && (
-                              <span className="text-xs text-muted-foreground line-through ml-1">${parseFloat(product.comparePrice).toFixed(2)}</span>
+                              <p className="text-xs text-muted-foreground line-through">${parseFloat(product.comparePrice).toFixed(2)}</p>
                             )}
                           </div>
                         </td>
                         <td className="px-4 py-3 hidden sm:table-cell">
-                          <span className={`text-sm font-medium ${product.stock > 0 ? "text-emerald-600" : "text-rose-500"}`}>
-                            {product.stock}
+                          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
+                            product.stock === 0
+                              ? "bg-rose-50 text-rose-600"
+                              : product.stock <= 3
+                              ? "bg-amber-50 text-amber-600"
+                              : "bg-emerald-50 text-emerald-600"
+                          }`}>
+                            {product.stock === 0 ? "Sin stock" : `${product.stock} uds`}
                           </span>
                         </td>
                         <td className="px-4 py-3 hidden sm:table-cell">
                           <button
                             onClick={() => toggleActiveMutation.mutate({ id: product.id, active: !product.active })}
-                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                            className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full transition-colors ${
                               product.active
-                                ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                ? "bg-emerald-50 text-emerald-600 hover:bg-emerald-100"
+                                : "bg-gray-100 text-gray-500 hover:bg-gray-200"
                             }`}
                           >
-                            {product.active ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                            <span className={`w-1.5 h-1.5 rounded-full ${product.active ? "bg-emerald-500" : "bg-gray-400"}`} />
                             {product.active ? "Activo" : "Inactivo"}
                           </button>
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex items-center justify-end gap-1">
                             <button
-                              onClick={() => handleEdit(product)}
-                              className="p-1.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-primary"
+                              onClick={() => toggleActiveMutation.mutate({ id: product.id, active: !product.active })}
+                              className="p-1.5 rounded-lg hover:bg-muted transition-colors sm:hidden"
                             >
-                              <Pencil className="w-4 h-4" />
+                              {product.active ? (
+                                <Eye className="w-4 h-4 text-emerald-500" />
+                              ) : (
+                                <EyeOff className="w-4 h-4 text-muted-foreground" />
+                              )}
                             </button>
                             <button
-                              onClick={() => handleDelete(product.id, product.name)}
-                              className="p-1.5 rounded-lg hover:bg-destructive/10 transition-colors text-muted-foreground hover:text-destructive"
+                              onClick={() => { setEditingProduct(product); setShowForm(true); }}
+                              className="p-1.5 rounded-lg hover:bg-primary/10 transition-colors"
                             >
-                              <Trash2 className="w-4 h-4" />
+                              <Edit2 className="w-4 h-4 text-primary" />
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm(`¿Eliminar "${product.name}"?`)) {
+                                  deleteMutation.mutate({ id: product.id });
+                                }
+                              }}
+                              className="p-1.5 rounded-lg hover:bg-rose-50 transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4 text-rose-500" />
                             </button>
                           </div>
                         </td>
                       </tr>
                     );
-                  })
-                )}
-              </tbody>
-            </table>
-          </div>
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex justify-center gap-2 p-4 border-t border-border">
-              <Button variant="outline" size="sm" className="rounded-full" disabled={page === 1} onClick={() => setPage(page - 1)}>
-                Anterior
-              </Button>
-              <span className="flex items-center text-sm text-muted-foreground px-2">
-                {page} / {totalPages}
-              </span>
-              <Button variant="outline" size="sm" className="rounded-full" disabled={page === totalPages} onClick={() => setPage(page + 1)}>
-                Siguiente
-              </Button>
+            <div className="flex items-center justify-between px-4 py-3 border-t" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+              <p className="text-xs text-muted-foreground">
+                Página {page} de {totalPages} · {total} productos
+              </p>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="rounded-xl text-xs">
+                  Anterior
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="rounded-xl text-xs">
+                  Siguiente
+                </Button>
+              </div>
             </div>
           )}
         </div>
