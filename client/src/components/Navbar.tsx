@@ -1,7 +1,6 @@
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
-import { ShoppingBag, Menu, X, User, Settings } from "lucide-react";
+import { ShoppingBag, Menu, X, User, Settings, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ const navLinks = [
 
 export default function Navbar() {
   const { cartCount, setCartOpen } = useCart();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -102,9 +101,16 @@ export default function Navbar() {
                 <div className="w-8 h-8 rounded-full gradient-purple flex items-center justify-center text-white text-sm font-semibold shadow-purple">
                   {user?.name?.[0]?.toUpperCase() ?? "U"}
                 </div>
+                <button
+                  onClick={logout}
+                  className="hidden md:flex p-2.5 rounded-full hover:bg-accent transition-colors"
+                  aria-label="Cerrar sesión"
+                >
+                  <LogOut className="w-4 h-4 text-muted-foreground" />
+                </button>
               </div>
             ) : (
-              <a href={getLoginUrl()}>
+              <Link href="/login">
                 <Button
                   size="sm"
                   className="hidden md:flex rounded-full gradient-purple text-white border-0 shadow-purple hover:opacity-90 transition-opacity"
@@ -112,7 +118,7 @@ export default function Navbar() {
                   <User className="w-4 h-4 mr-1.5" />
                   Entrar
                 </Button>
-              </a>
+              </Link>
             )}
 
             {/* Mobile menu */}
@@ -144,11 +150,11 @@ export default function Navbar() {
               </Link>
             ))}
             {!isAuthenticated && (
-              <a href={getLoginUrl()} className="mt-2">
+              <Link href="/login" className="mt-2">
                 <Button className="w-full rounded-xl gradient-purple text-white border-0">
                   Iniciar sesión
                 </Button>
-              </a>
+              </Link>
             )}
             {user?.role === "admin" && (
               <Link href="/admin">
@@ -156,6 +162,15 @@ export default function Navbar() {
                   Panel de administración
                 </Button>
               </Link>
+            )}
+            {isAuthenticated && (
+              <button
+                onClick={logout}
+                className="mt-2 w-full px-4 py-3 rounded-xl text-sm font-medium text-left text-foreground hover:bg-accent transition-all flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Cerrar sesión
+              </button>
             )}
           </nav>
         </div>
