@@ -1,55 +1,90 @@
 import { Link } from "wouter";
-import { Instagram, Facebook, Twitter, Heart } from "lucide-react";
+import { Instagram, Youtube, Heart, Palette } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground text-background mt-24">
-      <div className="container mx-auto px-4 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+    <footer
+      className="mt-16"
+      style={{
+        background: "linear-gradient(135deg, oklch(0.28 0.18 295) 0%, oklch(0.20 0.14 295) 100%)",
+      }}
+    >
+      <div className="container mx-auto px-4 lg:px-8 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center">
-                <span className="text-white font-bold text-sm">P</span>
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center"
+                style={{
+                  background:
+                    "linear-gradient(135deg, oklch(0.62 0.22 295) 0%, oklch(0.78 0.14 295) 100%)",
+                }}
+              >
+                <Palette className="w-5 h-5 text-white" />
               </div>
               <span
-                className="font-semibold text-xl text-background"
-                style={{ fontFamily: "'Playfair Display', serif" }}
+                className="font-black text-xl text-white"
+                style={{ fontFamily: "'Nunito', sans-serif" }}
               >
-                Purple Store
+                BoraHae Art
               </span>
             </div>
-            <p className="text-background/60 text-sm leading-relaxed max-w-xs">
-              Tu destino de moda y estilo. Descubre piezas únicas diseñadas para la mujer moderna y sofisticada.
+            <p
+              className="text-sm leading-relaxed max-w-xs mb-6"
+              style={{ color: "oklch(1 0 0 / 0.55)", fontFamily: "'Nunito', sans-serif" }}
+            >
+              Arte anime hecho a mano con amor. Cuadros originales de stock y encargos personalizados. Cada pieza es única e irrepetible.
             </p>
-            <div className="flex gap-3 mt-6">
-              {[Instagram, Facebook, Twitter].map((Icon, i) => (
+            <div className="flex gap-2.5">
+              {[
+                { Icon: Instagram, label: "Instagram" },
+                { Icon: Youtube, label: "YouTube" },
+              ].map(({ Icon, label }) => (
                 <a
-                  key={i}
+                  key={label}
                   href="#"
-                  className="w-9 h-9 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary transition-colors"
+                  aria-label={label}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                  style={{
+                    background: "oklch(1 0 0 / 0.10)",
+                    border: "1px solid oklch(1 0 0 / 0.15)",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.background =
+                      "linear-gradient(135deg, oklch(0.62 0.22 295) 0%, oklch(0.78 0.14 295) 100%)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.background =
+                      "oklch(1 0 0 / 0.10)";
+                  }}
                 >
-                  <Icon className="w-4 h-4 text-background" />
+                  <Icon className="w-4 h-4 text-white" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Links */}
+          {/* Tienda */}
           <div>
-            <h4 className="font-semibold text-background mb-4 text-sm uppercase tracking-wider">
+            <h4
+              className="font-black text-white mb-4 text-xs uppercase tracking-widest"
+              style={{ fontFamily: "'Nunito', sans-serif" }}
+            >
               Tienda
             </h4>
             <ul className="space-y-2.5">
               {[
-                { href: "/tienda", label: "Todos los productos" },
+                { href: "/tienda", label: "Todos los cuadros" },
                 { href: "/tienda", label: "Novedades" },
+                { href: "/tienda", label: "Encargos" },
                 { href: "/tienda", label: "Ofertas" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-background/60 text-sm hover:text-background transition-colors"
+                    className="text-sm transition-colors hover:text-white"
+                    style={{ color: "oklch(1 0 0 / 0.55)", fontFamily: "'Nunito', sans-serif" }}
                   >
                     {link.label}
                   </Link>
@@ -58,8 +93,12 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Info */}
           <div>
-            <h4 className="font-semibold text-background mb-4 text-sm uppercase tracking-wider">
+            <h4
+              className="font-black text-white mb-4 text-xs uppercase tracking-widest"
+              style={{ fontFamily: "'Nunito', sans-serif" }}
+            >
               Información
             </h4>
             <ul className="space-y-2.5">
@@ -71,7 +110,8 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-background/60 text-sm hover:text-background transition-colors"
+                    className="text-sm transition-colors hover:text-white"
+                    style={{ color: "oklch(1 0 0 / 0.55)", fontFamily: "'Nunito', sans-serif" }}
                   >
                     {link.label}
                   </Link>
@@ -81,12 +121,26 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-background/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-background/40 text-sm">
-            © {new Date().getFullYear()} Purple Store. Todos los derechos reservados.
+        <div
+          className="mt-10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
+          style={{ borderTop: "1px solid oklch(1 0 0 / 0.10)" }}
+        >
+          <p
+            className="text-xs"
+            style={{ color: "oklch(1 0 0 / 0.35)", fontFamily: "'Nunito', sans-serif" }}
+          >
+            © {new Date().getFullYear()} BoraHae Art. Todos los derechos reservados.
           </p>
-          <p className="text-background/40 text-sm flex items-center gap-1">
-            Hecho con <Heart className="w-3.5 h-3.5 text-primary fill-primary" /> para ti
+          <p
+            className="text-xs flex items-center gap-1"
+            style={{ color: "oklch(1 0 0 / 0.35)", fontFamily: "'Nunito', sans-serif" }}
+          >
+            Hecho con{" "}
+            <Heart
+              className="w-3.5 h-3.5"
+              style={{ color: "oklch(0.78 0.14 295)", fill: "oklch(0.78 0.14 295)" }}
+            />{" "}
+            para los fans del anime
           </p>
         </div>
       </div>

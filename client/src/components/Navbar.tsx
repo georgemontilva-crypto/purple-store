@@ -41,14 +41,17 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center shadow-purple">
-              <span className="text-white font-bold text-sm">P</span>
+            <div
+              className="w-8 h-8 rounded-xl flex items-center justify-center shadow-purple"
+              style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.68 0.20 295) 100%)" }}
+            >
+              <span className="text-white font-black text-sm" style={{ fontFamily: "'Nunito', sans-serif" }}>B</span>
             </div>
             <span
-              className="font-display font-semibold text-xl text-foreground group-hover:text-primary transition-colors"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="font-black text-lg text-foreground group-hover:text-primary transition-colors"
+              style={{ fontFamily: "'Nunito', sans-serif", letterSpacing: "-0.01em" }}
             >
-              Purple Store
+              BoraHae Art
             </span>
           </Link>
 

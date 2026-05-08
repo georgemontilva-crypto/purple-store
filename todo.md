@@ -53,3 +53,11 @@
 ## Pruebas y Entrega
 - [x] Tests vitest para procedimientos principales (10/10 passing)
 - [x] Checkpoint final
+
+## Rediseño Visual v2
+- [x] Actualizar paleta CSS: púrpura lavanda (#C9B8FF), índigo oscuro (#3D1A8C), blanco puro
+- [x] Cambiar tipografía global a Nunito (palo seco redondeada)
+- [x] Rediseñar Hero: contenedor con bordes redondeados, no full-width, imagen de fondo con overlay
+- [x] Rediseñar Home: estructura organizada tipo cards, secciones para cuadros de anime
+- [x] Actualizar Navbar con nueva paleta y tipografía
+- [x] Actualizar ProductCard con nueva paleta
