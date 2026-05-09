@@ -67,7 +67,7 @@ function HeroSection() {
     <section className="py-4 px-4 lg:px-8">
       <div
         className="hero-container relative w-full"
-        style={{ minHeight: "340px", maxHeight: "520px", borderRadius: "1.5rem", overflow: "hidden" }}
+        style={{ minHeight: "480px", maxHeight: "680px", borderRadius: "1.5rem", overflow: "hidden" }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -108,7 +108,7 @@ function HeroSection() {
             <div className="absolute bottom-12 right-16 w-24 h-24 rounded-full border-2 border-white/10" />
           </div>
         )}
-        <div className="relative z-10 flex flex-col justify-center h-full px-5 sm:px-8 lg:px-14 py-8 lg:py-10" style={{ minHeight: "340px" }}>
+        <div className="relative z-10 flex flex-col justify-center h-full px-5 sm:px-8 lg:px-14 py-12 lg:py-16" style={{ minHeight: "480px" }}>
           <div className="max-w-xl">
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 text-sm font-semibold"

@@ -81,14 +81,14 @@ export default function SidebarNav() {
         {/* Logo */}
         <Link href="/">
           <div
-            className="w-11 h-11 rounded-2xl flex items-center justify-center mb-3 cursor-pointer transition-transform hover:scale-105"
-            style={{ background: gradientBg, boxShadow: `0 4px 16px oklch(0.42 0.24 295 / 0.35)` }}
+            className="w-14 h-14 rounded-2xl flex items-center justify-center mb-3 cursor-pointer transition-transform hover:scale-105"
+            style={logoUrl ? {} : { background: gradientBg, boxShadow: `0 4px 16px oklch(0.42 0.24 295 / 0.35)` }}
             title={siteName}
           >
             {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-1 rounded-2xl" />
+              <img src={logoUrl} alt="Logo" className="w-full h-full object-contain" style={{ borderRadius: "0" }} />
             ) : (
-              <Palette className="w-5 h-5 text-white" />
+              <Palette className="w-6 h-6 text-white" />
             )}
           </div>
         </Link>
