@@ -149,66 +149,73 @@ export default function AdminCategories() {
     );
   }
 
-  return (
-    <AdminLayout>
-      <div className="space-y-4 max-w-6xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-bold text-foreground">Categorías</h2>
-            <p className="text-sm text-muted-foreground">{categories.length} categoría{categories.length !== 1 ? "s" : ""}</p>
-          </div>
-          <Button onClick={() => { setEditingCat(null); setShowForm(true); }} className="rounded-xl gradient-purple text-white border-0 shadow-purple hover:opacity-90 gap-2 font-semibold">
-            <Plus className="w-4 h-4" /> Nueva categoría
-          </Button>
-        </div>
+  const addBtn = (
+    <button
+      onClick={() => { setEditingCat(null); setShowForm(true); }}
+      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors"
+    >
+      <Plus className="w-4 h-4" /> Add Category
+    </button>
+  );
 
+  return (
+    <AdminLayout title="Categories" subtitle={`${categories.length} categories`} action={addBtn}>
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         {isLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => <div key={i} className="rounded-2xl bg-muted animate-pulse aspect-[4/3]" />)}
-          </div>
+          <div className="p-8 text-center text-sm text-gray-400">Cargando...</div>
         ) : categories.length === 0 ? (
-          <div className="bg-white rounded-2xl border py-16 text-center" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-            <Tags className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
-            <p className="font-semibold text-foreground">No hay categorías</p>
-            <p className="text-sm text-muted-foreground mt-1">Crea tu primera categoría para organizar los productos</p>
-            <Button onClick={() => { setEditingCat(null); setShowForm(true); }} className="mt-4 rounded-xl gradient-purple text-white border-0 shadow-purple gap-2">
+          <div className="py-16 text-center">
+            <Tags className="w-10 h-10 text-gray-200 mx-auto mb-3" />
+            <p className="text-sm text-gray-400">No hay categorías</p>
+            <button onClick={() => { setEditingCat(null); setShowForm(true); }} className="mt-4 flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors mx-auto">
               <Plus className="w-4 h-4" /> Crear categoría
-            </Button>
+            </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {categories.map((cat: any) => (
-              <div key={cat.id} className="bg-white rounded-2xl border overflow-hidden hover:shadow-md transition-all group" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-                <div className="aspect-video relative overflow-hidden bg-muted">
-                  {cat.imageUrl ? (
-                    <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, oklch(0.88 0.10 295), oklch(0.72 0.18 295))" }}>
-                      <Tags className="w-8 h-8 text-white/50" />
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">IMAGE</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">NAME</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden md:table-cell">SLUG</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden lg:table-cell">DESCRIPTION</th>
+                <th className="text-right px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {categories.map((cat: any) => (
+                <tr key={cat.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-3.5">
+                    <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                      {cat.imageUrl ? (
+                        <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Tags className="w-4 h-4 text-gray-300" />
+                        </div>
+                      )}
                     </div>
-                  )}
-                  {cat.featured && (
-                    <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: "oklch(0.42 0.20 295)", color: "white" }}>
-                      <Star className="w-3 h-3 fill-white" /> Destacada
+                  </td>
+                  <td className="px-6 py-3.5">
+                    <span className="font-semibold text-gray-900">{cat.name}</span>
+                    {cat.featured && <span className="ml-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-medium bg-purple-50 text-purple-700"><Star className="w-2.5 h-2.5" /> Featured</span>}
+                  </td>
+                  <td className="px-6 py-3.5 text-gray-400 font-mono text-xs hidden md:table-cell">{cat.slug}</td>
+                  <td className="px-6 py-3.5 text-gray-500 hidden lg:table-cell">{cat.description ? <span className="line-clamp-1">{cat.description}</span> : <span className="text-gray-300">—</span>}</td>
+                  <td className="px-6 py-3.5">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => { setEditingCat(cat); setShowForm(true); }} className="p-1.5 text-gray-400 hover:text-gray-700 transition-colors">
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      <button onClick={() => { if (confirm(`¿Eliminar "${cat.name}"?`)) deleteMutation.mutate({ id: cat.id }); }} className="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
-                  )}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button onClick={() => { setEditingCat(cat); setShowForm(true); }} className="p-2 rounded-xl bg-white/90 hover:bg-white transition-colors">
-                      <Edit2 className="w-4 h-4 text-primary" />
-                    </button>
-                    <button onClick={() => { if (confirm(`¿Eliminar "${cat.name}"?`)) deleteMutation.mutate({ id: cat.id }); }} className="p-2 rounded-xl bg-white/90 hover:bg-white transition-colors">
-                      <Trash2 className="w-4 h-4 text-rose-500" />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3">
-                  <p className="font-bold text-sm text-foreground truncate">{cat.name}</p>
-                  {cat.description && <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{cat.description}</p>}
-                  <p className="text-xs text-muted-foreground/50 mt-1 font-mono">{cat.slug}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
     </AdminLayout>

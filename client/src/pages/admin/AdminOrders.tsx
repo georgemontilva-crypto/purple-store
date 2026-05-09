@@ -208,25 +208,17 @@ export default function AdminOrders() {
   }
 
   return (
-    <AdminLayout>
-      <div className="space-y-4 max-w-6xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-bold text-foreground">Pedidos</h2>
-            <p className="text-sm text-muted-foreground">{total} pedido{total !== 1 ? "s" : ""} en total</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl border p-4 flex flex-col sm:flex-row gap-3" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+    <AdminLayout title="Pedidos" subtitle={`${total} pedido${total !== 1 ? "s" : ""} en total`}>
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input placeholder="Buscar por número o cliente..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 rounded-xl border-border/60 bg-muted/30 focus:bg-white" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Input placeholder="Buscar por número o cliente..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 border-gray-200 bg-white text-sm" />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-            className="px-3 py-2 rounded-xl border text-sm bg-muted/30 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20"
-            style={{ borderColor: "oklch(0.88 0.04 295)" }}
+            className="px-3 py-2 rounded-lg border border-gray-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-purple-200"
           >
             {STATUS_OPTIONS.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
@@ -234,7 +226,7 @@ export default function AdminOrders() {
           </select>
         </div>
 
-        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           {isLoading ? (
             <div className="p-6 space-y-3">{Array.from({ length: 5 }).map((_, i) => <div key={i} className="h-12 bg-muted rounded-xl animate-pulse" />)}</div>
           ) : filteredOrders.length === 0 ? (
