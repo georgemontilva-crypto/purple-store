@@ -219,17 +219,17 @@ export default function SidebarNav() {
       >
         {/* Logo */}
         <Link href="/" onClick={() => setMobileOpen(false)}>
-          <div className="flex items-center gap-2.5 cursor-pointer">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: gradientBg, boxShadow: `0 3px 10px oklch(0.42 0.24 295 / 0.35)` }}
-            >
-              {logoUrl ? (
-                <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-0.5" />
-              ) : (
+          <div className="flex items-center gap-2 cursor-pointer">
+            {logoUrl ? (
+              <img src={logoUrl} alt="Logo" className="h-9 w-auto object-contain flex-shrink-0" style={{ maxWidth: "100px" }} />
+            ) : (
+              <div
+                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: gradientBg, boxShadow: `0 3px 10px oklch(0.42 0.24 295 / 0.35)` }}
+              >
                 <Palette className="w-4 h-4 text-white" />
-              )}
-            </div>
+              </div>
+            )}
             <span className="font-black text-base" style={{ color: purple, ...nunito }}>
               {siteName}
             </span>

@@ -19,19 +19,16 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden"
-                style={{
-                  background:
-                    "linear-gradient(135deg, oklch(0.62 0.22 295) 0%, oklch(0.78 0.14 295) 100%)",
-                }}
-              >
-                {logoUrl ? (
-                  <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-0.5" />
-                ) : (
+              {logoUrl ? (
+                <img src={logoUrl} alt="Logo" className="h-11 w-auto object-contain" style={{ maxWidth: "120px" }} />
+              ) : (
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden"
+                  style={{ background: "linear-gradient(135deg, oklch(0.62 0.22 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                >
                   <Palette className="w-5 h-5 text-white" />
-                )}
-              </div>
+                </div>
+              )}
               <span
                 className="font-black text-xl text-white"
                 style={{ fontFamily: "'Nunito', sans-serif" }}
