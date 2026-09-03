@@ -26,12 +26,12 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
       <StoreLayout>
         <div className="container mx-auto px-4 lg:px-8 py-16">
           <div className="grid lg:grid-cols-2 gap-10 animate-pulse">
-            <div className="aspect-square rounded-3xl" style={{ background: "oklch(0.95 0.02 295)" }} />
+            <div className="aspect-square rounded-3xl" style={{ background: "#f6effe" }} />
             <div className="space-y-4">
-              <div className="h-6 rounded-2xl w-1/4" style={{ background: "oklch(0.95 0.02 295)" }} />
-              <div className="h-10 rounded-2xl w-3/4" style={{ background: "oklch(0.95 0.02 295)" }} />
-              <div className="h-8 rounded-2xl w-1/3" style={{ background: "oklch(0.95 0.02 295)" }} />
-              <div className="h-24 rounded-2xl" style={{ background: "oklch(0.95 0.02 295)" }} />
+              <div className="h-6 rounded-2xl w-1/4" style={{ background: "#f6effe" }} />
+              <div className="h-10 rounded-2xl w-3/4" style={{ background: "#f6effe" }} />
+              <div className="h-8 rounded-2xl w-1/3" style={{ background: "#f6effe" }} />
+              <div className="h-24 rounded-2xl" style={{ background: "#f6effe" }} />
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
         <div className="container mx-auto px-4 lg:px-8 py-24 text-center">
           <div
             className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5"
-            style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+            style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
           >
             <Palette className="w-10 h-10 text-white/60" />
           </div>
@@ -56,7 +56,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
           <Link href="/tienda">
             <Button
               className="rounded-full font-black border-0"
-              style={{ ...nunito, background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)", color: "white" }}
+              style={{ ...nunito, background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)", color: "white" }}
             >
               Volver a la tienda
             </Button>
@@ -104,14 +104,14 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
           <div className="space-y-3">
             <div
               className="aspect-square rounded-3xl overflow-hidden relative"
-              style={{ border: "1.5px solid oklch(0.91 0.04 295)" }}
+              style={{ border: "1.5px solid #e6dcf8" }}
             >
               {images[selectedImage] ? (
                 <img src={images[selectedImage]} alt={product.name} className="w-full h-full object-cover" />
               ) : (
                 <div
                   className="w-full h-full flex items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                  style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
                 >
                   <Palette className="w-20 h-20 text-white/40" />
                 </div>
@@ -139,9 +139,9 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
                     className="w-20 h-20 rounded-2xl overflow-hidden transition-all"
                     style={{
                       border: selectedImage === i
-                        ? "2.5px solid oklch(0.52 0.24 295)"
-                        : "2px solid oklch(0.91 0.04 295)",
-                      boxShadow: selectedImage === i ? "0 2px 12px oklch(0.42 0.24 295 / 0.3)" : "none",
+                        ? "2.5px solid #862bd8"
+                        : "2px solid #e6dcf8",
+                      boxShadow: selectedImage === i ? "0 2px 12px rgb(122 22 202 / 0.3)" : "none",
                     }}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -158,7 +158,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
               <Link href={`/tienda?categoria=${category.slug}`}>
                 <span
                   className="text-xs font-black uppercase tracking-widest hover:underline"
-                  style={{ color: "oklch(0.62 0.22 295)", fontFamily: "'Nunito', sans-serif" }}
+                  style={{ color: "#a159f1", fontFamily: "'Nunito', sans-serif" }}
                 >
                   {category.name}
                 </span>
@@ -185,7 +185,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl md:text-4xl font-black" style={{ ...nunito, color: "oklch(0.35 0.22 295)" }}>
+              <span className="text-3xl md:text-4xl font-black" style={{ ...nunito, color: "#6400aa" }}>
                 ${parseFloat(product.price).toFixed(2)}
               </span>
               {product.comparePrice && parseFloat(product.comparePrice) > parseFloat(product.price) && (
@@ -196,7 +196,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
               {discount && (
                 <span
                   className="px-2.5 py-1 text-sm font-black rounded-full"
-                  style={{ background: "oklch(0.95 0.06 295)", color: "oklch(0.35 0.22 295)", fontFamily: "'Nunito', sans-serif" }}
+                  style={{ background: "#f6e6ff", color: "#6400aa", fontFamily: "'Nunito', sans-serif" }}
                 >
                   Ahorras {discount}%
                 </span>
@@ -231,7 +231,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
               <span className="text-sm font-black text-foreground" style={nunito}>Cantidad:</span>
               <div
                 className="flex items-center gap-1 p-1 rounded-2xl"
-                style={{ border: "1.5px solid oklch(0.91 0.04 295)", background: "oklch(0.98 0.006 295)" }}
+                style={{ border: "1.5px solid #e6dcf8", background: "#f9f7fc" }}
               >
                 <button
                   onClick={() => setQty(Math.max(1, qty - 1))}
@@ -257,10 +257,10 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
                 style={{
                   ...nunito,
                   background: product.stock === 0
-                    ? "oklch(0.85 0.02 295)"
-                    : "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
-                  color: product.stock === 0 ? "oklch(0.55 0.06 295)" : "white",
-                  boxShadow: product.stock > 0 ? "0 6px 24px oklch(0.42 0.24 295 / 0.35)" : "none",
+                    ? "#d0cbd9"
+                    : "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
+                  color: product.stock === 0 ? "#78698f" : "white",
+                  boxShadow: product.stock > 0 ? "0 6px 24px rgb(122 22 202 / 0.35)" : "none",
                 }}
                 disabled={product.stock === 0}
                 onClick={handleAddToCart}
@@ -280,9 +280,9 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
                 <div
                   key={label}
                   className="flex flex-col items-center gap-1.5 p-3 rounded-2xl text-center"
-                  style={{ background: "oklch(0.97 0.01 295)", border: "1px solid oklch(0.91 0.04 295)" }}
+                  style={{ background: "#f6f4fb", border: "1px solid #e6dcf8" }}
                 >
-                  <Icon className="w-4 h-4" style={{ color: "oklch(0.52 0.24 295)" }} />
+                  <Icon className="w-4 h-4" style={{ color: "#862bd8" }} />
                   <span className="text-xs font-black text-foreground leading-tight" style={nunito}>{label}</span>
                 </div>
               ))}
@@ -292,7 +292,7 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
               <Button
                 variant="ghost"
                 className="rounded-full gap-1.5 font-bold -ml-2"
-                style={{ ...nunito, color: "oklch(0.55 0.06 295)" }}
+                style={{ ...nunito, color: "#78698f" }}
               >
                 <ArrowLeft className="w-4 h-4" />
                 Volver a la tienda

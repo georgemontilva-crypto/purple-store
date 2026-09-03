@@ -26,13 +26,13 @@ export default function About() {
         <div
           className="rounded-2xl px-5 py-8 md:px-8 md:py-14 relative overflow-hidden"
           style={{
-            background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 55%, oklch(0.72 0.18 295) 100%)",
+            background: "linear-gradient(125deg, #7331bd 0%, #944fdd 40%, #ff39a0 72%, #40c9e9 100%)",
           }}
         >
           <div className="absolute top-0 right-0 w-56 h-56 rounded-full blur-3xl opacity-20"
-            style={{ background: "oklch(0.88 0.10 295)" }} />
+            style={{ background: "#e3c8ff" }} />
           <div className="absolute bottom-0 left-1/4 w-32 h-32 rounded-full blur-2xl opacity-15"
-            style={{ background: "oklch(0.95 0.06 295)" }} />
+            style={{ background: "#f6e6ff" }} />
           <div className="absolute top-6 right-24 w-10 h-10 rounded-full border-2 border-white/20" />
           <div className="absolute top-12 right-40 w-5 h-5 rounded-full border border-white/15" />
 
@@ -48,7 +48,7 @@ export default function About() {
               {title?.value ?? "Sobre Nosotros"}
             </h1>
             <p className="text-white/75 text-base leading-relaxed font-semibold" style={nunito}>
-              {subtitle?.value ?? "Conoce la historia detrás de BoraHae Art y nuestra pasión por el arte anime hecho a mano"}
+              {subtitle?.value ?? "Conoce la historia detrás de Guaiqui Avenue y nuestra pasión por el arte anime hecho a mano"}
             </p>
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function About() {
           <div className="space-y-5">
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-black"
-              style={{ background: "oklch(0.92 0.06 295)", color: "oklch(0.35 0.22 295)", fontFamily: "'Nunito', sans-serif" }}
+              style={{ background: "#f0e4fd", color: "#6400aa", fontFamily: "'Nunito', sans-serif" }}
             >
               <Brush className="w-3.5 h-3.5" />
               Nuestra historia
@@ -78,29 +78,29 @@ export default function About() {
             {image1?.value ? (
               <img
                 src={image1.value}
-                alt="Sobre BoraHae Art"
+                alt="Sobre Guaiqui Avenue"
                 className="w-full aspect-square object-cover rounded-3xl"
-                style={{ boxShadow: "0 20px 60px oklch(0.42 0.24 295 / 0.25)" }}
+                style={{ boxShadow: "0 20px 60px rgb(122 22 202 / 0.25)" }}
               />
             ) : (
               <div
                 className="w-full aspect-square rounded-3xl flex items-center justify-center"
                 style={{
-                  background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)",
-                  boxShadow: "0 20px 60px oklch(0.42 0.24 295 / 0.20)",
+                  background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)",
+                  boxShadow: "0 20px 60px rgb(122 22 202 / 0.20)",
                 }}
               >
                 <div className="text-center">
                   <div
                     className="w-24 h-24 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                    style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" }}
+                    style={{ background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" }}
                   >
                     <Palette className="w-12 h-12 text-white" />
                   </div>
-                  <p className="font-black text-xl" style={{ color: "oklch(0.35 0.22 295)", fontFamily: "'Nunito', sans-serif" }}>
-                    BoraHae Art
+                  <p className="font-black text-xl" style={{ color: "#6400aa", fontFamily: "'Nunito', sans-serif" }}>
+                    Guaiqui Avenue
                   </p>
-                  <p className="text-sm font-semibold mt-1" style={{ color: "oklch(0.55 0.14 295)", fontFamily: "'Nunito', sans-serif" }}>
+                  <p className="text-sm font-semibold mt-1" style={{ color: "#815ab5", fontFamily: "'Nunito', sans-serif" }}>
                     Arte hecho a mano
                   </p>
                 </div>
@@ -111,14 +111,14 @@ export default function About() {
               className="absolute -bottom-4 -left-4 px-4 py-3 rounded-2xl"
               style={{
                 background: "white",
-                boxShadow: "0 8px 32px oklch(0.42 0.24 295 / 0.20)",
-                border: "1px solid oklch(0.91 0.04 295)",
+                boxShadow: "0 8px 32px rgb(122 22 202 / 0.20)",
+                border: "1px solid #e6dcf8",
               }}
             >
               <div className="flex items-center gap-2.5">
                 <div
                   className="w-9 h-9 rounded-xl flex items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" }}
+                  style={{ background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" }}
                 >
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
@@ -138,26 +138,26 @@ export default function About() {
               key={i}
               className="text-center p-6 rounded-2xl transition-all hover:-translate-y-1"
               style={{
-                background: "oklch(0.98 0.008 295)",
-                border: "1.5px solid oklch(0.91 0.04 295)",
-                boxShadow: "0 2px 12px oklch(0.42 0.24 295 / 0.05)",
+                background: "#f9f7fd",
+                border: "1.5px solid #e6dcf8",
+                boxShadow: "0 2px 12px rgb(122 22 202 / 0.05)",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px oklch(0.42 0.24 295 / 0.15)";
-                (e.currentTarget as HTMLDivElement).style.borderColor = "oklch(0.72 0.18 295 / 0.5)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgb(122 22 202 / 0.15)";
+                (e.currentTarget as HTMLDivElement).style.borderColor = "rgb(186 133 255 / 0.5)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 12px oklch(0.42 0.24 295 / 0.05)";
-                (e.currentTarget as HTMLDivElement).style.borderColor = "oklch(0.91 0.04 295)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 12px rgb(122 22 202 / 0.05)";
+                (e.currentTarget as HTMLDivElement).style.borderColor = "#e6dcf8";
               }}
             >
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center mx-auto mb-3"
-                style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
               >
                 <stat.icon className="w-5 h-5 text-white" />
               </div>
-              <p className="text-3xl font-black mb-1" style={{ ...nunito, color: "oklch(0.35 0.22 295)" }}>
+              <p className="text-3xl font-black mb-1" style={{ ...nunito, color: "#6400aa" }}>
                 {stat.value}
               </p>
               <p className="text-xs font-bold text-muted-foreground" style={nunito}>{stat.label}</p>
@@ -170,7 +170,7 @@ export default function About() {
           <div
             className="p-8 rounded-2xl"
             style={{
-              background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 100%)",
+              background: "linear-gradient(135deg, #6400aa 0%, #862bd8 100%)",
             }}
           >
             <div
@@ -188,13 +188,13 @@ export default function About() {
           <div
             className="p-8 rounded-2xl"
             style={{
-              background: "oklch(0.98 0.008 295)",
-              border: "1.5px solid oklch(0.91 0.04 295)",
+              background: "#f9f7fd",
+              border: "1.5px solid #e6dcf8",
             }}
           >
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-              style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+              style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
             >
               <Sparkles className="w-5 h-5 text-white" />
             </div>

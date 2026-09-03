@@ -5,12 +5,12 @@ import { toast } from "sonner";
 import { X, Mail, ArrowRight, Sparkles } from "lucide-react";
 
 const nunito = { fontFamily: "'Nunito', sans-serif" };
-const purple = "oklch(0.42 0.24 295)";
-const purpleLight = "oklch(0.62 0.22 295)";
-const purpleBg = "oklch(0.98 0.008 295)";
-const purpleBorder = "oklch(0.91 0.04 295)";
+const purple = "#7a16ca";
+const purpleLight = "#a159f1";
+const purpleBg = "#f9f7fd";
+const purpleBorder = "#e6dcf8";
 
-const STORAGE_KEY = "borahae_popup_seen";
+const STORAGE_KEY = "guaiqui_popup_seen";
 
 export default function WelcomePopup() {
   const [visible, setVisible] = useState(false);
@@ -84,7 +84,7 @@ export default function WelcomePopup() {
         <button
           onClick={handleClose}
           className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
-          style={{ background: "oklch(0.94 0.04 295)", color: purple }}
+          style={{ background: "#f0e5ff", color: purple }}
         >
           <X className="w-4 h-4" />
         </button>
@@ -106,7 +106,7 @@ export default function WelcomePopup() {
           {!popup.imageUrl && (
             <div
               className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
-              style={{ background: gradientBg, boxShadow: `0 4px 16px oklch(0.42 0.24 295 / 0.35)` }}
+              style={{ background: gradientBg, boxShadow: `0 4px 16px rgb(122 22 202 / 0.35)` }}
             >
               <Sparkles className="w-7 h-7 text-white" />
             </div>
@@ -115,7 +115,7 @@ export default function WelcomePopup() {
           {/* Título */}
           <h2
             className="text-2xl font-black text-center mb-1 leading-tight"
-            style={{ color: "oklch(0.22 0.18 295)", ...nunito }}
+            style={{ color: "#2e005d", ...nunito }}
           >
             {popup.title}
           </h2>
@@ -124,7 +124,7 @@ export default function WelcomePopup() {
           {popup.subtitle && (
             <p
               className="text-sm text-center mb-3 font-semibold"
-              style={{ color: "oklch(0.52 0.14 295)", ...nunito }}
+              style={{ color: "#7951ab", ...nunito }}
             >
               {popup.subtitle}
             </p>
@@ -134,7 +134,7 @@ export default function WelcomePopup() {
           {popup.body && (
             <p
               className="text-sm text-center mb-5 leading-relaxed"
-              style={{ color: "oklch(0.45 0.08 295)", ...nunito }}
+              style={{ color: "#5e4a7a", ...nunito }}
             >
               {popup.body}
             </p>
@@ -160,7 +160,7 @@ export default function WelcomePopup() {
                   style={{
                     background: purpleBg,
                     border: `1.5px solid ${purpleBorder}`,
-                    color: "oklch(0.22 0.18 295)",
+                    color: "#2e005d",
                     ...nunito,
                   }}
                 />
@@ -174,7 +174,7 @@ export default function WelcomePopup() {
                     style={{
                       background: purpleBg,
                       border: emailError ? "2px solid oklch(0.65 0.22 25)" : `1.5px solid ${purpleBorder}`,
-                      color: "oklch(0.22 0.18 295)",
+                      color: "#2e005d",
                       ...nunito,
                     }}
                   />
@@ -189,8 +189,8 @@ export default function WelcomePopup() {
                   disabled={subscribeMutation.isPending}
                   className="w-full py-2.5 rounded-xl font-bold text-sm text-white transition-all"
                   style={{
-                    background: subscribeMutation.isPending ? "oklch(0.75 0.12 295)" : gradientBg,
-                    boxShadow: `0 4px 14px oklch(0.42 0.24 295 / 0.30)`,
+                    background: subscribeMutation.isPending ? "#bc9bed" : gradientBg,
+                    boxShadow: `0 4px 14px rgb(122 22 202 / 0.30)`,
                     ...nunito,
                   }}
                 >
@@ -204,7 +204,7 @@ export default function WelcomePopup() {
           {subscribed && (
             <div
               className="text-center py-3 px-4 rounded-2xl mb-4"
-              style={{ background: "oklch(0.94 0.06 295)", ...nunito }}
+              style={{ background: "#f2e2ff", ...nunito }}
             >
               <p className="text-sm font-bold" style={{ color: purple }}>
                 ✓ ¡Suscripción confirmada! 💜
@@ -219,7 +219,7 @@ export default function WelcomePopup() {
                 className="w-full py-3 rounded-2xl font-black text-sm text-white flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
                 style={{
                   background: gradientBg,
-                  boxShadow: `0 4px 16px oklch(0.42 0.24 295 / 0.35)`,
+                  boxShadow: `0 4px 16px rgb(122 22 202 / 0.35)`,
                   ...nunito,
                 }}
               >
@@ -233,7 +233,7 @@ export default function WelcomePopup() {
           <button
             onClick={handleClose}
             className="w-full mt-3 text-xs font-semibold text-center transition-opacity hover:opacity-70"
-            style={{ color: "oklch(0.62 0.08 295)", ...nunito }}
+            style={{ color: "#8f7baf", ...nunito }}
           >
             No gracias, seguir explorando
           </button>

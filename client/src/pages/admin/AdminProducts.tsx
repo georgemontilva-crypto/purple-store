@@ -70,7 +70,7 @@ export default function AdminProducts() {
         </div>
 
         {/* Search */}
-        <div className="bg-white rounded-2xl border p-4" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="bg-white rounded-2xl border p-4" style={{ borderColor: "#eae5f3" }}>
           <div className="relative max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
@@ -83,7 +83,7 @@ export default function AdminProducts() {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
           {isLoading ? (
             <div className="p-6 space-y-3">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -110,7 +110,7 @@ export default function AdminProducts() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b" style={{ borderColor: "oklch(0.93 0.02 295)", background: "oklch(0.98 0.01 295)" }}>
+                  <tr className="border-b" style={{ borderColor: "#eae5f3", background: "#f9f7fe" }}>
                     <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Producto</th>
                     <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden md:table-cell">Categoría</th>
                     <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Precio</th>
@@ -119,7 +119,7 @@ export default function AdminProducts() {
                     <th className="text-right px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Acciones</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y" style={{ borderColor: "oklch(0.95 0.01 295)" }}>
+                <tbody className="divide-y" style={{ borderColor: "#efedf4" }}>
                   {products.map((product) => {
                     const category = categories.find((c: any) => c.id === product.categoryId);
                     return (
@@ -227,7 +227,7 @@ export default function AdminProducts() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between px-4 py-3 border-t" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            <div className="flex items-center justify-between px-4 py-3 border-t" style={{ borderColor: "#eae5f3" }}>
               <p className="text-xs text-muted-foreground">
                 Página {page} de {totalPages} · {total} productos
               </p>

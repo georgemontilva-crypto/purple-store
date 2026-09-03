@@ -10,7 +10,7 @@ const STATUS_OPTIONS = [
   { value: "", label: "Todos los estados" },
   { value: "pending",    label: "Pendiente",   dot: "bg-amber-400",   badge: "bg-amber-50 text-amber-700 border-amber-200" },
   { value: "confirmed",  label: "Confirmado",  dot: "bg-blue-400",    badge: "bg-blue-50 text-blue-700 border-blue-200" },
-  { value: "processing", label: "Procesando",  dot: "bg-violet-400",  badge: "bg-violet-50 text-violet-700 border-violet-200" },
+  { value: "processing", label: "Procesando",  dot: "bg-violet-400",  badge: "bg-guaiqui-purple-50 text-guaiqui-purple-dark border-violet-200" },
   { value: "shipped",    label: "Enviado",     dot: "bg-indigo-400",  badge: "bg-indigo-50 text-indigo-700 border-indigo-200" },
   { value: "delivered",  label: "Entregado",   dot: "bg-emerald-400", badge: "bg-emerald-50 text-emerald-700 border-emerald-200" },
   { value: "cancelled",  label: "Cancelado",   dot: "bg-rose-400",    badge: "bg-rose-50 text-rose-700 border-rose-200" },
@@ -55,7 +55,7 @@ function OrderDetail({ orderId, onBack }: { orderId: number; onBack: () => void 
         <ArrowLeft className="w-4 h-4" /> Volver a pedidos
       </button>
 
-      <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+      <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "#eae5f3" }}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -73,7 +73,7 @@ function OrderDetail({ orderId, onBack }: { orderId: number; onBack: () => void 
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+      <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "#eae5f3" }}>
         <h3 className="font-semibold text-sm text-foreground mb-3">Actualizar estado</h3>
         <div className="flex flex-wrap gap-2">
           {STATUS_OPTIONS.filter((s) => s.value).map((s) => (
@@ -95,7 +95,7 @@ function OrderDetail({ orderId, onBack }: { orderId: number; onBack: () => void 
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "#eae5f3" }}>
           <h3 className="font-semibold text-sm text-foreground mb-3 flex items-center gap-2">
             <User className="w-4 h-4 text-primary" /> Cliente
           </h3>
@@ -113,7 +113,7 @@ function OrderDetail({ orderId, onBack }: { orderId: number; onBack: () => void 
             )}
           </div>
         </div>
-        <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "#eae5f3" }}>
           <h3 className="font-semibold text-sm text-foreground mb-3 flex items-center gap-2">
             <MapPin className="w-4 h-4 text-primary" /> Envío
           </h3>
@@ -129,13 +129,13 @@ function OrderDetail({ orderId, onBack }: { orderId: number; onBack: () => void 
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-        <div className="px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+      <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
+        <div className="px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
           <h3 className="font-semibold text-sm text-foreground flex items-center gap-2">
             <Package className="w-4 h-4 text-primary" /> Artículos del pedido
           </h3>
         </div>
-        <div className="divide-y" style={{ borderColor: "oklch(0.95 0.01 295)" }}>
+        <div className="divide-y" style={{ borderColor: "#efedf4" }}>
           {(order.items as any[])?.map((item: any, i: number) => (
             <div key={i} className="flex items-center gap-3 px-5 py-3">
               <div className="w-12 h-12 rounded-xl overflow-hidden bg-muted flex-shrink-0">
@@ -158,7 +158,7 @@ function OrderDetail({ orderId, onBack }: { orderId: number; onBack: () => void 
             </div>
           ))}
         </div>
-        <div className="px-5 py-3 border-t flex justify-end" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="px-5 py-3 border-t flex justify-end" style={{ borderColor: "#eae5f3" }}>
           <div className="text-right">
             <p className="text-sm text-muted-foreground">Total del pedido</p>
             <p className="text-xl font-black text-foreground">${parseFloat(order.total).toFixed(2)}</p>
@@ -218,7 +218,7 @@ export default function AdminOrders() {
           <select
             value={statusFilter}
             onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}
-            className="px-3 py-2 rounded-lg border border-gray-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-purple-200"
+            className="px-3 py-2 rounded-lg border border-gray-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-guaiqui-purple-100"
           >
             {STATUS_OPTIONS.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
@@ -239,7 +239,7 @@ export default function AdminOrders() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b" style={{ borderColor: "oklch(0.93 0.02 295)", background: "oklch(0.98 0.01 295)" }}>
+                  <tr className="border-b" style={{ borderColor: "#eae5f3", background: "#f9f7fe" }}>
                     <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Pedido</th>
                     <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden sm:table-cell">Cliente</th>
                     <th className="text-left px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide hidden md:table-cell">Fecha</th>
@@ -248,7 +248,7 @@ export default function AdminOrders() {
                     <th className="text-right px-4 py-3 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Ver</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y" style={{ borderColor: "oklch(0.95 0.01 295)" }}>
+                <tbody className="divide-y" style={{ borderColor: "#efedf4" }}>
                   {filteredOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => setSelectedOrderId(order.id)}>
                       <td className="px-4 py-3">
@@ -281,7 +281,7 @@ export default function AdminOrders() {
           )}
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-between px-4 py-3 border-t" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            <div className="flex items-center justify-between px-4 py-3 border-t" style={{ borderColor: "#eae5f3" }}>
               <p className="text-xs text-muted-foreground">Página {page} de {totalPages}</p>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="rounded-xl text-xs">Anterior</Button>

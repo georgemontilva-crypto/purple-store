@@ -36,7 +36,7 @@ export default function Contact() {
   const nunito = { fontFamily: "'Nunito', sans-serif" };
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: contactEmail?.value ?? "hola@borahaeart.com" },
+    { icon: Mail, label: "Email", value: contactEmail?.value ?? "hola@guaiquiavenue.com" },
     { icon: Phone, label: "Teléfono / WhatsApp", value: contactPhone?.value ?? "+57 300 000 0000" },
     { icon: MapPin, label: "Ubicación", value: contactAddress?.value ?? "Colombia" },
   ];
@@ -48,11 +48,11 @@ export default function Contact() {
         <div
           className="rounded-2xl px-5 py-8 md:px-8 md:py-12 relative overflow-hidden"
           style={{
-            background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 55%, oklch(0.72 0.18 295) 100%)",
+            background: "linear-gradient(125deg, #7331bd 0%, #944fdd 40%, #ff39a0 72%, #40c9e9 100%)",
           }}
         >
           <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-20"
-            style={{ background: "oklch(0.88 0.10 295)" }} />
+            style={{ background: "#e3c8ff" }} />
           <div className="absolute top-6 right-24 w-10 h-10 rounded-full border-2 border-white/20" />
           <div className="absolute top-12 right-40 w-5 h-5 rounded-full border border-white/15" />
 
@@ -91,27 +91,27 @@ export default function Contact() {
                   key={i}
                   className="flex items-start gap-4 p-4 rounded-2xl transition-all hover:-translate-y-0.5"
                   style={{
-                    background: "oklch(0.98 0.008 295)",
-                    border: "1.5px solid oklch(0.91 0.04 295)",
-                    boxShadow: "0 2px 8px oklch(0.42 0.24 295 / 0.05)",
+                    background: "#f9f7fd",
+                    border: "1.5px solid #e6dcf8",
+                    boxShadow: "0 2px 8px rgb(122 22 202 / 0.05)",
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 20px oklch(0.42 0.24 295 / 0.12)";
-                    (e.currentTarget as HTMLDivElement).style.borderColor = "oklch(0.72 0.18 295 / 0.4)";
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 20px rgb(122 22 202 / 0.12)";
+                    (e.currentTarget as HTMLDivElement).style.borderColor = "rgb(186 133 255 / 0.4)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px oklch(0.42 0.24 295 / 0.05)";
-                    (e.currentTarget as HTMLDivElement).style.borderColor = "oklch(0.91 0.04 295)";
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgb(122 22 202 / 0.05)";
+                    (e.currentTarget as HTMLDivElement).style.borderColor = "#e6dcf8";
                   }}
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                    style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
                   >
                     <info.icon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-xs font-black uppercase tracking-wider mb-0.5" style={{ color: "oklch(0.62 0.22 295)", fontFamily: "'Nunito', sans-serif" }}>
+                    <p className="text-xs font-black uppercase tracking-wider mb-0.5" style={{ color: "#a159f1", fontFamily: "'Nunito', sans-serif" }}>
                       {info.label}
                     </p>
                     <p className="text-foreground font-bold text-sm" style={nunito}>{info.value}</p>
@@ -124,7 +124,7 @@ export default function Contact() {
             <div
               className="p-4 rounded-2xl"
               style={{
-                background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 100%)",
+                background: "linear-gradient(135deg, #6400aa 0%, #862bd8 100%)",
               }}
             >
               <p className="font-black text-white text-sm mb-1" style={nunito}>⚡ Tiempo de respuesta</p>
@@ -139,16 +139,16 @@ export default function Contact() {
             <div
               className="p-8 rounded-2xl"
               style={{
-                background: "oklch(0.98 0.008 295)",
-                border: "1.5px solid oklch(0.91 0.04 295)",
-                boxShadow: "0 4px 24px oklch(0.42 0.24 295 / 0.08)",
+                background: "#f9f7fd",
+                border: "1.5px solid #e6dcf8",
+                boxShadow: "0 4px 24px rgb(122 22 202 / 0.08)",
               }}
             >
               {sent ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <div
                     className="w-20 h-20 rounded-2xl flex items-center justify-center mb-5"
-                    style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                    style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
                   >
                     <CheckCircle className="w-10 h-10 text-white" />
                   </div>
@@ -160,7 +160,7 @@ export default function Contact() {
                   </p>
                   <Button
                     className="rounded-full font-black border-0"
-                    style={{ ...nunito, background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)", color: "white" }}
+                    style={{ ...nunito, background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)", color: "white" }}
                     onClick={() => setSent(false)}
                   >
                     Enviar otro mensaje
@@ -183,7 +183,7 @@ export default function Contact() {
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         className="rounded-2xl font-semibold text-sm"
-                        style={{ ...nunito, border: "1.5px solid oklch(0.91 0.04 295)" }}
+                        style={{ ...nunito, border: "1.5px solid #e6dcf8" }}
                         required
                       />
                     </div>
@@ -197,7 +197,7 @@ export default function Contact() {
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         className="rounded-2xl font-semibold text-sm"
-                        style={{ ...nunito, border: "1.5px solid oklch(0.91 0.04 295)" }}
+                        style={{ ...nunito, border: "1.5px solid #e6dcf8" }}
                         required
                       />
                     </div>
@@ -210,7 +210,7 @@ export default function Contact() {
                       value={form.subject}
                       onChange={(e) => setForm({ ...form, subject: e.target.value })}
                       className="rounded-2xl font-semibold text-sm"
-                      style={{ ...nunito, border: "1.5px solid oklch(0.91 0.04 295)" }}
+                      style={{ ...nunito, border: "1.5px solid #e6dcf8" }}
                     />
                   </div>
 
@@ -227,9 +227,9 @@ export default function Contact() {
                       className="w-full px-4 py-3 rounded-2xl focus:outline-none focus:ring-2 bg-background text-foreground placeholder:text-muted-foreground text-sm resize-none transition-all font-semibold"
                       style={{
                         ...nunito,
-                        border: "1.5px solid oklch(0.91 0.04 295)",
+                        border: "1.5px solid #e6dcf8",
                         // @ts-ignore
-                        "--tw-ring-color": "oklch(0.62 0.22 295 / 0.3)",
+                        "--tw-ring-color": "rgb(161 89 241 / 0.3)",
                       }}
                     />
                   </div>
@@ -240,9 +240,9 @@ export default function Contact() {
                     className="w-full rounded-2xl font-black h-12 text-base border-0 hover:opacity-90 transition-opacity"
                     style={{
                       ...nunito,
-                      background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                      background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                       color: "white",
-                      boxShadow: "0 6px 24px oklch(0.42 0.24 295 / 0.35)",
+                      boxShadow: "0 6px 24px rgb(122 22 202 / 0.35)",
                     }}
                     disabled={sendMutation.isPending}
                   >

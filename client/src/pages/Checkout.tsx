@@ -52,13 +52,13 @@ export default function Checkout() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "oklch(0.98 0.008 295)" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#f9f7fd" }}>
         <div className="text-center">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3"
-            style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295), oklch(0.62 0.22 295))" }}>
+            style={{ background: "linear-gradient(135deg, #7a16ca, #a159f1)" }}>
             <Lock className="w-6 h-6 text-white" />
           </div>
-          <p className="text-sm font-semibold" style={{ color: "oklch(0.52 0.14 295)" }}>Verificando sesión...</p>
+          <p className="text-sm font-semibold" style={{ color: "#7951ab" }}>Verificando sesión...</p>
         </div>
       </div>
     );
@@ -79,7 +79,7 @@ export default function Checkout() {
 
   const inputStyle = {
     ...nunito,
-    border: "1.5px solid oklch(0.91 0.04 295)",
+    border: "1.5px solid #e6dcf8",
     borderRadius: "14px",
     fontWeight: "600",
   };
@@ -92,8 +92,8 @@ export default function Checkout() {
             <div
               className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6"
               style={{
-                background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
-                boxShadow: "0 12px 40px oklch(0.42 0.24 295 / 0.35)",
+                background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
+                boxShadow: "0 12px 40px rgb(122 22 202 / 0.35)",
               }}
             >
               <CheckCircle className="w-12 h-12 text-white" />
@@ -107,11 +107,11 @@ export default function Checkout() {
             <div
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-6"
               style={{
-                background: "oklch(0.92 0.06 295)",
-                border: "1.5px solid oklch(0.78 0.14 295 / 0.5)",
+                background: "#f0e4fd",
+                border: "1.5px solid rgb(200 161 255 / 0.5)",
               }}
             >
-              <span className="text-sm font-black" style={{ color: "oklch(0.35 0.22 295)", fontFamily: "'Nunito', sans-serif" }}>
+              <span className="text-sm font-black" style={{ color: "#6400aa", fontFamily: "'Nunito', sans-serif" }}>
                 Pedido #{orderNumber}
               </span>
             </div>
@@ -124,9 +124,9 @@ export default function Checkout() {
                   className="w-full rounded-2xl font-black h-12 border-0 hover:opacity-90"
                   style={{
                     ...nunito,
-                    background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                    background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                     color: "white",
-                    boxShadow: "0 6px 24px oklch(0.42 0.24 295 / 0.35)",
+                    boxShadow: "0 6px 24px rgb(122 22 202 / 0.35)",
                   }}
                 >
                   Seguir comprando
@@ -136,7 +136,7 @@ export default function Checkout() {
                 <Button
                   variant="ghost"
                   className="w-full rounded-2xl font-bold"
-                  style={{ ...nunito, color: "oklch(0.55 0.06 295)" }}
+                  style={{ ...nunito, color: "#78698f" }}
                 >
                   Volver al inicio
                 </Button>
@@ -154,7 +154,7 @@ export default function Checkout() {
         <div className="container mx-auto px-4 lg:px-8 py-24 text-center">
           <div
             className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5"
-            style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+            style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
           >
             <ShoppingBag className="w-9 h-9 text-white/60" />
           </div>
@@ -167,7 +167,7 @@ export default function Checkout() {
               className="rounded-full font-black border-0"
               style={{
                 ...nunito,
-                background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                 color: "white",
               }}
             >
@@ -186,7 +186,7 @@ export default function Checkout() {
           <Button
             variant="ghost"
             className="rounded-full gap-1.5 mb-6 -ml-2 font-bold"
-            style={{ ...nunito, color: "oklch(0.55 0.06 295)" }}
+            style={{ ...nunito, color: "#78698f" }}
           >
             <ArrowLeft className="w-4 h-4" />
             Volver a la tienda
@@ -203,12 +203,12 @@ export default function Checkout() {
             {/* Contact */}
             <div
               className="p-6 rounded-2xl"
-              style={{ background: "oklch(0.98 0.008 295)", border: "1.5px solid oklch(0.91 0.04 295)" }}
+              style={{ background: "#f9f7fd", border: "1.5px solid #e6dcf8" }}
             >
               <h2 className="font-black text-foreground text-base mb-5 flex items-center gap-2" style={nunito}>
                 <div
                   className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" }}
+                  style={{ background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" }}
                 >
                   <CreditCard className="w-4 h-4 text-white" />
                 </div>
@@ -255,12 +255,12 @@ export default function Checkout() {
             {/* Shipping */}
             <div
               className="p-6 rounded-2xl"
-              style={{ background: "oklch(0.98 0.008 295)", border: "1.5px solid oklch(0.91 0.04 295)" }}
+              style={{ background: "#f9f7fd", border: "1.5px solid #e6dcf8" }}
             >
               <h2 className="font-black text-foreground text-base mb-5 flex items-center gap-2" style={nunito}>
                 <div
                   className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" }}
+                  style={{ background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" }}
                 >
                   <MapPin className="w-4 h-4 text-white" />
                 </div>
@@ -318,7 +318,7 @@ export default function Checkout() {
             {/* Notes */}
             <div
               className="p-6 rounded-2xl"
-              style={{ background: "oklch(0.98 0.008 295)", border: "1.5px solid oklch(0.91 0.04 295)" }}
+              style={{ background: "#f9f7fd", border: "1.5px solid #e6dcf8" }}
             >
               <label className="text-sm font-black text-foreground block mb-1.5" style={nunito}>
                 Notas del pedido (opcional)
@@ -331,7 +331,7 @@ export default function Checkout() {
                 className="w-full px-4 py-3 focus:outline-none focus:ring-2 bg-background text-foreground placeholder:text-muted-foreground text-sm resize-none transition-all font-semibold"
                 style={{
                   ...nunito,
-                  border: "1.5px solid oklch(0.91 0.04 295)",
+                  border: "1.5px solid #e6dcf8",
                   borderRadius: "14px",
                 }}
               />
@@ -343,9 +343,9 @@ export default function Checkout() {
               className="w-full rounded-2xl font-black h-14 text-base border-0 hover:opacity-90 transition-opacity"
               style={{
                 ...nunito,
-                background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                 color: "white",
-                boxShadow: "0 8px 32px oklch(0.42 0.24 295 / 0.40)",
+                boxShadow: "0 8px 32px rgb(122 22 202 / 0.40)",
               }}
               disabled={createOrderMutation.isPending}
             >
@@ -358,9 +358,9 @@ export default function Checkout() {
             <div
               className="sticky top-6 rounded-2xl p-6 space-y-4"
               style={{
-                background: "oklch(0.98 0.008 295)",
-                border: "1.5px solid oklch(0.91 0.04 295)",
-                boxShadow: "0 4px 24px oklch(0.42 0.24 295 / 0.08)",
+                background: "#f9f7fd",
+                border: "1.5px solid #e6dcf8",
+                boxShadow: "0 4px 24px rgb(122 22 202 / 0.08)",
               }}
             >
               <h2 className="font-black text-foreground text-base" style={nunito}>Resumen del pedido</h2>
@@ -372,14 +372,14 @@ export default function Checkout() {
                     <div key={item.id} className="flex gap-3">
                       <div
                         className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0"
-                        style={{ border: "1px solid oklch(0.91 0.04 295)" }}
+                        style={{ border: "1px solid #e6dcf8" }}
                       >
                         {item.product.imageUrl ? (
                           <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
                         ) : (
                           <div
                             className="w-full h-full flex items-center justify-center"
-                            style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                            style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
                           >
                             <Palette className="w-5 h-5 text-white/50" />
                           </div>
@@ -388,7 +388,7 @@ export default function Checkout() {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-black text-foreground line-clamp-1" style={nunito}>{item.product.name}</p>
                         <p className="text-xs font-semibold text-muted-foreground" style={nunito}>Cant: {item.quantity}</p>
-                        <p className="text-sm font-black" style={{ ...nunito, color: "oklch(0.35 0.22 295)" }}>
+                        <p className="text-sm font-black" style={{ ...nunito, color: "#6400aa" }}>
                           ${(parseFloat(item.product.price) * item.quantity).toFixed(2)}
                         </p>
                       </div>
@@ -399,7 +399,7 @@ export default function Checkout() {
 
               <div
                 className="pt-4 space-y-2"
-                style={{ borderTop: "1.5px solid oklch(0.91 0.04 295)" }}
+                style={{ borderTop: "1.5px solid #e6dcf8" }}
               >
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground font-semibold" style={nunito}>Subtotal</span>
@@ -411,20 +411,20 @@ export default function Checkout() {
                 </div>
                 <div
                   className="flex justify-between font-black text-lg pt-3"
-                  style={{ borderTop: "1.5px solid oklch(0.91 0.04 295)", ...nunito }}
+                  style={{ borderTop: "1.5px solid #e6dcf8", ...nunito }}
                 >
                   <span>Total</span>
-                  <span style={{ color: "oklch(0.35 0.22 295)" }}>${subtotal.toFixed(2)}</span>
+                  <span style={{ color: "#6400aa" }}>${subtotal.toFixed(2)}</span>
                 </div>
               </div>
 
               {/* Trust */}
               <div
                 className="flex items-center gap-2 p-3 rounded-xl"
-                style={{ background: "oklch(0.92 0.06 295)" }}
+                style={{ background: "#f0e4fd" }}
               >
-                <Truck className="w-4 h-4 flex-shrink-0" style={{ color: "oklch(0.42 0.24 295)" }} />
-                <p className="text-xs font-black" style={{ color: "oklch(0.35 0.22 295)", fontFamily: "'Nunito', sans-serif" }}>
+                <Truck className="w-4 h-4 flex-shrink-0" style={{ color: "#7a16ca" }} />
+                <p className="text-xs font-black" style={{ color: "#6400aa", fontFamily: "'Nunito', sans-serif" }}>
                   Envío gratis en todos los pedidos
                 </p>
               </div>

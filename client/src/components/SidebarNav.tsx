@@ -30,13 +30,13 @@ const navLinks = [
 ];
 
 const nunito = { fontFamily: "'Nunito', sans-serif" };
-const purple = "oklch(0.42 0.24 295)";
-const purpleLight = "oklch(0.62 0.22 295)";
-const purpleBg = "oklch(0.98 0.008 295)";
-const purpleBorder = "oklch(0.91 0.04 295)";
-const purpleHover = "oklch(0.92 0.06 295)";
-const purpleDark = "oklch(0.22 0.08 295)";
-const purpleMid = "oklch(0.52 0.14 295)";
+const purple = "#7a16ca";
+const purpleLight = "#a159f1";
+const purpleBg = "#f9f7fd";
+const purpleBorder = "#e6dcf8";
+const purpleHover = "#f0e4fd";
+const purpleDark = "#220e39";
+const purpleMid = "#7951ab";
 
 export default function SidebarNav() {
   const [location] = useLocation();
@@ -47,7 +47,7 @@ export default function SidebarNav() {
   const { data: logoData } = trpc.content.get.useQuery({ key: "site_logo" });
   const { data: siteNameData } = trpc.content.get.useQuery({ key: "site_name" });
   const logoUrl = logoData?.value ?? "";
-  const siteName = siteNameData?.value ?? "BoraHae Art";
+  const siteName = siteNameData?.value ?? "Guaiqui Avenue";
 
   const logoutMutation = trpc.customAuth.logout.useMutation({
     onSuccess: () => {
@@ -75,14 +75,14 @@ export default function SidebarNav() {
           width: "72px",
           background: purpleBg,
           borderRight: `1.5px solid ${purpleBorder}`,
-          boxShadow: `2px 0 16px oklch(0.42 0.24 295 / 0.06)`,
+          boxShadow: `2px 0 16px rgb(122 22 202 / 0.06)`,
         }}
       >
         {/* Logo */}
         <Link href="/">
           <div
             className="w-14 h-14 rounded-2xl flex items-center justify-center mb-3 cursor-pointer transition-transform hover:scale-105"
-            style={logoUrl ? {} : { background: gradientBg, boxShadow: `0 4px 16px oklch(0.42 0.24 295 / 0.35)` }}
+            style={logoUrl ? {} : { background: gradientBg, boxShadow: `0 4px 16px rgb(122 22 202 / 0.35)` }}
             title={siteName}
           >
             {logoUrl ? (
@@ -105,7 +105,7 @@ export default function SidebarNav() {
                   className="relative group w-11 h-11 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-150"
                   style={{
                     background: active ? gradientBg : "transparent",
-                    boxShadow: active ? `0 4px 14px oklch(0.42 0.24 295 / 0.30)` : "none",
+                    boxShadow: active ? `0 4px 14px rgb(122 22 202 / 0.30)` : "none",
                   }}
                   onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLDivElement).style.background = purpleHover; }}
                   onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
@@ -144,12 +144,12 @@ export default function SidebarNav() {
               <button
                 className="w-11 h-11 rounded-2xl flex items-center justify-center transition-all duration-150"
                 style={{ background: purpleHover }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "oklch(0.88 0.08 295)"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#e1ccff"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = purpleHover; }}
                 title={user.name ?? "Usuario"}
               >
                 {user.name ? (
-                  <span className="text-sm font-black" style={{ color: "oklch(0.35 0.22 295)", ...nunito }}>
+                  <span className="text-sm font-black" style={{ color: "#6400aa", ...nunito }}>
                     {user.name.charAt(0).toUpperCase()}
                   </span>
                 ) : (
@@ -162,16 +162,16 @@ export default function SidebarNav() {
                 style={{ background: purpleDark, color: "white", ...nunito, boxShadow: "0 4px 16px oklch(0 0 0 / 0.3)", minWidth: "165px" }}
               >
                 {/* User info */}
-                <div className="px-3 py-2.5 border-b" style={{ borderColor: "oklch(0.32 0.1 295)" }}>
-                  <p className="font-bold text-xs" style={{ color: "oklch(0.88 0.06 295)" }}>{user.name}</p>
-                  <p style={{ color: "oklch(0.55 0.08 295)", fontSize: "10px", marginTop: "1px" }}>{user.email}</p>
+                <div className="px-3 py-2.5 border-b" style={{ borderColor: "#3d235c" }}>
+                  <p className="font-bold text-xs" style={{ color: "#decff9" }}>{user.name}</p>
+                  <p style={{ color: "#7a6699", fontSize: "10px", marginTop: "1px" }}>{user.email}</p>
                 </div>
                 {/* Admin link */}
                 {user.role === "admin" && (
                   <Link href="/admin">
                     <div className="px-3 py-2.5 flex items-center gap-2 cursor-pointer hover:bg-white/10 transition-colors">
-                      <Settings className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "oklch(0.72 0.18 295)" }} />
-                      <span style={{ color: "oklch(0.88 0.06 295)" }}>Panel Admin</span>
+                      <Settings className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "#ba85ff" }} />
+                      <span style={{ color: "#decff9" }}>Panel Admin</span>
                     </div>
                   </Link>
                 )}
@@ -180,8 +180,8 @@ export default function SidebarNav() {
                   onClick={() => logoutMutation.mutate()}
                   className="w-full px-3 py-2.5 flex items-center gap-2 cursor-pointer hover:bg-white/10 transition-colors text-left"
                 >
-                  <LogOut className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "oklch(0.62 0.08 295)" }} />
-                  <span style={{ color: "oklch(0.72 0.06 295)" }}>Cerrar sesión</span>
+                  <LogOut className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "#8f7baf" }} />
+                  <span style={{ color: "#ab9cc5" }}>Cerrar sesión</span>
                 </button>
                 <div className="absolute right-full bottom-8 border-4 border-transparent" style={{ borderRightColor: purpleDark }} />
               </div>
@@ -214,7 +214,7 @@ export default function SidebarNav() {
           height: "60px",
           background: purpleBg,
           borderBottom: `1.5px solid ${purpleBorder}`,
-          boxShadow: "0 2px 12px oklch(0.42 0.24 295 / 0.08)",
+          boxShadow: "0 2px 12px rgb(122 22 202 / 0.08)",
         }}
       >
         {/* Logo */}
@@ -225,7 +225,7 @@ export default function SidebarNav() {
             ) : (
               <div
                 className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: gradientBg, boxShadow: `0 3px 10px oklch(0.42 0.24 295 / 0.35)` }}
+                style={{ background: gradientBg, boxShadow: `0 3px 10px rgb(122 22 202 / 0.35)` }}
               >
                 <Palette className="w-4 h-4 text-white" />
               </div>
@@ -285,7 +285,7 @@ export default function SidebarNav() {
             style={{
               background: purpleBg,
               borderBottom: `1.5px solid ${purpleBorder}`,
-              boxShadow: "0 8px 32px oklch(0.42 0.24 295 / 0.15)",
+              boxShadow: "0 8px 32px rgb(122 22 202 / 0.15)",
               borderRadius: "0 0 24px 24px",
             }}
             onClick={(e) => e.stopPropagation()}
@@ -300,13 +300,13 @@ export default function SidebarNav() {
                       className="flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer transition-all"
                       style={{
                         background: active ? gradientBg : "transparent",
-                        boxShadow: active ? `0 4px 14px oklch(0.42 0.24 295 / 0.25)` : "none",
+                        boxShadow: active ? `0 4px 14px rgb(122 22 202 / 0.25)` : "none",
                       }}
                     >
                       <Icon className="w-5 h-5 flex-shrink-0" style={{ color: active ? "white" : purpleMid }} />
                       <span
                         className="font-bold text-sm"
-                        style={{ color: active ? "white" : "oklch(0.35 0.18 295)", ...nunito }}
+                        style={{ color: active ? "white" : "#4e0586", ...nunito }}
                       >
                         {label}
                       </span>
@@ -330,7 +330,7 @@ export default function SidebarNav() {
                     }}
                   >
                     <Settings className="w-5 h-5 flex-shrink-0" style={{ color: location.startsWith("/admin") ? "white" : purpleMid }} />
-                    <span className="font-bold text-sm" style={{ color: location.startsWith("/admin") ? "white" : "oklch(0.35 0.18 295)", ...nunito }}>
+                    <span className="font-bold text-sm" style={{ color: location.startsWith("/admin") ? "white" : "#4e0586", ...nunito }}>
                       Panel Admin
                     </span>
                   </div>
@@ -348,13 +348,13 @@ export default function SidebarNav() {
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-black text-sm truncate" style={{ color: "oklch(0.35 0.22 295)", ...nunito }}>{user.name}</p>
+                    <p className="font-black text-sm truncate" style={{ color: "#6400aa", ...nunito }}>{user.name}</p>
                     <p className="text-xs truncate" style={{ color: purpleMid, ...nunito }}>{user.email}</p>
                   </div>
                   <button
                     onClick={() => logoutMutation.mutate()}
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
-                    style={{ background: "oklch(0.88 0.08 295)", color: "oklch(0.35 0.22 295)", ...nunito }}
+                    style={{ background: "#e1ccff", color: "#6400aa", ...nunito }}
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     Salir
@@ -374,7 +374,7 @@ export default function SidebarNav() {
                   <Link href="/registro" onClick={() => setMobileOpen(false)} className="flex-1">
                     <div
                       className="flex items-center justify-center gap-2 py-3 rounded-2xl font-bold text-sm cursor-pointer"
-                      style={{ background: gradientBg, color: "white", ...nunito, boxShadow: `0 4px 14px oklch(0.42 0.24 295 / 0.30)` }}
+                      style={{ background: gradientBg, color: "white", ...nunito, boxShadow: `0 4px 14px rgb(122 22 202 / 0.30)` }}
                     >
                       <UserPlus className="w-4 h-4" />
                       Registrarse
@@ -433,7 +433,7 @@ function DesktopSidebarIconLink({ icon, label, active }: { icon: React.ReactNode
       className="relative group w-11 h-11 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-150"
       style={{
         background: active ? gradientBg : "transparent",
-        boxShadow: active ? `0 4px 14px oklch(0.42 0.24 295 / 0.30)` : "none",
+        boxShadow: active ? `0 4px 14px rgb(122 22 202 / 0.30)` : "none",
       }}
       onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLDivElement).style.background = purpleHover; }}
       onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}

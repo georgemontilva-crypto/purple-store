@@ -42,15 +42,15 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2 group">
             <div
               className="w-8 h-8 rounded-xl flex items-center justify-center shadow-purple"
-              style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.68 0.20 295) 100%)" }}
+              style={{ background: "linear-gradient(120deg, #ff39a0 0%, #944fdd 55%, #40c9e9 100%)" }}
             >
-              <span className="text-white font-black text-sm" style={{ fontFamily: "'Nunito', sans-serif" }}>B</span>
+              <span className="text-white font-black text-sm" style={{ fontFamily: "'Nunito', sans-serif" }}>G</span>
             </div>
             <span
               className="font-black text-lg text-foreground group-hover:text-primary transition-colors"
               style={{ fontFamily: "'Nunito', sans-serif", letterSpacing: "-0.01em" }}
             >
-              BoraHae Art
+              Guaiqui Avenue
             </span>
           </Link>
 

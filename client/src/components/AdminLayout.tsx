@@ -64,7 +64,7 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
   const { data: logoData } = trpc.content.get.useQuery({ key: "site_logo" });
   const { data: siteNameData } = trpc.content.get.useQuery({ key: "site_name" });
   const logoUrl = logoData?.value ?? "";
-  const siteName = siteNameData?.value ?? "BoraHae Art";
+  const siteName = siteNameData?.value ?? "Guaiqui Avenue";
 
   const logoutMutation = trpc.auth.logout.useMutation({
     onSuccess: () => (window.location.href = "/"),
@@ -74,7 +74,7 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-guaiqui-purple border-t-transparent rounded-full animate-spin" />
           <p className="text-sm text-gray-500">Cargando panel...</p>
         </div>
       </div>
@@ -85,13 +85,13 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center max-w-sm mx-auto px-6">
-          <div className="w-14 h-14 rounded-2xl bg-purple-600 flex items-center justify-center mx-auto mb-5">
+          <div className="w-14 h-14 rounded-2xl bg-guaiqui-purple flex items-center justify-center mx-auto mb-5">
             <Palette className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-xl font-bold mb-2 text-gray-900">Panel de administración</h1>
           <p className="text-gray-500 mb-6 text-sm">Inicia sesión con tu cuenta de administrador para continuar.</p>
           <a href={getLoginUrl()}>
-            <button className="w-full px-6 py-3 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors">
+            <button className="w-full px-6 py-3 rounded-lg bg-guaiqui-purple text-white font-semibold hover:bg-guaiqui-purple-dark transition-colors">
               Iniciar sesión
             </button>
           </a>
@@ -108,7 +108,7 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
           <p className="text-xl font-bold mb-2 text-gray-900">Acceso denegado</p>
           <p className="text-gray-500 mb-6 text-sm">No tienes permisos para acceder al panel de administración.</p>
           <Link href="/">
-            <button className="px-6 py-3 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition-colors">
+            <button className="px-6 py-3 rounded-lg bg-guaiqui-purple text-white font-semibold hover:bg-guaiqui-purple-dark transition-colors">
               Volver al inicio
             </button>
           </Link>
@@ -131,7 +131,7 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
             {logoUrl ? (
               <img src={logoUrl} alt="Logo" className="h-8 w-auto object-contain flex-shrink-0" style={{ maxWidth: "80px" }} />
             ) : (
-              <div className="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-guaiqui-purple flex items-center justify-center flex-shrink-0">
                 <Palette className="w-4 h-4 text-white" />
               </div>
             )}
@@ -160,11 +160,11 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
                     onClick={() => setSidebarOpen(false)}
                     className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm font-medium transition-all ${
                       active
-                        ? "bg-purple-50 text-purple-700"
+                        ? "bg-guaiqui-purple-50 text-guaiqui-purple-dark"
                         : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                     }`}
                   >
-                    <item.icon className={`w-4 h-4 flex-shrink-0 ${active ? "text-purple-600" : "text-gray-400"}`} />
+                    <item.icon className={`w-4 h-4 flex-shrink-0 ${active ? "text-guaiqui-purple" : "text-gray-400"}`} />
                     <span>{item.label}</span>
                   </Link>
                 );
@@ -192,7 +192,7 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
           Cerrar sesión
         </button>
         <div className="mt-2 px-2.5 py-2 rounded-lg bg-gray-50 flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-guaiqui-purple flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
             {user?.name?.[0]?.toUpperCase() ?? "A"}
           </div>
           <div className="min-w-0 flex-1">
@@ -240,7 +240,7 @@ export default function AdminLayout({ children, title, subtitle, action }: Admin
           <div className="flex items-center gap-3">
             {action}
             <div className="flex items-center gap-2 pl-3 border-l border-gray-200">
-              <div className="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold">
+              <div className="w-7 h-7 rounded-full bg-guaiqui-purple flex items-center justify-center text-white text-xs font-bold">
                 {user?.name?.[0]?.toUpperCase() ?? "A"}
               </div>
               <span className="text-sm font-medium text-gray-700 hidden md:block">{user?.name}</span>

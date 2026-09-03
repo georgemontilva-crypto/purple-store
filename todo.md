@@ -63,7 +63,7 @@
 - [x] Actualizar ProductCard con nueva paleta
 
 ## Rediseño Visual v3 - Páginas restantes
-- [x] Rediseñar página Tienda con nueva identidad BoraHae
+- [x] Rediseñar página Tienda con nueva identidad Guaiqui Avenue
 - [x] Rediseñar página Detalle de Producto
 - [x] Rediseñar página Sobre Nosotros
 - [x] Rediseñar página Contacto

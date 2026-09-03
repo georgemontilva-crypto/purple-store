@@ -36,12 +36,12 @@ export default function AdminMessages() {
 
         <div className="grid lg:grid-cols-5 gap-4" style={{ minHeight: "calc(100vh - 14rem)" }}>
           {/* Message List */}
-          <div className="lg:col-span-2 bg-white rounded-2xl border overflow-hidden flex flex-col" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-            <div className="px-4 py-3 border-b flex items-center gap-2" style={{ borderColor: "oklch(0.93 0.02 295)", background: "oklch(0.98 0.01 295)" }}>
+          <div className="lg:col-span-2 bg-white rounded-2xl border overflow-hidden flex flex-col" style={{ borderColor: "#eae5f3" }}>
+            <div className="px-4 py-3 border-b flex items-center gap-2" style={{ borderColor: "#eae5f3", background: "#f9f7fe" }}>
               <Inbox className="w-4 h-4 text-primary" />
               <span className="font-semibold text-sm text-foreground">Bandeja de entrada</span>
             </div>
-            <div className="flex-1 overflow-y-auto divide-y" style={{ borderColor: "oklch(0.95 0.01 295)" }}>
+            <div className="flex-1 overflow-y-auto divide-y" style={{ borderColor: "#efedf4" }}>
               {isLoading ? (
                 Array.from({ length: 4 }).map((_, i) => (
                   <div key={i} className="p-4">
@@ -84,10 +84,10 @@ export default function AdminMessages() {
           </div>
 
           {/* Message Detail */}
-          <div className="lg:col-span-3 bg-white rounded-2xl border overflow-hidden flex flex-col" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div className="lg:col-span-3 bg-white rounded-2xl border overflow-hidden flex flex-col" style={{ borderColor: "#eae5f3" }}>
             {selected ? (
               <>
-                <div className="px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+                <div className="px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
                   <h3 className="font-bold text-foreground">{selected.subject || "Sin asunto"}</h3>
                   <div className="flex flex-wrap gap-3 mt-2 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1.5">
@@ -106,7 +106,7 @@ export default function AdminMessages() {
                     <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap">{selected.message}</p>
                   </div>
                 </div>
-                <div className="px-5 py-4 border-t" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+                <div className="px-5 py-4 border-t" style={{ borderColor: "#eae5f3" }}>
                   <a href={`mailto:${selected.email}?subject=Re: ${selected.subject || "Tu mensaje"}`}>
                     <Button className="rounded-xl gradient-purple text-white border-0 shadow-purple gap-2">
                       <Mail className="w-4 h-4" />
@@ -118,7 +118,7 @@ export default function AdminMessages() {
             ) : (
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: "oklch(0.95 0.03 295)" }}>
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: "#f2eaff" }}>
                     <MessageSquare className="w-8 h-8 text-primary/40" />
                   </div>
                   <p className="font-semibold text-foreground">Selecciona un mensaje</p>

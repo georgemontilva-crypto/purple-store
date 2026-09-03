@@ -36,7 +36,7 @@ export async function sendVerificationEmail(
   pin: string
 ): Promise<{ previewUrl?: string }> {
   const transporter = await getTransporter();
-  const from = process.env.SMTP_FROM ?? `"BoraHae Art" <noreply@borahae.art>`;
+  const from = process.env.SMTP_FROM ?? `"Guaiqui Avenue" <noreply@guaiquiavenue.com>`;
 
   const html = `
 <!DOCTYPE html>
@@ -44,34 +44,34 @@ export async function sendVerificationEmail(
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verifica tu cuenta - BoraHae Art</title>
+  <title>Verifica tu cuenta - Guaiqui Avenue</title>
 </head>
-<body style="margin:0;padding:0;background:#f5f3ff;font-family:'Segoe UI',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f3ff;padding:40px 20px;">
+<body style="margin:0;padding:0;background:#f6effe;font-family:'Segoe UI',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f6effe;padding:40px 20px;">
     <tr>
       <td align="center">
-        <table width="480" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(93,0,200,0.10);">
+        <table width="480" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(148,79,221,0.14);">
           <!-- Header -->
           <tr>
-            <td style="background:linear-gradient(135deg,#3d1a8c 0%,#7c3aed 60%,#a78bfa 100%);padding:36px 40px 28px;text-align:center;">
+            <td style="background:linear-gradient(120deg,#ff39a0 0%,#944fdd 45%,#40c9e9 80%,#98e4e0 100%);padding:36px 40px 28px;text-align:center;">
               <div style="display:inline-block;background:rgba(255,255,255,0.15);border-radius:16px;padding:12px 20px;margin-bottom:12px;">
-                <span style="font-size:28px;">🎨</span>
+                <span style="font-size:28px;">✨</span>
               </div>
-              <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:800;letter-spacing:-0.5px;">BoraHae Art</h1>
-              <p style="margin:4px 0 0;color:rgba(255,255,255,0.75);font-size:13px;">Arte Anime Hecho a Mano</p>
+              <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:800;letter-spacing:-0.5px;">Guaiqui Avenue</h1>
+              <p style="margin:4px 0 0;color:rgba(255,255,255,0.75);font-size:13px;">Tu tienda online</p>
             </td>
           </tr>
           <!-- Body -->
           <tr>
             <td style="padding:36px 40px 28px;">
-              <h2 style="margin:0 0 8px;color:#1e1b4b;font-size:20px;font-weight:800;">¡Hola, ${name}! 👋</h2>
+              <h2 style="margin:0 0 8px;color:#2a1147;font-size:20px;font-weight:800;">¡Hola, ${name}! 👋</h2>
               <p style="margin:0 0 24px;color:#6b7280;font-size:15px;line-height:1.6;">
-                Gracias por registrarte en <strong>BoraHae Art</strong>. Para activar tu cuenta, ingresa el siguiente código de verificación:
+                Gracias por registrarte en <strong>Guaiqui Avenue</strong>. Para activar tu cuenta, ingresa el siguiente código de verificación:
               </p>
               <!-- PIN -->
-              <div style="background:linear-gradient(135deg,#f5f3ff 0%,#ede9fe 100%);border:2px solid #c4b5fd;border-radius:16px;padding:28px;text-align:center;margin-bottom:24px;">
-                <p style="margin:0 0 8px;color:#7c3aed;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Tu código de verificación</p>
-                <div style="font-size:42px;font-weight:900;letter-spacing:10px;color:#3d1a8c;font-family:'Courier New',monospace;">${pin}</div>
+              <div style="background:linear-gradient(135deg,#fff0f8 0%,#f6effe 100%);border:2px solid #e6d7fb;border-radius:16px;padding:28px;text-align:center;margin-bottom:24px;">
+                <p style="margin:0 0 8px;color:#944fdd;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Tu código de verificación</p>
+                <div style="font-size:42px;font-weight:900;letter-spacing:10px;color:#7331bd;font-family:'Courier New',monospace;">${pin}</div>
                 <p style="margin:10px 0 0;color:#9ca3af;font-size:12px;">Este código expira en <strong>15 minutos</strong></p>
               </div>
               <p style="margin:0 0 8px;color:#6b7280;font-size:13px;line-height:1.6;">
@@ -81,8 +81,8 @@ export async function sendVerificationEmail(
           </tr>
           <!-- Footer -->
           <tr>
-            <td style="background:#faf5ff;padding:20px 40px;border-top:1px solid #ede9fe;text-align:center;">
-              <p style="margin:0;color:#a78bfa;font-size:12px;">© 2025 BoraHae Art · Arte Anime Hecho a Mano</p>
+            <td style="background:#fbf8ff;padding:20px 40px;border-top:1px solid #f0e6fb;text-align:center;">
+              <p style="margin:0;color:#944fdd;font-size:12px;">© 2026 Guaiqui Avenue</p>
             </td>
           </tr>
         </table>
@@ -96,9 +96,9 @@ export async function sendVerificationEmail(
   const info = await transporter.sendMail({
     from,
     to,
-    subject: `${pin} es tu código de verificación - BoraHae Art`,
+    subject: `${pin} es tu código de verificación - Guaiqui Avenue`,
     html,
-    text: `Hola ${name},\n\nTu código de verificación para BoraHae Art es: ${pin}\n\nEste código expira en 15 minutos.\n\nSi no creaste esta cuenta, ignora este correo.`,
+    text: `Hola ${name},\n\nTu código de verificación para Guaiqui Avenue es: ${pin}\n\nEste código expira en 15 minutos.\n\nSi no creaste esta cuenta, ignora este correo.`,
   });
 
   const previewUrl = nodemailer.getTestMessageUrl(info) || undefined;

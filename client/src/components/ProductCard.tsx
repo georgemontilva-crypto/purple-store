@@ -51,19 +51,19 @@ export default function ProductCard({
       <div
         className="group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1"
         style={{
-          background: "oklch(0.99 0.004 295)",
-          border: "1px solid oklch(0.91 0.04 295)",
-          boxShadow: "0 2px 12px oklch(0.42 0.24 295 / 0.06)",
+          background: "#fcfbfe",
+          border: "1px solid #e6dcf8",
+          boxShadow: "0 2px 12px rgb(122 22 202 / 0.06)",
         }}
         onMouseEnter={(e) => {
           (e.currentTarget as HTMLDivElement).style.boxShadow =
-            "0 8px 32px oklch(0.42 0.24 295 / 0.16)";
-          (e.currentTarget as HTMLDivElement).style.borderColor = "oklch(0.72 0.18 295 / 0.5)";
+            "0 8px 32px rgb(122 22 202 / 0.16)";
+          (e.currentTarget as HTMLDivElement).style.borderColor = "rgb(186 133 255 / 0.5)";
         }}
         onMouseLeave={(e) => {
           (e.currentTarget as HTMLDivElement).style.boxShadow =
-            "0 2px 12px oklch(0.42 0.24 295 / 0.06)";
-          (e.currentTarget as HTMLDivElement).style.borderColor = "oklch(0.91 0.04 295)";
+            "0 2px 12px rgb(122 22 202 / 0.06)";
+          (e.currentTarget as HTMLDivElement).style.borderColor = "#e6dcf8";
         }}
       >
         {/* Image */}
@@ -79,7 +79,7 @@ export default function ProductCard({
               className="w-full h-full flex items-center justify-center"
               style={{
                 background:
-                  "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)",
+                  "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)",
               }}
             >
               <Palette className="w-12 h-12 text-white/50" />
@@ -93,8 +93,8 @@ export default function ProductCard({
                 className="px-2.5 py-1 text-white text-xs font-black rounded-full"
                 style={{
                   background:
-                    "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
-                  boxShadow: "0 2px 8px oklch(0.42 0.24 295 / 0.4)",
+                    "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
+                  boxShadow: "0 2px 8px rgb(122 22 202 / 0.4)",
                   fontFamily: "'Nunito', sans-serif",
                 }}
               >
@@ -130,8 +130,8 @@ export default function ProductCard({
               className={`w-full py-2.5 rounded-xl text-white text-xs font-black flex items-center justify-center gap-1.5 transition-all ${adding ? "scale-95 opacity-80" : "hover:opacity-90"}`}
               style={{
                 background:
-                  "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
-                boxShadow: "0 4px 16px oklch(0.42 0.24 295 / 0.4)",
+                  "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
+                boxShadow: "0 4px 16px rgb(122 22 202 / 0.4)",
                 fontFamily: "'Nunito', sans-serif",
               }}
             >
@@ -146,7 +146,7 @@ export default function ProductCard({
           {categoryName && (
             <p
               className="text-xs font-bold mb-1 uppercase tracking-wider"
-              style={{ color: "oklch(0.62 0.22 295)", fontFamily: "'Nunito', sans-serif" }}
+              style={{ color: "#a159f1", fontFamily: "'Nunito', sans-serif" }}
             >
               {categoryName}
             </p>
@@ -160,7 +160,7 @@ export default function ProductCard({
           <div className="flex items-center gap-2">
             <span
               className="text-base font-black"
-              style={{ color: "oklch(0.35 0.22 295)", fontFamily: "'Nunito', sans-serif" }}
+              style={{ color: "#6400aa", fontFamily: "'Nunito', sans-serif" }}
             >
               ${parseFloat(price).toFixed(2)}
             </span>

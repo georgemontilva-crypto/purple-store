@@ -34,7 +34,7 @@ function FAQForm({ faq, onClose }: { faq?: any; onClose: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
-      <div className="bg-white rounded-2xl border p-5 space-y-4" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+      <div className="bg-white rounded-2xl border p-5 space-y-4" style={{ borderColor: "#eae5f3" }}>
         <h3 className="font-semibold text-sm text-foreground">{isEdit ? "Editar pregunta" : "Nueva pregunta frecuente"}</h3>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Pregunta *</label>
@@ -49,7 +49,7 @@ function FAQForm({ faq, onClose }: { faq?: any; onClose: () => void }) {
             rows={4}
             required
             className="w-full px-3 py-2.5 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background"
-            style={{ borderColor: "oklch(0.88 0.04 295)" }}
+            style={{ borderColor: "#dcd2ee" }}
           />
         </div>
         <div className="space-y-1.5">
@@ -109,7 +109,7 @@ export default function AdminFAQs() {
             {Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-20 rounded-2xl bg-muted animate-pulse" />)}
           </div>
         ) : faqs.length === 0 ? (
-          <div className="bg-white rounded-2xl border py-16 text-center" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div className="bg-white rounded-2xl border py-16 text-center" style={{ borderColor: "#eae5f3" }}>
             <HelpCircle className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
             <p className="font-semibold text-foreground">No hay preguntas frecuentes</p>
             <p className="text-sm text-muted-foreground mt-1">Agrega preguntas para ayudar a tus clientes</p>
@@ -123,7 +123,7 @@ export default function AdminFAQs() {
               <div
                 key={faq.id}
                 className={`bg-white rounded-2xl border overflow-hidden transition-all hover:shadow-sm ${!faq.active ? "opacity-60" : ""}`}
-                style={{ borderColor: faq.active ? "oklch(0.93 0.02 295)" : "oklch(0.90 0.01 295)" }}
+                style={{ borderColor: faq.active ? "#eae5f3" : "#dfdce4" }}
               >
                 <div className="flex items-start gap-3 p-4">
                   <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">

@@ -6,7 +6,7 @@ import { Link } from "wouter";
 const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
   pending:    { label: "Pendiente",   className: "bg-amber-50 text-amber-700 border border-amber-200" },
   confirmed:  { label: "Confirmado",  className: "bg-blue-50 text-blue-700 border border-blue-200" },
-  processing: { label: "Procesando",  className: "bg-violet-50 text-violet-700 border border-violet-200" },
+  processing: { label: "Procesando",  className: "bg-guaiqui-purple-50 text-guaiqui-purple-dark border border-violet-200" },
   shipped:    { label: "Enviado",     className: "bg-indigo-50 text-indigo-700 border border-indigo-200" },
   delivered:  { label: "Entregado",   className: "bg-emerald-50 text-emerald-700 border border-emerald-200" },
   cancelled:  { label: "Cancelado",   className: "bg-red-50 text-red-700 border border-red-200" },
@@ -44,7 +44,7 @@ export default function AdminDashboard() {
       label: "Total Clientes",
       value: stats?.totalCustomers ?? 0,
       icon: Users,
-      iconColor: "text-purple-500",
+      iconColor: "text-guaiqui-purple",
       href: "/admin/clientes",
     },
     {
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
               <p className="text-xs text-gray-400 mt-0.5">Overview of your store performance</p>
             </div>
             <Link href="/admin/pedidos">
-              <span className="text-xs text-purple-600 hover:text-purple-700 flex items-center gap-1 font-medium">
+              <span className="text-xs text-guaiqui-purple hover:text-guaiqui-purple-dark flex items-center gap-1 font-medium">
                 Ver todos <ArrowRight className="w-3 h-3" />
               </span>
             </Link>
@@ -133,7 +133,7 @@ export default function AdminDashboard() {
           <h3 className="font-semibold text-gray-900 text-sm mb-4">Acciones rápidas</h3>
           <div className="flex flex-wrap gap-3">
             <Link href="/admin/productos/nuevo">
-              <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors">
+              <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-guaiqui-purple text-white text-sm font-medium hover:bg-guaiqui-purple-dark transition-colors">
                 <Plus className="w-4 h-4" /> Nuevo producto
               </button>
             </Link>

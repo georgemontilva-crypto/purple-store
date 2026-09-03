@@ -633,7 +633,7 @@ export async function upsertWelcomePopup(data: Partial<{
     await db.update(welcomePopup).set(data).where(eq(welcomePopup.id, existing[0].id));
   } else {
     await db.insert(welcomePopup).values({
-      title: data.title ?? "¡Bienvenida a BoraHae Art!",
+      title: data.title ?? "¡Bienvenidos a Guaiqui Avenue!",
       ...data,
     });
   }

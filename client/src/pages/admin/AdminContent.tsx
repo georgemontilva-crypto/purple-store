@@ -44,7 +44,7 @@ function ContentField({ fieldKey, label, type, placeholder }: { fieldKey: string
     <div className="space-y-2">
       <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}</label>
       <div className="flex items-start gap-4">
-        <div className="w-20 h-20 rounded-xl overflow-hidden bg-muted border flex-shrink-0" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="w-20 h-20 rounded-xl overflow-hidden bg-muted border flex-shrink-0" style={{ borderColor: "#eae5f3" }}>
           {value ? <img src={value} alt={label} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><ImageIcon className="w-6 h-6 text-muted-foreground/40" /></div>}
         </div>
         <div className="space-y-2">
@@ -63,7 +63,7 @@ function ContentField({ fieldKey, label, type, placeholder }: { fieldKey: string
     <div className="space-y-1.5">
       <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{label}</label>
       <div className="flex gap-2">
-        <textarea value={value} onChange={(e) => setValue(e.target.value)} placeholder={placeholder} rows={3} className="flex-1 px-3 py-2.5 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "oklch(0.88 0.04 295)" }} />
+        <textarea value={value} onChange={(e) => setValue(e.target.value)} placeholder={placeholder} rows={3} className="flex-1 px-3 py-2.5 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "#dcd2ee" }} />
         <Button type="button" size="sm" className="rounded-xl gradient-purple text-white border-0 shadow-purple self-start" onClick={() => setMutation.mutate({ key: fieldKey, value })} disabled={setMutation.isPending}>
           {setMutation.isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
         </Button>
@@ -114,7 +114,7 @@ function LogoField() {
 
   return (
     <div className="flex items-start gap-5">
-      <div className="w-28 h-16 rounded-xl overflow-hidden bg-muted border flex items-center justify-center flex-shrink-0" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+      <div className="w-28 h-16 rounded-xl overflow-hidden bg-muted border flex items-center justify-center flex-shrink-0" style={{ borderColor: "#eae5f3" }}>
         {logoUrl ? <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-2" /> : <ImageLucide className="w-7 h-7 text-muted-foreground/30" />}
       </div>
       <div className="space-y-2">
@@ -194,7 +194,7 @@ function BannerSlidesManager() {
       {isLoading ? (
         <div className="space-y-2">{Array.from({ length: 2 }).map((_, i) => <div key={i} className="h-16 rounded-xl bg-muted animate-pulse" />)}</div>
       ) : slides.length === 0 ? (
-        <div className="border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer hover:border-primary/40 transition-colors" style={{ borderColor: "oklch(0.88 0.04 295)" }} onClick={() => fileRef.current?.click()}>
+        <div className="border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer hover:border-primary/40 transition-colors" style={{ borderColor: "#dcd2ee" }} onClick={() => fileRef.current?.click()}>
           <div className="flex items-center justify-center gap-3 mb-2">
             <ImageLucide className="w-6 h-6 text-muted-foreground/40" />
             <Video className="w-6 h-6 text-muted-foreground/40" />
@@ -205,7 +205,7 @@ function BannerSlidesManager() {
       ) : (
         <div className="space-y-2">
           {slides.map((slide, index) => (
-            <div key={slide.id} className={`bg-muted/30 rounded-xl border overflow-hidden transition-all ${!slide.active ? "opacity-60" : ""}`} style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+            <div key={slide.id} className={`bg-muted/30 rounded-xl border overflow-hidden transition-all ${!slide.active ? "opacity-60" : ""}`} style={{ borderColor: "#eae5f3" }}>
               {editingId === slide.id ? (
                 <div className="p-3 space-y-2">
                   <Input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} placeholder="Titulo (opcional)" className="rounded-lg text-sm" />
@@ -233,7 +233,7 @@ function BannerSlidesManager() {
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-foreground truncate">{slide.title || `Slide ${index + 1}`}</p>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs font-medium ${slide.type === "video" ? "bg-blue-50 text-blue-600" : "bg-violet-50 text-violet-600"}`}>
+                      <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-xs font-medium ${slide.type === "video" ? "bg-blue-50 text-blue-600" : "bg-guaiqui-purple-50 text-guaiqui-purple"}`}>
                         {slide.type === "video" ? <Video className="w-2.5 h-2.5" /> : <ImageLucide className="w-2.5 h-2.5" />}
                         {slide.type === "video" ? "Video" : "Imagen"}
                       </span>
@@ -264,12 +264,12 @@ function BannerSlidesManager() {
 const CONTENT_SECTIONS = [
   {
     title: "Sobre nosotros",
-    description: "Informacion sobre la artista y la historia de BoraHae Art",
+    description: "Informacion sobre la artista y la historia de Guaiqui Avenue",
     icon: FileText,
     color: "text-blue-600",
     bg: "bg-blue-50",
     fields: [
-      { key: "about_title", label: "Titulo de la pagina", type: "text", placeholder: "Sobre BoraHae Art" },
+      { key: "about_title", label: "Titulo de la pagina", type: "text", placeholder: "Sobre Guaiqui Avenue" },
       { key: "about_subtitle", label: "Subtitulo", type: "text", placeholder: "Arte anime con alma" },
       { key: "about_short", label: "Texto corto (aparece en el Home)", type: "textarea", placeholder: "Somos artistas apasionados..." },
       { key: "about_body", label: "Texto completo (pagina Sobre Nosotros)", type: "textarea", placeholder: "Historia detallada..." },
@@ -283,8 +283,8 @@ const CONTENT_SECTIONS = [
     title: "Textos del hero",
     description: "Titulo, descripcion y boton del banner principal",
     icon: Sparkles,
-    color: "text-violet-600",
-    bg: "bg-violet-50",
+    color: "text-guaiqui-purple",
+    bg: "bg-guaiqui-purple-50",
     fields: [
       { key: "hero_title", label: "Titulo principal", type: "text", placeholder: "Arte Anime Hecho a Mano" },
       { key: "hero_subtitle", label: "Subtitulo / descripcion", type: "textarea", placeholder: "Cuadros originales de anime..." },
@@ -298,7 +298,7 @@ const CONTENT_SECTIONS = [
     color: "text-emerald-600",
     bg: "bg-emerald-50",
     fields: [
-      { key: "contact_email", label: "Email de contacto", type: "text", placeholder: "hola@borahaeart.com" },
+      { key: "contact_email", label: "Email de contacto", type: "text", placeholder: "hola@guaiquiavenue.com" },
       { key: "contact_phone", label: "Telefono / WhatsApp", type: "text", placeholder: "+57 300 123 4567" },
       { key: "contact_address", label: "Ciudad / Pais", type: "text", placeholder: "Bogota, Colombia" },
     ],
@@ -358,7 +358,7 @@ function PopupManager() {
   return (
     <div className="space-y-5">
       {/* Activar/desactivar */}
-      <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: form.active ? "oklch(0.95 0.06 295)" : "oklch(0.96 0.01 295)" }}>
+      <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: form.active ? "#f6e6ff" : "#f3f0f8" }}>
         <div>
           <p className="text-sm font-bold text-foreground">Pop-up activo</p>
           <p className="text-xs text-muted-foreground">Cuando está activo, se muestra a los visitantes</p>
@@ -366,7 +366,7 @@ function PopupManager() {
         <button
           onClick={() => setForm(f => ({ ...f, active: !f.active }))}
           className="relative w-12 h-6 rounded-full transition-all"
-          style={{ background: form.active ? "oklch(0.42 0.24 295)" : "oklch(0.80 0.02 295)" }}
+          style={{ background: form.active ? "#7a16ca" : "#c0bbc9" }}
         >
           <span className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all" style={{ left: form.active ? "26px" : "2px" }} />
         </button>
@@ -376,7 +376,7 @@ function PopupManager() {
       <div className="space-y-2">
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Imagen del pop-up</label>
         <div className="flex items-start gap-4">
-          <div className="w-32 h-20 rounded-xl overflow-hidden bg-muted border flex-shrink-0" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div className="w-32 h-20 rounded-xl overflow-hidden bg-muted border flex-shrink-0" style={{ borderColor: "#eae5f3" }}>
             {form.imageUrl ? <img src={form.imageUrl} alt="Pop-up" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><ImageIcon className="w-6 h-6 text-muted-foreground/40" /></div>}
           </div>
           <div className="space-y-2">
@@ -395,7 +395,7 @@ function PopupManager() {
       {/* Título */}
       <div className="space-y-1.5">
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Título</label>
-        <Input value={form.title} onChange={(e) => setForm(f => ({ ...f, title: e.target.value }))} placeholder="¡Bienvenida a BoraHae Art!" className="rounded-xl" />
+        <Input value={form.title} onChange={(e) => setForm(f => ({ ...f, title: e.target.value }))} placeholder="¡Bienvenidos a Guaiqui Avenue!" className="rounded-xl" />
       </div>
 
       {/* Subtítulo */}
@@ -407,7 +407,7 @@ function PopupManager() {
       {/* Cuerpo */}
       <div className="space-y-1.5">
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Texto del cuerpo</label>
-        <textarea value={form.body} onChange={(e) => setForm(f => ({ ...f, body: e.target.value }))} placeholder="Descripción del pop-up..." rows={3} className="w-full px-3 py-2.5 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "oklch(0.88 0.04 295)" }} />
+        <textarea value={form.body} onChange={(e) => setForm(f => ({ ...f, body: e.target.value }))} placeholder="Descripción del pop-up..." rows={3} className="w-full px-3 py-2.5 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "#dcd2ee" }} />
       </div>
 
       {/* Botón CTA */}
@@ -434,7 +434,7 @@ function PopupManager() {
             onClick={() => setForm(f => ({ ...f, showOnce: !f.showOnce }))}
             className="flex items-center gap-2 mt-1"
           >
-            <span className="relative w-10 h-5 rounded-full transition-all inline-block" style={{ background: form.showOnce ? "oklch(0.42 0.24 295)" : "oklch(0.80 0.02 295)" }}>
+            <span className="relative w-10 h-5 rounded-full transition-all inline-block" style={{ background: form.showOnce ? "#7a16ca" : "#c0bbc9" }}>
               <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all" style={{ left: form.showOnce ? "22px" : "2px" }} />
             </span>
             <span className="text-sm text-foreground">{form.showOnce ? "Sí" : "No"}</span>
@@ -451,7 +451,7 @@ function PopupManager() {
         <button
           onClick={() => setForm(f => ({ ...f, showNewsletter: !f.showNewsletter }))}
           className="relative w-10 h-5 rounded-full transition-all"
-          style={{ background: form.showNewsletter ? "oklch(0.42 0.24 295)" : "oklch(0.80 0.02 295)" }}
+          style={{ background: form.showNewsletter ? "#7a16ca" : "#c0bbc9" }}
         >
           <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all" style={{ left: form.showNewsletter ? "22px" : "2px" }} />
         </button>
@@ -526,10 +526,10 @@ export default function AdminContent() {
         </div>
 
         {/* Logo */}
-        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-            <div className="w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
-              <LayoutTemplate className="w-4 h-4 text-violet-600" />
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
+          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
+            <div className="w-9 h-9 rounded-xl bg-guaiqui-purple-50 flex items-center justify-center flex-shrink-0">
+              <LayoutTemplate className="w-4 h-4 text-guaiqui-purple" />
             </div>
             <div>
               <h3 className="font-bold text-sm text-foreground">Logo de la tienda</h3>
@@ -541,10 +541,10 @@ export default function AdminContent() {
           </div>
         </div>
         {/* Site Name */}
-        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-            <div className="w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
-              <LayoutTemplate className="w-4 h-4 text-violet-600" />
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
+          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
+            <div className="w-9 h-9 rounded-xl bg-guaiqui-purple-50 flex items-center justify-center flex-shrink-0">
+              <LayoutTemplate className="w-4 h-4 text-guaiqui-purple" />
             </div>
             <div>
               <h3 className="font-bold text-sm text-foreground">Nombre de la tienda</h3>
@@ -552,14 +552,14 @@ export default function AdminContent() {
             </div>
           </div>
           <div className="p-5">
-            <ContentField fieldKey="site_name" label="Nombre de la tienda" type="text" placeholder="BoraHae Art" />
+            <ContentField fieldKey="site_name" label="Nombre de la tienda" type="text" placeholder="Guaiqui Avenue" />
           </div>
         </div>
         {/* Banner Slides */}
-        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-            <div className="w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
-              <Sparkles className="w-4 h-4 text-violet-600" />
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
+          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
+            <div className="w-9 h-9 rounded-xl bg-guaiqui-purple-50 flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-4 h-4 text-guaiqui-purple" />
             </div>
             <div>
               <h3 className="font-bold text-sm text-foreground">Carrusel del hero</h3>
@@ -572,10 +572,10 @@ export default function AdminContent() {
         </div>
 
         {/* Welcome Popup */}
-        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-            <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0">
-              <Bell className="w-4 h-4 text-purple-600" />
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
+          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
+            <div className="w-9 h-9 rounded-xl bg-guaiqui-purple-50 flex items-center justify-center flex-shrink-0">
+              <Bell className="w-4 h-4 text-guaiqui-purple" />
             </div>
             <div>
               <h3 className="font-bold text-sm text-foreground">Pop-up de bienvenida</h3>
@@ -588,8 +588,8 @@ export default function AdminContent() {
         </div>
 
         {/* Newsletter Subscribers */}
-        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+        <div className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
+          <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
             <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
               <Users className="w-4 h-4 text-blue-600" />
             </div>
@@ -605,8 +605,8 @@ export default function AdminContent() {
 
         {/* Other sections */}
         {CONTENT_SECTIONS.map((section) => (
-          <div key={section.title} className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
-            <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div key={section.title} className="bg-white rounded-2xl border overflow-hidden" style={{ borderColor: "#eae5f3" }}>
+            <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: "#eae5f3" }}>
               <div className={`w-9 h-9 rounded-xl ${section.bg} flex items-center justify-center flex-shrink-0`}>
                 <section.icon className={`w-4 h-4 ${section.color}`} />
               </div>

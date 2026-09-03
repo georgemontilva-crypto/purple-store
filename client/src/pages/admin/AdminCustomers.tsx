@@ -66,7 +66,7 @@ export default function AdminCustomers() {
                     <tr key={customer.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-3.5">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 text-sm font-bold flex-shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-guaiqui-purple-100 flex items-center justify-center text-guaiqui-purple-dark text-sm font-bold flex-shrink-0">
                             {customer.name?.[0]?.toUpperCase() ?? "U"}
                           </div>
                           <div className="min-w-0">
@@ -76,7 +76,7 @@ export default function AdminCustomers() {
                         </div>
                       </td>
                       <td className="px-6 py-3.5 hidden md:table-cell">
-                        <a href={`mailto:${customer.email}`} className="text-sm text-gray-500 hover:text-purple-600 transition-colors">
+                        <a href={`mailto:${customer.email}`} className="text-sm text-gray-500 hover:text-guaiqui-purple transition-colors">
                           {customer.email ?? "—"}
                         </a>
                       </td>
@@ -88,7 +88,7 @@ export default function AdminCustomers() {
                       <td className="px-6 py-3.5">
                         <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${
                           customer.role === "admin"
-                            ? "bg-purple-50 text-purple-700"
+                            ? "bg-guaiqui-purple-50 text-guaiqui-purple-dark"
                             : "bg-gray-100 text-gray-600"
                         }`}>
                           {customer.role === "admin" ? (

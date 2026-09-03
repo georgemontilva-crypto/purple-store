@@ -6,12 +6,12 @@ export default function Footer() {
   const { data: logoData } = trpc.content.get.useQuery({ key: "site_logo" });
   const { data: siteNameData } = trpc.content.get.useQuery({ key: "site_name" });
   const logoUrl = logoData?.value ?? "";
-  const siteName = siteNameData?.value ?? "BoraHae Art";
+  const siteName = siteNameData?.value ?? "Guaiqui Avenue";
   return (
     <footer
       className="mt-16"
       style={{
-        background: "linear-gradient(135deg, oklch(0.28 0.18 295) 0%, oklch(0.20 0.14 295) 100%)",
+        background: "linear-gradient(135deg, #3a1a63 0%, #2a1147 100%)",
       }}
     >
       <div className="container mx-auto px-4 lg:px-8 py-14">
@@ -24,7 +24,7 @@ export default function Footer() {
               ) : (
                 <div
                   className="w-9 h-9 rounded-xl flex items-center justify-center overflow-hidden"
-                  style={{ background: "linear-gradient(135deg, oklch(0.62 0.22 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                  style={{ background: "linear-gradient(135deg, #ff39a0 0%, #944fdd 60%, #40c9e9 100%)" }}
                 >
                   <Palette className="w-5 h-5 text-white" />
                 </div>
@@ -58,7 +58,7 @@ export default function Footer() {
                   }}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLAnchorElement).style.background =
-                      "linear-gradient(135deg, oklch(0.62 0.22 295) 0%, oklch(0.78 0.14 295) 100%)";
+                      "linear-gradient(135deg, #ff39a0 0%, #944fdd 60%, #40c9e9 100%)";
                   }}
                   onMouseLeave={(e) => {
                     (e.currentTarget as HTMLAnchorElement).style.background =
@@ -144,7 +144,7 @@ export default function Footer() {
             Hecho con{" "}
             <Heart
               className="w-3.5 h-3.5"
-              style={{ color: "oklch(0.78 0.14 295)", fill: "oklch(0.78 0.14 295)" }}
+              style={{ color: "#c8a1ff", fill: "#c8a1ff" }}
             />{" "}
             para los fans del anime
           </p>

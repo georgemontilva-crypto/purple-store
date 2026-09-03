@@ -18,11 +18,11 @@ export default function FAQs() {
         <div
           className="rounded-2xl px-5 py-8 md:px-8 md:py-12 relative overflow-hidden"
           style={{
-            background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 55%, oklch(0.72 0.18 295) 100%)",
+            background: "linear-gradient(125deg, #7331bd 0%, #944fdd 40%, #ff39a0 72%, #40c9e9 100%)",
           }}
         >
           <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-20"
-            style={{ background: "oklch(0.88 0.10 295)" }} />
+            style={{ background: "#e3c8ff" }} />
           <div className="absolute top-6 right-24 w-10 h-10 rounded-full border-2 border-white/20" />
           <div className="absolute top-12 right-40 w-5 h-5 rounded-full border border-white/15" />
 
@@ -51,7 +51,7 @@ export default function FAQs() {
               <div
                 key={i}
                 className="h-16 rounded-2xl animate-pulse"
-                style={{ background: "oklch(0.95 0.02 295)" }}
+                style={{ background: "#f6effe" }}
               />
             ))}
           </div>
@@ -59,7 +59,7 @@ export default function FAQs() {
           <div className="text-center py-16">
             <div
               className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5"
-              style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+              style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
             >
               <HelpCircle className="w-9 h-9 text-white/70" />
             </div>
@@ -75,12 +75,12 @@ export default function FAQs() {
                 className="rounded-2xl overflow-hidden transition-all duration-200"
                 style={{
                   border: openId === faq.id
-                    ? "1.5px solid oklch(0.62 0.22 295 / 0.5)"
-                    : "1.5px solid oklch(0.91 0.04 295)",
-                  background: openId === faq.id ? "oklch(0.97 0.01 295)" : "oklch(0.99 0.004 295)",
+                    ? "1.5px solid rgb(161 89 241 / 0.5)"
+                    : "1.5px solid #e6dcf8",
+                  background: openId === faq.id ? "#f6f4fb" : "#fcfbfe",
                   boxShadow: openId === faq.id
-                    ? "0 4px 20px oklch(0.42 0.24 295 / 0.10)"
-                    : "0 1px 4px oklch(0.42 0.24 295 / 0.04)",
+                    ? "0 4px 20px rgb(122 22 202 / 0.10)"
+                    : "0 1px 4px rgb(122 22 202 / 0.04)",
                 }}
               >
                 <button
@@ -92,9 +92,9 @@ export default function FAQs() {
                       className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-black"
                       style={{
                         background: openId === faq.id
-                          ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)"
-                          : "oklch(0.92 0.06 295)",
-                        color: openId === faq.id ? "white" : "oklch(0.42 0.24 295)",
+                          ? "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)"
+                          : "#f0e4fd",
+                        color: openId === faq.id ? "white" : "#7a16ca",
                         fontFamily: "'Nunito', sans-serif",
                       }}
                     >
@@ -109,7 +109,7 @@ export default function FAQs() {
                     style={{
                       width: "18px",
                       height: "18px",
-                      color: "oklch(0.52 0.24 295)",
+                      color: "#862bd8",
                       transform: openId === faq.id ? "rotate(180deg)" : "rotate(0deg)",
                     }}
                   />
@@ -118,7 +118,7 @@ export default function FAQs() {
                   <div className="px-5 pb-5">
                     <div
                       className="w-full h-px mb-4"
-                      style={{ background: "oklch(0.91 0.04 295)" }}
+                      style={{ background: "#e6dcf8" }}
                     />
                     <p className="text-muted-foreground leading-relaxed font-semibold text-sm" style={nunito}>
                       {faq.answer}
@@ -134,7 +134,7 @@ export default function FAQs() {
         <div
           className="mt-12 p-8 rounded-2xl text-center"
           style={{
-            background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 100%)",
+            background: "linear-gradient(135deg, #6400aa 0%, #862bd8 100%)",
           }}
         >
           <div
@@ -155,7 +155,7 @@ export default function FAQs() {
               style={{
                 ...nunito,
                 background: "white",
-                color: "oklch(0.35 0.22 295)",
+                color: "#6400aa",
                 boxShadow: "0 4px 16px oklch(0 0 0 / 0.15)",
               }}
             >

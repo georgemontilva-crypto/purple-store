@@ -41,110 +41,132 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* -- Paleta de marca Guaiqui Avenue (tomada del logo) -- */
+  --color-guaiqui-pink: #ff39a0;
+  --color-guaiqui-pink-dark: #db1f80;
+  --color-guaiqui-pink-100: #ffd9ec;
+  --color-guaiqui-pink-50: #fff0f8;
+
+  --color-guaiqui-purple: #944fdd;
+  --color-guaiqui-purple-dark: #7331bd;
+  --color-guaiqui-purple-100: #e6d7fb;
+  --color-guaiqui-purple-50: #f6effe;
+
+  --color-guaiqui-cyan: #40c9e9;
+  --color-guaiqui-cyan-100: #cdeffa;
+  --color-guaiqui-cyan-50: #ecf9fd;
+
+  --color-guaiqui-mint: #98e4e0;
+  --color-guaiqui-mint-100: #d6f4f2;
+  --color-guaiqui-mint-50: #eefbfa;
+
+  --color-guaiqui-ink: #2a1147;
 }
 
-/* BoraHae palette:
-   Lavanda claro: #C9B8FF → oklch(0.78 0.14 295)
-   Púrpura medio: #9B72FF → oklch(0.62 0.22 295)
-   Índigo oscuro:  #3D1A8C → oklch(0.35 0.22 295)
-   Fondo blanco puro: #FFFFFF
-   Texto oscuro: #1A0A3C → oklch(0.14 0.10 295)
+/* Paleta Guaiqui Avenue:
+   Rosa magenta:  #FF39A0
+   Purpura:       #944FDD
+   Cian:          #40C9E9
+   Menta / aqua:  #98E4E0
+   Fondo:         #FFFFFF
+   Texto oscuro:  #2A1147
 */
 
 :root {
-  /* Primary: índigo/púrpura BoraHae */
-  --primary: oklch(0.42 0.24 295);
-  --primary-foreground: oklch(1 0 0);
+  /* Primary: purpura Guaiqui */
+  --primary: #944fdd;
+  --primary-foreground: #ffffff;
 
   /* Sidebar */
-  --sidebar-primary: oklch(0.42 0.24 295);
-  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-primary: #944fdd;
+  --sidebar-primary-foreground: #ffffff;
 
-  /* Charts */
-  --chart-1: oklch(0.78 0.14 295);
-  --chart-2: oklch(0.62 0.22 295);
-  --chart-3: oklch(0.52 0.24 295);
-  --chart-4: oklch(0.42 0.24 295);
-  --chart-5: oklch(0.35 0.22 295);
+  /* Charts: los 4 colores del logo */
+  --chart-1: #ff39a0;
+  --chart-2: #944fdd;
+  --chart-3: #40c9e9;
+  --chart-4: #98e4e0;
+  --chart-5: #7331bd;
 
   /* Radius generoso para look redondeado */
   --radius: 1rem;
 
   /* Backgrounds */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.14 0.10 295);
+  --background: #ffffff;
+  --foreground: #2a1147;
 
   /* Cards */
-  --card: oklch(0.99 0.004 295);
-  --card-foreground: oklch(0.14 0.10 295);
+  --card: #fdfbff;
+  --card-foreground: #2a1147;
 
   /* Popover */
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.14 0.10 295);
+  --popover: #ffffff;
+  --popover-foreground: #2a1147;
 
-  /* Secondary: lavanda muy suave */
-  --secondary: oklch(0.96 0.02 295);
-  --secondary-foreground: oklch(0.42 0.24 295);
+  /* Secondary: lila muy suave */
+  --secondary: #f6effe;
+  --secondary-foreground: #7331bd;
 
   /* Muted */
-  --muted: oklch(0.97 0.006 295);
-  --muted-foreground: oklch(0.55 0.06 295);
+  --muted: #f7f4fb;
+  --muted-foreground: #6b5b85;
 
-  /* Accent: lavanda claro */
-  --accent: oklch(0.92 0.06 295);
-  --accent-foreground: oklch(0.35 0.22 295);
+  /* Accent: menta del logo */
+  --accent: #d6f4f2;
+  --accent-foreground: #1f5e5b;
 
   /* Destructive */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
   /* Borders */
-  --border: oklch(0.91 0.02 295);
-  --input: oklch(0.91 0.02 295);
-  --ring: oklch(0.62 0.22 295);
+  --border: #ece2f8;
+  --input: #ece2f8;
+  --ring: #944fdd;
 
   /* Sidebar */
-  --sidebar: oklch(0.98 0.006 295);
-  --sidebar-foreground: oklch(0.14 0.10 295);
-  --sidebar-accent: oklch(0.92 0.06 295);
-  --sidebar-accent-foreground: oklch(0.35 0.22 295);
-  --sidebar-border: oklch(0.91 0.02 295);
-  --sidebar-ring: oklch(0.62 0.22 295);
+  --sidebar: #fbf8ff;
+  --sidebar-foreground: #2a1147;
+  --sidebar-accent: #f6effe;
+  --sidebar-accent-foreground: #7331bd;
+  --sidebar-border: #ece2f8;
+  --sidebar-ring: #944fdd;
 }
 
 .dark {
-  --primary: oklch(0.72 0.18 295);
-  --primary-foreground: oklch(0.14 0.10 295);
-  --sidebar-primary: oklch(0.72 0.18 295);
-  --sidebar-primary-foreground: oklch(0.14 0.10 295);
-  --background: oklch(0.12 0.06 295);
-  --foreground: oklch(0.95 0.01 295);
-  --card: oklch(0.17 0.07 295);
-  --card-foreground: oklch(0.95 0.01 295);
-  --popover: oklch(0.17 0.07 295);
-  --popover-foreground: oklch(0.95 0.01 295);
-  --secondary: oklch(0.22 0.08 295);
-  --secondary-foreground: oklch(0.85 0.08 295);
-  --muted: oklch(0.25 0.07 295);
-  --muted-foreground: oklch(0.65 0.06 295);
-  --accent: oklch(0.28 0.10 295);
-  --accent-foreground: oklch(0.92 0.04 295);
+  --primary: #b57cf0;
+  --primary-foreground: #1b0a30;
+  --sidebar-primary: #b57cf0;
+  --sidebar-primary-foreground: #1b0a30;
+  --background: #170a29;
+  --foreground: #f3ecfb;
+  --card: #22103a;
+  --card-foreground: #f3ecfb;
+  --popover: #22103a;
+  --popover-foreground: #f3ecfb;
+  --secondary: #2d1649;
+  --secondary-foreground: #dcc9f5;
+  --muted: #32194f;
+  --muted-foreground: #a894c2;
+  --accent: #1f4f4d;
+  --accent-foreground: #bff0ed;
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.72 0.18 295);
-  --chart-1: oklch(0.78 0.14 295);
-  --chart-2: oklch(0.62 0.22 295);
-  --chart-3: oklch(0.52 0.24 295);
-  --chart-4: oklch(0.42 0.24 295);
-  --chart-5: oklch(0.35 0.22 295);
-  --sidebar: oklch(0.17 0.07 295);
-  --sidebar-foreground: oklch(0.95 0.01 295);
-  --sidebar-accent: oklch(0.28 0.10 295);
-  --sidebar-accent-foreground: oklch(0.92 0.04 295);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.72 0.18 295);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: #b57cf0;
+  --chart-1: #ff39a0;
+  --chart-2: #b57cf0;
+  --chart-3: #40c9e9;
+  --chart-4: #98e4e0;
+  --chart-5: #944fdd;
+  --sidebar: #22103a;
+  --sidebar-foreground: #f3ecfb;
+  --sidebar-accent: #2d1649;
+  --sidebar-accent-foreground: #dcc9f5;
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: #b57cf0;
 }
 
 @layer base {
@@ -189,18 +211,31 @@
     min-width: 0;
   }
 
-  /* BoraHae gradients */
+  /* Gradientes Guaiqui Avenue */
   .gradient-purple {
-    background: linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%);
+    background: linear-gradient(135deg, #944fdd 0%, #ff39a0 100%);
   }
   .gradient-purple-soft {
-    background: linear-gradient(135deg, oklch(0.97 0.02 295) 0%, oklch(0.92 0.06 295) 100%);
+    background: linear-gradient(135deg, #f6effe 0%, #ffe6f3 100%);
   }
   .gradient-lavender {
-    background: linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%);
+    background: linear-gradient(135deg, #e6d7fb 0%, #98e4e0 100%);
+  }
+  /* Los 4 colores del logo en un solo gradiente */
+  .gradient-guaiqui {
+    background: linear-gradient(120deg, #ff39a0 0%, #944fdd 38%, #40c9e9 72%, #98e4e0 100%);
+  }
+  .gradient-guaiqui-soft {
+    background: linear-gradient(120deg, #fff0f8 0%, #f6effe 40%, #ecf9fd 72%, #eefbfa 100%);
   }
   .text-gradient-purple {
-    background: linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.72 0.18 295) 100%);
+    background: linear-gradient(135deg, #ff39a0 0%, #944fdd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-guaiqui {
+    background: linear-gradient(110deg, #ff39a0 0%, #944fdd 45%, #40c9e9 75%, #98e4e0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -213,20 +248,23 @@
     -webkit-backdrop-filter: blur(20px);
   }
   .glass-dark {
-    background: oklch(0.14 0.10 295 / 0.75);
+    background: rgb(42 17 71 / 0.75);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
 
   /* Shadows */
   .shadow-purple {
-    box-shadow: 0 4px 24px oklch(0.42 0.24 295 / 0.18);
+    box-shadow: 0 4px 24px rgb(148 79 221 / 0.20);
   }
   .shadow-purple-lg {
-    box-shadow: 0 12px 48px oklch(0.42 0.24 295 / 0.22);
+    box-shadow: 0 12px 48px rgb(148 79 221 / 0.24);
+  }
+  .shadow-pink {
+    box-shadow: 0 4px 24px rgb(255 57 160 / 0.22);
   }
   .shadow-card {
-    box-shadow: 0 2px 16px oklch(0.42 0.24 295 / 0.08);
+    box-shadow: 0 2px 16px rgb(148 79 221 / 0.08);
   }
 
   /* Hero container - bordes redondeados, no full-width */
@@ -239,8 +277,8 @@
   /* Scrollbar global */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: oklch(0.78 0.14 295 / 0.5); border-radius: 99px; }
-  ::-webkit-scrollbar-thumb:hover { background: oklch(0.62 0.22 295 / 0.8); }
+  ::-webkit-scrollbar-thumb { background: rgb(148 79 221 / 0.45); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(255 57 160 / 0.75); }
 
   /* Carruseles sin scrollbar visible */
   .no-scrollbar::-webkit-scrollbar { display: none; }

@@ -207,7 +207,7 @@ export type InsertBannerSlide = typeof bannerSlides.$inferInsert;
 // --- Welcome Popup -----------------------------------------------------------
 export const welcomePopup = mysqlTable("welcome_popup", {
   id: int("id").autoincrement().primaryKey(),
-  title: varchar("title", { length: 255 }).notNull().default("¡Bienvenida a BoraHae Art!"),
+  title: varchar("title", { length: 255 }).notNull().default("¡Bienvenidos a Guaiqui Avenue!"),
   subtitle: varchar("subtitle", { length: 500 }),
   body: text("body"),
   imageUrl: varchar("imageUrl", { length: 1000 }),

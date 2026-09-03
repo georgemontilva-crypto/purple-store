@@ -61,10 +61,10 @@ function CategoryForm({ category, onClose }: { category?: any; onClose: () => vo
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
-      <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+      <div className="bg-white rounded-2xl border p-5" style={{ borderColor: "#eae5f3" }}>
         <h3 className="font-semibold text-sm text-foreground mb-3">Imagen de categoría</h3>
         <div className="flex items-start gap-4">
-          <div className="w-24 h-24 rounded-xl overflow-hidden bg-muted flex-shrink-0 border" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+          <div className="w-24 h-24 rounded-xl overflow-hidden bg-muted flex-shrink-0 border" style={{ borderColor: "#eae5f3" }}>
             {form.imageUrl ? (
               <img src={form.imageUrl} alt="Preview" className="w-full h-full object-cover" />
             ) : (
@@ -75,7 +75,7 @@ function CategoryForm({ category, onClose }: { category?: any; onClose: () => vo
           </div>
           <div className="flex-1">
             <label className="cursor-pointer">
-              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-colors ${uploading ? "opacity-50" : "hover:bg-muted"}`} style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-colors ${uploading ? "opacity-50" : "hover:bg-muted"}`} style={{ borderColor: "#eae5f3" }}>
                 <Upload className="w-4 h-4" />
                 {uploading ? "Subiendo..." : "Subir imagen"}
               </div>
@@ -90,7 +90,7 @@ function CategoryForm({ category, onClose }: { category?: any; onClose: () => vo
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border p-5 space-y-4" style={{ borderColor: "oklch(0.93 0.02 295)" }}>
+      <div className="bg-white rounded-2xl border p-5 space-y-4" style={{ borderColor: "#eae5f3" }}>
         <h3 className="font-semibold text-sm text-foreground">Información</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
@@ -104,7 +104,7 @@ function CategoryForm({ category, onClose }: { category?: any; onClose: () => vo
         </div>
         <div className="space-y-1.5">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Descripción</label>
-          <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} placeholder="Descripción breve..." rows={2} className="w-full px-3 py-2 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "oklch(0.88 0.04 295)" }} />
+          <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} placeholder="Descripción breve..." rows={2} className="w-full px-3 py-2 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "#dcd2ee" }} />
         </div>
         <div className="flex items-center gap-6">
           <div className="space-y-1.5">
@@ -152,7 +152,7 @@ export default function AdminCategories() {
   const addBtn = (
     <button
       onClick={() => { setEditingCat(null); setShowForm(true); }}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors"
+      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-guaiqui-purple text-white text-sm font-medium hover:bg-guaiqui-purple-dark transition-colors"
     >
       <Plus className="w-4 h-4" /> Add Category
     </button>
@@ -167,7 +167,7 @@ export default function AdminCategories() {
           <div className="py-16 text-center">
             <Tags className="w-10 h-10 text-gray-200 mx-auto mb-3" />
             <p className="text-sm text-gray-400">No hay categorías</p>
-            <button onClick={() => { setEditingCat(null); setShowForm(true); }} className="mt-4 flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors mx-auto">
+            <button onClick={() => { setEditingCat(null); setShowForm(true); }} className="mt-4 flex items-center gap-2 px-4 py-2 rounded-lg bg-guaiqui-purple text-white text-sm font-medium hover:bg-guaiqui-purple-dark transition-colors mx-auto">
               <Plus className="w-4 h-4" /> Crear categoría
             </button>
           </div>
@@ -198,7 +198,7 @@ export default function AdminCategories() {
                   </td>
                   <td className="px-6 py-3.5">
                     <span className="font-semibold text-gray-900">{cat.name}</span>
-                    {cat.featured && <span className="ml-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-medium bg-purple-50 text-purple-700"><Star className="w-2.5 h-2.5" /> Featured</span>}
+                    {cat.featured && <span className="ml-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-medium bg-guaiqui-purple-50 text-guaiqui-purple-dark"><Star className="w-2.5 h-2.5" /> Featured</span>}
                   </td>
                   <td className="px-6 py-3.5 text-gray-400 font-mono text-xs hidden md:table-cell">{cat.slug}</td>
                   <td className="px-6 py-3.5 text-gray-500 hidden lg:table-cell">{cat.description ? <span className="line-clamp-1">{cat.description}</span> : <span className="text-gray-300">—</span>}</td>

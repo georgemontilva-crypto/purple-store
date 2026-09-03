@@ -92,17 +92,17 @@ function HeroSection() {
                 ) : (
                   <img src={slide.url} alt={slide.title ?? `Slide ${i + 1}`} className="absolute inset-0 w-full h-full object-cover" />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.14_0.10_295/0.80)] via-[oklch(0.14_0.10_295/0.45)] to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[rgb(18 0 42 / 0.80)] via-[rgb(18 0 42 / 0.45)] to-transparent" />
               </div>
             ))}
           </div>
         ) : (
           <div
             className="absolute inset-0"
-            style={{ background: "linear-gradient(135deg, oklch(0.28 0.18 295) 0%, oklch(0.42 0.24 295) 40%, oklch(0.62 0.22 295) 70%, oklch(0.78 0.14 295) 100%)" }}
+            style={{ background: "linear-gradient(125deg, #2a1147 0%, #7331bd 35%, #ff39a0 68%, #40c9e9 100%)" }}
           >
-            <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl opacity-30" style={{ background: "oklch(0.88 0.10 295)" }} />
-            <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full blur-3xl opacity-20" style={{ background: "oklch(0.95 0.06 295)" }} />
+            <div className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl opacity-30" style={{ background: "#e3c8ff" }} />
+            <div className="absolute bottom-0 left-1/3 w-64 h-64 rounded-full blur-3xl opacity-20" style={{ background: "#f6e6ff" }} />
             <div className="absolute top-8 right-24 w-16 h-16 rounded-full border-2 border-white/20" />
             <div className="absolute top-16 right-40 w-8 h-8 rounded-full border border-white/15" />
             <div className="absolute bottom-12 right-16 w-24 h-24 rounded-full border-2 border-white/10" />
@@ -128,7 +128,7 @@ function HeroSection() {
             </p>
             <div className="flex flex-wrap gap-2 sm:gap-3">
               <Link href="/tienda">
-                <Button size="lg" className="rounded-full font-bold h-12 px-7 text-sm border-0 shadow-lg hover:scale-105 transition-transform" style={{ background: "oklch(1 0 0)", color: "oklch(0.35 0.22 295)" }}>
+                <Button size="lg" className="rounded-full font-bold h-12 px-7 text-sm border-0 shadow-lg hover:scale-105 transition-transform" style={{ background: "oklch(1 0 0)", color: "#6400aa" }}>
                   {ctaText}<ArrowRight className="w-4 h-4 ml-1.5" />
                 </Button>
               </Link>
@@ -216,8 +216,8 @@ function QuickInfoBar() {
       <div
         className="rounded-2xl py-3 overflow-hidden"
         style={{
-          background: "oklch(0.96 0.02 295)",
-          border: "1px solid oklch(0.91 0.04 295)",
+          background: "#f4effd",
+          border: "1px solid #e6dcf8",
         }}
       >
         <div className="flex">
@@ -272,7 +272,7 @@ function FeaturedCategories() {
                     ) : (
                       <div
                         className="w-full h-full flex items-center justify-center"
-                        style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + (cat.id * 15) % 40}) 0%, oklch(0.72 0.18 ${285 + (cat.id * 20) % 30}) 100%)` }}
+                        style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${340 - (cat.id * 35) % 150}) 0%, oklch(0.68 0.18 ${330 - (cat.id * 40) % 140}) 100%)` }}
                       >
                         <Palette className="w-10 h-10 text-white/60" />
                       </div>
@@ -292,7 +292,7 @@ function FeaturedCategories() {
                   >
                     <div
                       className="w-full h-full flex items-center justify-center"
-                      style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + i * 8}) 0%, oklch(0.62 0.22 ${285 + i * 5}) 100%)` }}
+                      style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${340 - (i * 35) % 150}) 0%, oklch(0.62 0.20 ${330 - (i * 40) % 140}) 100%)` }}
                     >
                       <Palette className="w-10 h-10 text-white/50" />
                     </div>
@@ -321,7 +321,7 @@ function FeaturedCategories() {
                 ) : (
                   <div
                     className="w-full h-full flex items-center justify-center"
-                    style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + (cat.id * 15) % 40}) 0%, oklch(0.72 0.18 ${285 + (cat.id * 20) % 30}) 100%)` }}
+                    style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${340 - (cat.id * 35) % 150}) 0%, oklch(0.68 0.18 ${330 - (cat.id * 40) % 140}) 100%)` }}
                   >
                     <Palette className="w-10 h-10 text-white/60" />
                   </div>
@@ -344,7 +344,7 @@ function FeaturedCategories() {
               >
                 <div
                   className="w-full h-full flex items-center justify-center"
-                  style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${280 + i * 8}) 0%, oklch(0.62 0.22 ${285 + i * 5}) 100%)` }}
+                  style={{ background: `linear-gradient(135deg, oklch(0.88 0.10 ${340 - (i * 35) % 150}) 0%, oklch(0.62 0.20 ${330 - (i * 40) % 140}) 100%)` }}
                 >
                   <Palette className="w-10 h-10 text-white/50" />
                 </div>
@@ -408,11 +408,11 @@ function FeaturedProducts() {
                 <div
                   key={i}
                   className="flex-shrink-0 rounded-2xl overflow-hidden border border-border/50"
-                  style={{ width: "75vw", scrollSnapAlign: "start", background: "oklch(0.97 0.01 295)" }}
+                  style={{ width: "75vw", scrollSnapAlign: "start", background: "#f6f4fb" }}
                 >
                   <div
                     className="aspect-square flex items-center justify-center"
-                    style={{ background: `linear-gradient(135deg, oklch(0.92 0.06 ${285 + i * 8}) 0%, oklch(0.78 0.14 ${290 + i * 5}) 100%)` }}
+                    style={{ background: `linear-gradient(135deg, oklch(0.93 0.06 ${340 - (i * 35) % 150}) 0%, oklch(0.80 0.13 ${330 - (i * 40) % 140}) 100%)` }}
                   >
                     <Palette className="w-12 h-12 text-white/40" />
                   </div>
@@ -452,11 +452,11 @@ function FeaturedProducts() {
             <div
               key={i}
               className="rounded-2xl overflow-hidden border border-border/50"
-              style={{ background: "oklch(0.97 0.01 295)" }}
+              style={{ background: "#f6f4fb" }}
             >
               <div
                 className="aspect-square flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, oklch(0.92 0.06 ${285 + i * 8}) 0%, oklch(0.78 0.14 ${290 + i * 5}) 100%)` }}
+                style={{ background: `linear-gradient(135deg, oklch(0.93 0.06 ${340 - (i * 35) % 150}) 0%, oklch(0.80 0.13 ${330 - (i * 40) % 140}) 100%)` }}
               >
                 <Palette className="w-12 h-12 text-white/40" />
               </div>
@@ -479,7 +479,7 @@ function CommissionBanner() {
       <div
         className="rounded-2xl p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6"
         style={{
-          background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 60%, oklch(0.68 0.20 295) 100%)",
+          background: "linear-gradient(125deg, #7331bd 0%, #944fdd 45%, #ff39a0 78%, #40c9e9 100%)",
         }}
       >
         <div className="text-center lg:text-left">
@@ -504,7 +504,7 @@ function CommissionBanner() {
             <Button
               size="lg"
               className="rounded-full font-black h-12 px-7 border-0 hover:scale-105 transition-transform shadow-lg"
-              style={{ background: "white", color: "oklch(0.35 0.22 295)" }}
+              style={{ background: "white", color: "#6400aa" }}
             >
               Pedir encargo
               <ArrowRight className="w-4 h-4 ml-1.5" />
@@ -523,37 +523,37 @@ function WhyUs() {
       icon: Brush,
       title: "100% Hecho a mano",
       desc: "Cada cuadro es pintado a mano con materiales de calidad profesional.",
-      color: "oklch(0.88 0.10 295)",
+      color: "#e3c8ff",
     },
     {
       icon: Palette,
       title: "Arte original",
       desc: "No usamos impresiones. Cada pieza es única e irrepetible.",
-      color: "oklch(0.78 0.14 295)",
+      color: "#c8a1ff",
     },
     {
       icon: Clock,
       title: "Encargos rápidos",
       desc: "Tu pedido personalizado listo en 7 a 14 días hábiles.",
-      color: "oklch(0.68 0.18 295)",
+      color: "#ae78f3",
     },
     {
       icon: Heart,
       title: "Con amor por el anime",
       desc: "Somos fans del anime. Entendemos los detalles que importan.",
-      color: "oklch(0.58 0.22 295)",
+      color: "#954be3",
     },
     {
       icon: Star,
       title: "Alta calidad",
       desc: "Pinturas acrílicas y óleos de alta durabilidad y colores vivos.",
-      color: "oklch(0.48 0.24 295)",
+      color: "#7a16ca",
     },
     {
       icon: Shield,
       title: "Garantía total",
       desc: "Si no quedas satisfecho, lo rehacemos sin costo adicional.",
-      color: "oklch(0.42 0.24 295)",
+      color: "#7a16ca",
     },
   ];
 
@@ -570,8 +570,8 @@ function WhyUs() {
             key={i}
             className="flex flex-col items-center text-center p-4 rounded-2xl hover:shadow-purple transition-all duration-300 hover:-translate-y-1 cursor-default"
             style={{
-              background: "oklch(0.98 0.01 295)",
-              border: "1px solid oklch(0.92 0.04 295)",
+              background: "#f9f7fe",
+              border: "1px solid #e9dffb",
             }}
           >
             <div
@@ -602,13 +602,13 @@ function AboutSnippet() {
     <section className="py-10 px-4 lg:px-8">
       <div
         className="rounded-2xl overflow-hidden grid lg:grid-cols-2"
-        style={{ border: "1px solid oklch(0.91 0.04 295)" }}
+        style={{ border: "1px solid #e6dcf8" }}
       >
         {/* Image side */}
         <div
           className="relative min-h-[260px] lg:min-h-[320px]"
           style={{
-            background: "linear-gradient(135deg, oklch(0.88 0.10 295) 0%, oklch(0.72 0.18 295) 100%)",
+            background: "linear-gradient(135deg, #ffd9ec 0%, #944fdd 100%)",
           }}
         >
           {aboutImage?.value ? (
@@ -626,7 +626,7 @@ function AboutSnippet() {
                 >
                   <Palette className="w-10 h-10 text-white" />
                 </div>
-                <p className="text-white font-black text-xl">BoraHae Art</p>
+                <p className="text-white font-black text-xl">Guaiqui Avenue</p>
                 <p className="text-white/70 text-sm">Arte Anime · Hecho a mano</p>
               </div>
             </div>
@@ -646,7 +646,7 @@ function AboutSnippet() {
         </div>
 
         {/* Text side */}
-        <div className="p-8 lg:p-10 flex flex-col justify-center" style={{ background: "oklch(0.99 0.004 295)" }}>
+        <div className="p-8 lg:p-10 flex flex-col justify-center" style={{ background: "#fcfbfe" }}>
           <h2 className="text-2xl lg:text-3xl font-black text-foreground mb-4 leading-tight">
             Arte que conecta con{" "}
             <span className="text-gradient-purple">tu pasión</span>
@@ -664,7 +664,7 @@ function AboutSnippet() {
             <Link href="/contacto">
               <Button
                 className="rounded-full font-bold gap-1.5 text-sm border-0"
-                style={{ background: "oklch(0.42 0.24 295)", color: "white" }}
+                style={{ background: "#7a16ca", color: "white" }}
               >
                 Contáctanos <Heart className="w-3.5 h-3.5" />
               </Button>

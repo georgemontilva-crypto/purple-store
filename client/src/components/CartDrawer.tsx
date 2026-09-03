@@ -39,12 +39,12 @@ export default function CartDrawer() {
         {/* Header */}
         <div
           className="flex items-center justify-between px-5 py-4"
-          style={{ borderBottom: "1.5px solid oklch(0.91 0.04 295)" }}
+          style={{ borderBottom: "1.5px solid #e6dcf8" }}
         >
           <div className="flex items-center gap-2.5">
             <div
               className="w-8 h-8 rounded-xl flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" }}
+              style={{ background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" }}
             >
               <ShoppingBag className="w-4 h-4 text-white" />
             </div>
@@ -53,7 +53,7 @@ export default function CartDrawer() {
               <span
                 className="w-5 h-5 text-white text-xs rounded-full flex items-center justify-center font-black"
                 style={{
-                  background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                  background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                   fontFamily: "'Nunito', sans-serif",
                 }}
               >
@@ -75,7 +75,7 @@ export default function CartDrawer() {
             <div className="flex flex-col items-center justify-center h-full gap-5 text-center">
               <div
                 className="w-20 h-20 rounded-2xl flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
               >
                 <ShoppingBag className="w-9 h-9 text-white/60" />
               </div>
@@ -90,7 +90,7 @@ export default function CartDrawer() {
                   className="rounded-full font-black border-0"
                   style={{
                     ...nunito,
-                    background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                    background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                     color: "white",
                   }}
                 >
@@ -108,14 +108,14 @@ export default function CartDrawer() {
                     key={item.id}
                     className="flex gap-3 p-3 rounded-2xl transition-all"
                     style={{
-                      background: "oklch(0.98 0.008 295)",
-                      border: "1.5px solid oklch(0.91 0.04 295)",
+                      background: "#f9f7fd",
+                      border: "1.5px solid #e6dcf8",
                     }}
                   >
                     {/* Image */}
                     <div
                       className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0"
-                      style={{ border: "1px solid oklch(0.91 0.04 295)" }}
+                      style={{ border: "1px solid #e6dcf8" }}
                     >
                       {item.product.imageUrl ? (
                         <img
@@ -126,7 +126,7 @@ export default function CartDrawer() {
                       ) : (
                         <div
                           className="w-full h-full flex items-center justify-center"
-                          style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                          style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
                         >
                           <Palette className="w-5 h-5 text-white/50" />
                         </div>
@@ -138,7 +138,7 @@ export default function CartDrawer() {
                       <p className="text-sm font-black text-foreground line-clamp-2 leading-snug" style={nunito}>
                         {item.product.name}
                       </p>
-                      <p className="text-sm font-black mt-1" style={{ ...nunito, color: "oklch(0.42 0.24 295)" }}>
+                      <p className="text-sm font-black mt-1" style={{ ...nunito, color: "#7a16ca" }}>
                         ${price.toFixed(2)}
                       </p>
 
@@ -147,9 +147,9 @@ export default function CartDrawer() {
                         <button
                           onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                           className="w-6 h-6 rounded-lg flex items-center justify-center transition-colors hover:opacity-80"
-                          style={{ background: "oklch(0.92 0.06 295)", border: "1px solid oklch(0.82 0.10 295 / 0.5)" }}
+                          style={{ background: "#f0e4fd", border: "1px solid rgb(208 181 251 / 0.5)" }}
                         >
-                          <Minus className="w-3 h-3" style={{ color: "oklch(0.42 0.24 295)" }} />
+                          <Minus className="w-3 h-3" style={{ color: "#7a16ca" }} />
                         </button>
                         <span className="text-sm font-black w-5 text-center" style={nunito}>
                           {item.quantity}
@@ -157,9 +157,9 @@ export default function CartDrawer() {
                         <button
                           onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                           className="w-6 h-6 rounded-lg flex items-center justify-center transition-colors hover:opacity-80"
-                          style={{ background: "oklch(0.92 0.06 295)", border: "1px solid oklch(0.82 0.10 295 / 0.5)" }}
+                          style={{ background: "#f0e4fd", border: "1px solid rgb(208 181 251 / 0.5)" }}
                         >
-                          <Plus className="w-3 h-3" style={{ color: "oklch(0.42 0.24 295)" }} />
+                          <Plus className="w-3 h-3" style={{ color: "#7a16ca" }} />
                         </button>
                         <button
                           onClick={() => removeFromCart(item.productId)}
@@ -180,11 +180,11 @@ export default function CartDrawer() {
         {cartItems.length > 0 && (
           <div
             className="p-5 space-y-3"
-            style={{ borderTop: "1.5px solid oklch(0.91 0.04 295)" }}
+            style={{ borderTop: "1.5px solid #e6dcf8" }}
           >
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground text-sm font-semibold" style={nunito}>Subtotal</span>
-              <span className="font-black text-lg" style={{ ...nunito, color: "oklch(0.35 0.22 295)" }}>
+              <span className="font-black text-lg" style={{ ...nunito, color: "#6400aa" }}>
                 ${subtotal.toFixed(2)}
               </span>
             </div>
@@ -196,9 +196,9 @@ export default function CartDrawer() {
                 className="w-full rounded-2xl font-black h-12 text-base border-0 hover:opacity-90 transition-opacity"
                 style={{
                   ...nunito,
-                  background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                  background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                   color: "white",
-                  boxShadow: "0 6px 24px oklch(0.42 0.24 295 / 0.35)",
+                  boxShadow: "0 6px 24px rgb(122 22 202 / 0.35)",
                 }}
               >
                 Finalizar compra
@@ -209,7 +209,7 @@ export default function CartDrawer() {
               <Button
                 variant="ghost"
                 className="w-full rounded-2xl text-sm font-bold"
-                style={{ ...nunito, color: "oklch(0.55 0.06 295)" }}
+                style={{ ...nunito, color: "#78698f" }}
               >
                 Seguir comprando
               </Button>

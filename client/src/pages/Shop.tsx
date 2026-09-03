@@ -43,14 +43,14 @@ export default function Shop() {
         <div
           className="rounded-2xl px-5 py-7 md:px-8 md:py-10 relative overflow-hidden"
           style={{
-            background: "linear-gradient(135deg, oklch(0.35 0.22 295) 0%, oklch(0.52 0.24 295) 55%, oklch(0.72 0.18 295) 100%)",
+            background: "linear-gradient(125deg, #7331bd 0%, #944fdd 40%, #ff39a0 72%, #40c9e9 100%)",
           }}
         >
           {/* Decorative circles */}
           <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-20"
-            style={{ background: "oklch(0.88 0.10 295)" }} />
+            style={{ background: "#e3c8ff" }} />
           <div className="absolute bottom-0 left-1/3 w-32 h-32 rounded-full blur-2xl opacity-15"
-            style={{ background: "oklch(0.95 0.06 295)" }} />
+            style={{ background: "#f6e6ff" }} />
           <div className="absolute top-4 right-20 w-12 h-12 rounded-full border-2 border-white/20" />
           <div className="absolute top-10 right-36 w-6 h-6 rounded-full border border-white/15" />
 
@@ -85,7 +85,7 @@ export default function Shop() {
               value={search}
               onChange={(e) => { setSearch(e.target.value); setPage(1); }}
               className="pl-9 rounded-2xl font-semibold text-sm"
-              style={{ fontFamily: "'Nunito', sans-serif", border: "1.5px solid oklch(0.91 0.04 295)" }}
+              style={{ fontFamily: "'Nunito', sans-serif", border: "1.5px solid #e6dcf8" }}
             />
             {search && (
               <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -98,8 +98,8 @@ export default function Shop() {
             className="flex items-center gap-2 px-4 py-2.5 rounded-2xl font-bold text-sm flex-shrink-0"
             style={{
               fontFamily: "'Nunito', sans-serif",
-              background: filtersOpen ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" : "oklch(0.95 0.02 295)",
-              color: filtersOpen ? "white" : "oklch(0.42 0.24 295)",
+              background: filtersOpen ? "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" : "#f6effe",
+              color: filtersOpen ? "white" : "#7a16ca",
             }}
           >
             <SlidersHorizontal className="w-4 h-4" />
@@ -111,7 +111,7 @@ export default function Shop() {
         {filtersOpen && (
           <div
             className="lg:hidden rounded-2xl p-4 mb-4"
-            style={{ background: "oklch(0.98 0.008 295)", border: "1.5px solid oklch(0.91 0.04 295)" }}
+            style={{ background: "#f9f7fd", border: "1.5px solid #e6dcf8" }}
           >
             <div className="flex flex-wrap gap-2">
               <button
@@ -119,8 +119,8 @@ export default function Shop() {
                 className="px-4 py-2 rounded-full text-sm font-bold transition-all"
                 style={{
                   fontFamily: "'Nunito', sans-serif",
-                  background: !selectedCatSlug ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" : "oklch(0.92 0.06 295)",
-                  color: !selectedCatSlug ? "white" : "oklch(0.42 0.24 295)",
+                  background: !selectedCatSlug ? "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" : "#f0e4fd",
+                  color: !selectedCatSlug ? "white" : "#7a16ca",
                 }}
               >Todos</button>
               {categories.map((cat) => (
@@ -130,8 +130,8 @@ export default function Shop() {
                   className="px-4 py-2 rounded-full text-sm font-bold transition-all"
                   style={{
                     fontFamily: "'Nunito', sans-serif",
-                    background: selectedCatSlug === cat.slug ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" : "oklch(0.92 0.06 295)",
-                    color: selectedCatSlug === cat.slug ? "white" : "oklch(0.42 0.24 295)",
+                    background: selectedCatSlug === cat.slug ? "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" : "#f0e4fd",
+                    color: selectedCatSlug === cat.slug ? "white" : "#7a16ca",
                   }}
                 >{cat.name}</button>
               ))}
@@ -152,7 +152,7 @@ export default function Shop() {
                   value={search}
                   onChange={(e) => { setSearch(e.target.value); setPage(1); }}
                   className="pl-9 rounded-2xl font-semibold text-sm"
-                  style={{ fontFamily: "'Nunito', sans-serif", border: "1.5px solid oklch(0.91 0.04 295)" }}
+                  style={{ fontFamily: "'Nunito', sans-serif", border: "1.5px solid #e6dcf8" }}
                 />
                 {search && (
                   <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -164,7 +164,7 @@ export default function Shop() {
               {/* Categories */}
               <div
                 className="rounded-2xl p-4"
-                style={{ background: "oklch(0.98 0.008 295)", border: "1.5px solid oklch(0.91 0.04 295)" }}
+                style={{ background: "#f9f7fd", border: "1.5px solid #e6dcf8" }}
               >
                 <h3
                   className="font-black text-foreground mb-3 flex items-center gap-2 text-sm"
@@ -179,8 +179,8 @@ export default function Shop() {
                     className="w-full text-left px-3 py-2 rounded-xl text-sm font-bold transition-all"
                     style={{
                       fontFamily: "'Nunito', sans-serif",
-                      background: !selectedCatSlug ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)" : "transparent",
-                      color: !selectedCatSlug ? "white" : "oklch(0.55 0.06 295)",
+                      background: !selectedCatSlug ? "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)" : "transparent",
+                      color: !selectedCatSlug ? "white" : "#78698f",
                     }}
                   >
                     Todos los cuadros
@@ -193,13 +193,13 @@ export default function Shop() {
                       style={{
                         fontFamily: "'Nunito', sans-serif",
                         background: selectedCatSlug === cat.slug
-                          ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)"
+                          ? "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)"
                           : "transparent",
-                        color: selectedCatSlug === cat.slug ? "white" : "oklch(0.55 0.06 295)",
+                        color: selectedCatSlug === cat.slug ? "white" : "#78698f",
                       }}
                       onMouseEnter={(e) => {
                         if (selectedCatSlug !== cat.slug)
-                          (e.currentTarget as HTMLButtonElement).style.background = "oklch(0.92 0.06 295)";
+                          (e.currentTarget as HTMLButtonElement).style.background = "#f0e4fd";
                       }}
                       onMouseLeave={(e) => {
                         if (selectedCatSlug !== cat.slug)
@@ -223,8 +223,8 @@ export default function Shop() {
                   <span
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black"
                     style={{
-                      background: "oklch(0.92 0.06 295)",
-                      color: "oklch(0.35 0.22 295)",
+                      background: "#f0e4fd",
+                      color: "#6400aa",
                       fontFamily: "'Nunito', sans-serif",
                     }}
                   >
@@ -238,8 +238,8 @@ export default function Shop() {
                   <span
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black"
                     style={{
-                      background: "oklch(0.92 0.06 295)",
-                      color: "oklch(0.35 0.22 295)",
+                      background: "#f0e4fd",
+                      color: "#6400aa",
                       fontFamily: "'Nunito', sans-serif",
                     }}
                   >
@@ -258,7 +258,7 @@ export default function Shop() {
               {/* View toggle */}
               <div
                 className="flex items-center gap-1 p-1 rounded-xl"
-                style={{ background: "oklch(0.95 0.02 295)" }}
+                style={{ background: "#f6effe" }}
               >
                 <button
                   onClick={() => setViewGrid(true)}
@@ -283,7 +283,7 @@ export default function Shop() {
                   <div
                     key={i}
                     className="rounded-2xl animate-pulse"
-                    style={{ aspectRatio: viewGrid ? "1/1.2" : "4/1", background: "oklch(0.95 0.02 295)" }}
+                    style={{ aspectRatio: viewGrid ? "1/1.2" : "4/1", background: "#f6effe" }}
                   />
                 ))}
               </div>
@@ -291,7 +291,7 @@ export default function Shop() {
               <div className="flex flex-col items-center justify-center py-24 text-center">
                 <div
                   className="w-20 h-20 rounded-2xl flex items-center justify-center mb-5"
-                  style={{ background: "linear-gradient(135deg, oklch(0.92 0.06 295) 0%, oklch(0.78 0.14 295) 100%)" }}
+                  style={{ background: "linear-gradient(135deg, #f6effe 0%, #d6f4f2 100%)" }}
                 >
                   <Palette className="w-9 h-9 text-white/70" />
                 </div>
@@ -307,7 +307,7 @@ export default function Shop() {
                 <Button
                   className="rounded-full font-black border-0"
                   style={{
-                    background: "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)",
+                    background: "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)",
                     color: "white",
                     fontFamily: "'Nunito', sans-serif",
                   }}
@@ -358,10 +358,10 @@ export default function Shop() {
                         style={{
                           fontFamily: "'Nunito', sans-serif",
                           background: p === page
-                            ? "linear-gradient(135deg, oklch(0.42 0.24 295) 0%, oklch(0.62 0.22 295) 100%)"
+                            ? "linear-gradient(135deg, #944fdd 0%, #ff39a0 100%)"
                             : "transparent",
-                          color: p === page ? "white" : "oklch(0.42 0.24 295)",
-                          border: p === page ? "none" : "1.5px solid oklch(0.91 0.04 295)",
+                          color: p === page ? "white" : "#7a16ca",
+                          border: p === page ? "none" : "1.5px solid #e6dcf8",
                         }}
                         onClick={() => setPage(p)}
                       >
