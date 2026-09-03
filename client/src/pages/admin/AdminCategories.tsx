@@ -1,7 +1,7 @@
 import AdminLayout from "@/components/AdminLayout";
 import { trpc } from "@/lib/trpc";
-import { useState } from "react";
-import { Plus, Edit2, Trash2, Tags, ImageOff, Star, X, Upload } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Plus, Edit2, Trash2, Tags, ImageOff, Star, X, Upload, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -52,8 +52,9 @@ function CategoryForm({ category, onClose }: { category?: any; onClose: () => vo
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const payload = { ...form, slug: form.slug || slugify(form.name), sortOrder: Number(form.sortOrder) };
-    if (category) updateMutation.mutate({ id: category.id, ...payload });
+    const { sortOrder, ...rest } = form;
+    const payload = { ...rest, slug: form.slug || slugify(form.name) };
+    if (category) updateMutation.mutate({ id: category.id, ...payload, sortOrder: Number(sortOrder) });
     else createMutation.mutate(payload);
   };
 
@@ -107,11 +108,7 @@ function CategoryForm({ category, onClose }: { category?: any; onClose: () => vo
           <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} placeholder="Descripción breve..." rows={2} className="w-full px-3 py-2 rounded-xl border text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 bg-background" style={{ borderColor: "#dcd2ee" }} />
         </div>
         <div className="flex items-center gap-6">
-          <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Orden</label>
-            <Input type="number" value={form.sortOrder} onChange={(e) => setForm((f) => ({ ...f, sortOrder: parseInt(e.target.value) || 0 }))} className="rounded-xl w-24" />
-          </div>
-          <label className="flex items-center gap-2 cursor-pointer mt-5">
+          <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" checked={form.featured} onChange={(e) => setForm((f) => ({ ...f, featured: e.target.checked }))} className="w-4 h-4 rounded accent-primary" />
             <span className="text-sm font-medium text-foreground">Categoría destacada</span>
           </label>
@@ -134,7 +131,36 @@ export default function AdminCategories() {
   const [editingCat, setEditingCat] = useState<any>(null);
 
   const { data: catData, isLoading } = trpc.categories.list.useQuery();
-  const categories: any[] = (catData as any)?.categories ?? (Array.isArray(catData) ? catData : []);
+  const serverCategories: any[] = (catData as any)?.categories ?? (Array.isArray(catData) ? catData : []);
+
+  // Copia local para que el arrastre se vea inmediato
+  const [categories, setCategories] = useState<any[]>(serverCategories);
+  const [dragId, setDragId] = useState<number | null>(null);
+  const [overId, setOverId] = useState<number | null>(null);
+
+  useEffect(() => { setCategories(serverCategories); }, [catData]);
+
+  const reorderMutation = trpc.categories.reorder.useMutation({
+    onSuccess: () => { utils.categories.list.invalidate(); utils.categories.featured.invalidate(); },
+    onError: (err) => {
+      toast.error("No se pudo guardar el orden", { description: err.message });
+      setCategories(serverCategories);
+    },
+  });
+
+  const handleDrop = (targetId: number) => {
+    setOverId(null);
+    if (dragId === null || dragId === targetId) { setDragId(null); return; }
+    const from = categories.findIndex((c) => c.id === dragId);
+    const to = categories.findIndex((c) => c.id === targetId);
+    if (from === -1 || to === -1) { setDragId(null); return; }
+    const next = [...categories];
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+    setCategories(next);
+    setDragId(null);
+    reorderMutation.mutate({ ids: next.map((c) => c.id) });
+  };
 
   const deleteMutation = trpc.categories.delete.useMutation({
     onSuccess: () => { toast.success("Categoría eliminada"); utils.categories.list.invalidate(); },
@@ -159,7 +185,7 @@ export default function AdminCategories() {
   );
 
   return (
-    <AdminLayout title="Categories" subtitle={`${categories.length} categories`} action={addBtn}>
+    <AdminLayout title="Categories" subtitle={`${categories.length} categorías · arrastra para reordenar`} action={addBtn}>
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         {isLoading ? (
           <div className="p-8 text-center text-sm text-gray-400">Cargando...</div>
@@ -175,6 +201,7 @@ export default function AdminCategories() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100">
+                <th className="w-10 px-3 py-3"></th>
                 <th className="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">IMAGE</th>
                 <th className="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">NAME</th>
                 <th className="text-left px-6 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden md:table-cell">SLUG</th>
@@ -184,7 +211,19 @@ export default function AdminCategories() {
             </thead>
             <tbody className="divide-y divide-gray-50">
               {categories.map((cat: any) => (
-                <tr key={cat.id} className="hover:bg-gray-50 transition-colors">
+                <tr
+                  key={cat.id}
+                  draggable
+                  onDragStart={() => setDragId(cat.id)}
+                  onDragEnd={() => { setDragId(null); setOverId(null); }}
+                  onDragOver={(e) => { e.preventDefault(); if (overId !== cat.id) setOverId(cat.id); }}
+                  onDragLeave={() => { if (overId === cat.id) setOverId(null); }}
+                  onDrop={(e) => { e.preventDefault(); handleDrop(cat.id); }}
+                  className={`transition-colors ${dragId === cat.id ? "opacity-40" : "hover:bg-gray-50"} ${overId === cat.id && dragId !== cat.id ? "bg-guaiqui-purple-50" : ""}`}
+                >
+                  <td className="px-3 py-3.5 cursor-grab active:cursor-grabbing text-gray-300 hover:text-guaiqui-purple">
+                    <GripVertical className="w-4 h-4" />
+                  </td>
                   <td className="px-6 py-3.5">
                     <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                       {cat.imageUrl ? (

@@ -58,6 +58,9 @@ const categoriesRouter = router({
       const { id, ...data } = input;
       return db.updateCategory(id, data);
     }),
+  reorder: adminProcedure
+    .input(z.object({ ids: z.array(z.number()).min(1) }))
+    .mutation(({ input }) => db.reorderCategories(input.ids)),
   delete: adminProcedure
     .input(z.object({ id: z.number() }))
     .mutation(({ input }) => db.deleteCategory(input.id)),

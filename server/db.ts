@@ -88,7 +88,7 @@ export async function getAllUsers(page = 1, limit = 20) {
 export async function getCategories() {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(categories).orderBy(categories.sortOrder, categories.name);
+  return db.select().from(categories).orderBy(categories.sortOrder, categories.id);
 }
 
 export async function getFeaturedCategories() {
@@ -98,7 +98,7 @@ export async function getFeaturedCategories() {
     .select()
     .from(categories)
     .where(eq(categories.featured, true))
-    .orderBy(categories.sortOrder);
+    .orderBy(categories.sortOrder, categories.id);
 }
 
 export async function getCategoryBySlug(slug: string) {
@@ -119,13 +119,31 @@ export async function createCategory(data: {
 }) {
   const db = await getDb();
   if (!db) throw new Error("DB not available");
-  await db.insert(categories).values(data);
+  // Si no viene sortOrder, la categoria se agrega al final de la lista
+  let sortOrder = data.sortOrder;
+  if (sortOrder === undefined) {
+    const maxRow = await db
+      .select({ max: sql<number>`COALESCE(MAX(${categories.sortOrder}), -1)` })
+      .from(categories);
+    sortOrder = Number(maxRow[0]?.max ?? -1) + 1;
+  }
+  await db.insert(categories).values({ ...data, sortOrder });
   const result = await db
     .select()
     .from(categories)
     .where(eq(categories.slug, data.slug))
     .limit(1);
   return result[0];
+}
+
+// Reordena las categorias segun el arreglo de ids recibido
+export async function reorderCategories(ids: number[]) {
+  const db = await getDb();
+  if (!db) throw new Error("DB not available");
+  for (let i = 0; i < ids.length; i++) {
+    await db.update(categories).set({ sortOrder: i }).where(eq(categories.id, ids[i]));
+  }
+  return { success: true };
 }
 
 export async function updateCategory(
