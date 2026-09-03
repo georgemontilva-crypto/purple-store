@@ -26,8 +26,8 @@ function HeroSection() {
   const { data: heroCta } = trpc.content.get.useQuery({ key: "hero_cta" });
   const { data: slides = [] } = trpc.banner.list.useQuery();
 
-  const title = heroTitle?.value ?? "Arte Anime\nHecho a Mano";
-  const subtitle = heroSubtitle?.value ?? "Cuadros originales de anime y personajes favoritos, pintados a mano con amor. Stock disponible y pedidos por encargo.";
+  const title = heroTitle?.value ?? "Detalles que\nEnamoran";
+  const subtitle = heroSubtitle?.value ?? "Accesorios, maquillaje y arreglos florales elegidos con cariño. Stock disponible y pedidos personalizados.";
   const ctaText = heroCta?.value ?? "Ver coleccion";
 
   const [current, setCurrent] = useState(0);
@@ -115,7 +115,7 @@ function HeroSection() {
               style={{ background: "oklch(1 0 0 / 0.15)", border: "1px solid oklch(1 0 0 / 0.25)", color: "white", backdropFilter: "blur(8px)" }}
             >
               <Brush className="w-3.5 h-3.5" />
-              Arte original · Hecho a mano
+              Elegido con cariño · Envío a todo el país
             </div>
             <h1
               className="font-black leading-tight mb-4 text-white"
@@ -284,7 +284,7 @@ function FeaturedCategories() {
                   </div>
                 </Link>
               ))
-            : ["Anime", "Shōnen", "Shōjo", "Chibi", "Paisajes", "Encargos"].map((name, i) => (
+            : ["Accesorios", "Maquillaje", "Flores", "Regalos", "Cuidado personal", "Personalizados"].map((name, i) => (
                 <Link key={i} href="/tienda">
                   <div
                     className="group relative rounded-2xl overflow-hidden cursor-pointer flex-shrink-0"
@@ -336,7 +336,7 @@ function FeaturedCategories() {
         </div>
       ) : (
         <div className="hidden sm:grid grid-cols-3 lg:grid-cols-6 gap-3">
-          {["Anime", "Shōnen", "Shōjo", "Chibi", "Paisajes", "Encargos"].map((name, i) => (
+          {["Accesorios", "Maquillaje", "Flores", "Regalos", "Cuidado personal", "Personalizados"].map((name, i) => (
             <Link key={i} href="/tienda">
               <div
                 className="group relative rounded-2xl overflow-hidden cursor-pointer hover:shadow-purple transition-all duration-300 hover:-translate-y-1"
@@ -496,7 +496,7 @@ function CommissionBanner() {
             ¿Quieres tu personaje favorito?
           </h2>
           <p className="text-white/80 text-base max-w-md">
-            Pintamos cualquier personaje de anime, serie o videojuego. Tamaños personalizados, envío a todo el país.
+            Armamos el arreglo o el kit de regalo que imagines. Personalización a tu gusto, envío a todo el país.
           </p>
         </div>
         <div className="flex gap-3 flex-shrink-0">
@@ -527,7 +527,7 @@ function WhyUs() {
     },
     {
       icon: Palette,
-      title: "Arte original",
+      title: "Selección propia",
       desc: "No usamos impresiones. Cada pieza es única e irrepetible.",
       color: "#c8a1ff",
     },
@@ -539,8 +539,8 @@ function WhyUs() {
     },
     {
       icon: Heart,
-      title: "Con amor por el anime",
-      desc: "Somos fans del anime. Entendemos los detalles que importan.",
+      title: "Hecho con cariño",
+      desc: "Cuidamos cada detalle, del empaque a la entrega.",
       color: "#954be3",
     },
     {
@@ -561,7 +561,7 @@ function WhyUs() {
     <section className="py-10 px-4 lg:px-8">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-black text-foreground mb-2">¿Por qué elegirnos?</h2>
-        <p className="text-muted-foreground text-sm">Arte con alma, calidad garantizada</p>
+        <p className="text-muted-foreground text-sm">Detalles con alma, calidad garantizada</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -596,7 +596,7 @@ function AboutSnippet() {
 
   const text =
     aboutShort?.value ??
-    "Somos artistas apasionados por el anime y el arte hecho a mano. Cada cuadro que creamos lleva horas de dedicación, amor por los detalles y el deseo de que tengas una pieza única en tu espacio. Trabajamos con stock disponible y también hacemos encargos personalizados.";
+    "Somos una tienda de accesorios, maquillaje y arreglos florales. Elegimos cada producto pensando en que te haga sonreír, ya sea para ti o para regalar. Manejamos stock disponible y también armamos pedidos personalizados.";
 
   return (
     <section className="py-10 px-4 lg:px-8">
@@ -627,7 +627,7 @@ function AboutSnippet() {
                   <Palette className="w-10 h-10 text-white" />
                 </div>
                 <p className="text-white font-black text-xl">Guaiqui Avenue</p>
-                <p className="text-white/70 text-sm">Arte Anime · Hecho a mano</p>
+                <p className="text-white/70 text-sm">Accesorios · Belleza · Flores</p>
               </div>
             </div>
           )}
@@ -648,7 +648,7 @@ function AboutSnippet() {
         {/* Text side */}
         <div className="p-8 lg:p-10 flex flex-col justify-center" style={{ background: "#fcfbfe" }}>
           <h2 className="text-2xl lg:text-3xl font-black text-foreground mb-4 leading-tight">
-            Arte que conecta con{" "}
+            Detalles que conectan con{" "}
             <span className="text-gradient-purple">tu pasión</span>
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-6 text-sm lg:text-base">{text}</p>

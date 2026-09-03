@@ -60,7 +60,7 @@ export default function Shop() {
               style={{ background: "oklch(1 0 0 / 0.15)", color: "white", border: "1px solid oklch(1 0 0 / 0.25)" }}
             >
               <Palette className="w-3.5 h-3.5" />
-              Arte Anime · Hecho a mano
+              Accesorios · Belleza · Flores
             </div>
             <h1
               className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-2"

@@ -60,7 +60,7 @@ export default function Login() {
             </span>
           </Link>
           <p className="mt-2 text-sm" style={{ color: "#7a6699" }}>
-            Arte Anime Hecho a Mano
+            Accesorios, Belleza y Flores
           </p>
         </div>
 

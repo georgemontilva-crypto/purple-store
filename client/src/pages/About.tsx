@@ -16,7 +16,7 @@ export default function About() {
     { icon: Users, value: "+200", label: "Cuadros vendidos" },
     { icon: Star, value: "5.0", label: "Calificación promedio" },
     { icon: Award, value: "100%", label: "Hecho a mano" },
-    { icon: Heart, value: "∞", label: "Amor por el anime" },
+    { icon: Heart, value: "∞", label: "Amor por los detalles" },
   ];
 
   return (
@@ -42,13 +42,13 @@ export default function About() {
               style={{ background: "oklch(1 0 0 / 0.15)", color: "white", border: "1px solid oklch(1 0 0 / 0.25)" }}
             >
               <Palette className="w-3.5 h-3.5" />
-              Arte original · Con alma
+              Elegido con cariño
             </div>
             <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-white mb-3" style={nunito}>
               {title?.value ?? "Sobre Nosotros"}
             </h1>
             <p className="text-white/75 text-base leading-relaxed font-semibold" style={nunito}>
-              {subtitle?.value ?? "Conoce la historia detrás de Guaiqui Avenue y nuestra pasión por el arte anime hecho a mano"}
+              {subtitle?.value ?? "Conoce la historia detrás de Guaiqui Avenue y nuestra pasión por los detalles bonitos"}
             </p>
           </div>
         </div>
@@ -66,11 +66,11 @@ export default function About() {
               Nuestra historia
             </div>
             <h2 className="text-2xl md:text-3xl font-black text-foreground leading-tight" style={nunito}>
-              Arte anime pintado con amor
+              Detalles elegidos con amor
             </h2>
             <p className="text-muted-foreground leading-relaxed font-semibold whitespace-pre-line" style={nunito}>
               {body?.value ??
-                "Somos un pequeño estudio de arte especializado en cuadros de anime y personajes favoritos, pintados completamente a mano con materiales de alta calidad.\n\nCada cuadro es una pieza única e irrepetible. Manejamos stock disponible para entrega inmediata y también realizamos encargos personalizados para que tengas exactamente el arte que sueñas.\n\nNuestro proceso combina técnica, pasión y un profundo amor por la cultura anime. Cada pincelada lleva nuestra dedicación y cariño por este arte."}
+                "Somos una tienda de accesorios, maquillaje, arreglos florales y cositas lindas para regalar o consentirte.\n\nElegimos cada producto a mano, pensando en calidad y en que se vea bonito. Manejamos stock disponible para entrega inmediata y también armamos pedidos y arreglos personalizados para la ocasión que necesites.\n\nNuestro fuerte son los detalles: el empaque, la presentación y la atención cercana. Queremos que cada compra se sienta como un regalo."}
             </p>
           </div>
 
@@ -101,7 +101,7 @@ export default function About() {
                     Guaiqui Avenue
                   </p>
                   <p className="text-sm font-semibold mt-1" style={{ color: "#815ab5", fontFamily: "'Nunito', sans-serif" }}>
-                    Arte hecho a mano
+                    Elegido a mano
                   </p>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function About() {
             <h3 className="text-xl font-black text-white mb-3" style={nunito}>Nuestra misión</h3>
             <p className="text-white/75 leading-relaxed font-semibold text-sm" style={nunito}>
               {mission?.value ??
-                "Crear arte anime auténtico y de alta calidad, pintado a mano con amor, que conecte emocionalmente a los fans con sus personajes favoritos a través de piezas únicas e irrepetibles."}
+                "Ofrecer accesorios, belleza y arreglos florales de calidad, con una atención cercana y una presentación cuidada, para que cada detalle que compres se sienta especial."}
             </p>
           </div>
           <div
@@ -201,7 +201,7 @@ export default function About() {
             <h3 className="text-xl font-black text-foreground mb-3" style={nunito}>Nuestra visión</h3>
             <p className="text-muted-foreground leading-relaxed font-semibold text-sm" style={nunito}>
               {vision?.value ??
-                "Ser el estudio de arte anime de referencia, reconocido por la calidad artesanal de cada pieza, la personalización de encargos y el amor genuino por la cultura anime."}
+                "Ser la tienda de referencia para accesorios, belleza y detalles, reconocida por la calidad de la selección, los pedidos personalizados y el cariño con que atendemos a cada cliente."}
             </p>
           </div>
         </div>

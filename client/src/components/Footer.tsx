@@ -40,7 +40,7 @@ export default function Footer() {
               className="text-sm leading-relaxed max-w-xs mb-6"
               style={{ color: "oklch(1 0 0 / 0.55)", fontFamily: "'Nunito', sans-serif" }}
             >
-              Arte anime hecho a mano con amor. Cuadros originales de stock y encargos personalizados. Cada pieza es única e irrepetible.
+              Accesorios, maquillaje, arreglos florales y detalles bonitos para cada ocasión. Piezas seleccionadas con cariño y pedidos personalizados.
             </p>
             <div className="flex gap-2.5">
               {[
@@ -146,7 +146,7 @@ export default function Footer() {
               className="w-3.5 h-3.5"
               style={{ color: "#c8a1ff", fill: "#c8a1ff" }}
             />{" "}
-            para los fans del anime
+            para consentirte
           </p>
         </div>
       </div>

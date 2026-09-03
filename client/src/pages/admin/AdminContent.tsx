@@ -264,14 +264,14 @@ function BannerSlidesManager() {
 const CONTENT_SECTIONS = [
   {
     title: "Sobre nosotros",
-    description: "Informacion sobre la artista y la historia de Guaiqui Avenue",
+    description: "Informacion sobre la tienda y la historia de Guaiqui Avenue",
     icon: FileText,
     color: "text-blue-600",
     bg: "bg-blue-50",
     fields: [
       { key: "about_title", label: "Titulo de la pagina", type: "text", placeholder: "Sobre Guaiqui Avenue" },
-      { key: "about_subtitle", label: "Subtitulo", type: "text", placeholder: "Arte anime con alma" },
-      { key: "about_short", label: "Texto corto (aparece en el Home)", type: "textarea", placeholder: "Somos artistas apasionados..." },
+      { key: "about_subtitle", label: "Subtitulo", type: "text", placeholder: "Detalles que enamoran" },
+      { key: "about_short", label: "Texto corto (aparece en el Home)", type: "textarea", placeholder: "Somos una tienda de detalles..." },
       { key: "about_body", label: "Texto completo (pagina Sobre Nosotros)", type: "textarea", placeholder: "Historia detallada..." },
       { key: "about_mission", label: "Mision", type: "textarea", placeholder: "Nuestra mision es..." },
       { key: "about_vision", label: "Vision", type: "textarea", placeholder: "Nuestra vision es..." },
@@ -286,8 +286,8 @@ const CONTENT_SECTIONS = [
     color: "text-guaiqui-purple",
     bg: "bg-guaiqui-purple-50",
     fields: [
-      { key: "hero_title", label: "Titulo principal", type: "text", placeholder: "Arte Anime Hecho a Mano" },
-      { key: "hero_subtitle", label: "Subtitulo / descripcion", type: "textarea", placeholder: "Cuadros originales de anime..." },
+      { key: "hero_title", label: "Titulo principal", type: "text", placeholder: "Accesorios, Belleza y Flores" },
+      { key: "hero_subtitle", label: "Subtitulo / descripcion", type: "textarea", placeholder: "Accesorios, maquillaje y arreglos florales..." },
       { key: "hero_cta", label: "Texto del boton CTA", type: "text", placeholder: "Ver coleccion" },
     ],
   },
@@ -401,7 +401,7 @@ function PopupManager() {
       {/* Subtítulo */}
       <div className="space-y-1.5">
         <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Subtítulo</label>
-        <Input value={form.subtitle} onChange={(e) => setForm(f => ({ ...f, subtitle: e.target.value }))} placeholder="Arte anime hecho a mano con amor" className="rounded-xl" />
+        <Input value={form.subtitle} onChange={(e) => setForm(f => ({ ...f, subtitle: e.target.value }))} placeholder="Detalles bonitos para cada ocasión" className="rounded-xl" />
       </div>
 
       {/* Cuerpo */}
